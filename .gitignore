@@ -11,3 +11,4 @@ thesis.pdf
 *.make
 *.out
 *.toc
+*.fdb_latexmk
