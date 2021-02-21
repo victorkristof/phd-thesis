@@ -12,4 +12,4 @@ compress: $(PROJECT).pdf
 
 clean:
 	latexmk -c
-	rm *.bbl
+	rm *.bbl *.brf
