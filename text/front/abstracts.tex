@@ -4,18 +4,16 @@
 \markboth{Abstract}{Abstract}
 \addcontentsline{toc}{chapter}{Abstract / Résumé} % adds an entry to the table of contents
 
-From the lack of transparency in democratic processes to the spread of conspiracy theories to the rise in greenhouse gas emissions, global problems stemming from the decisions and behaviors of people can seem intractable and unpredictable.
+Global problems stemming from the decisions and behaviors of people, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions, can seem intractable and unpredictable.
 Fortunately, people are more predictable than we think, and with large enough datasets and machine-learning algorithms, we can design accurate models of human behavior in a variety of settings.
 In this thesis, we develop probabilistic models of choice to discover insights into social processes.
 We focus on designing models that are highly interpretable by drawing from the econometrics literature on discrete-choice models, which we combine with latent-factor models, Bayesian statistics, and generalized linear models.
 These predictive models enable interpretability through their learned parameters and latent factors.
 
-First, we study the social dynamics behind group collaborations for collective content creation, such as in Wikipedia and the Linux kernel.
-By combining the Rasch model with latent factors reminiscent of collaborative filtering, we develop a model of acceptance probability of edits.
-We also study the competitive dynamics of the law-making process in the European Union through the lens of peer-production systems.
-We model the adoption of law edits by combining our model with the Bradley-Terry model and enhancing it with techniques from natural language processing.
-This methodology enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with high probability of edit acceptance.
-The latent representations capture non-linear interactions between components and users and cluster well into different topics.
+First, we study the social dynamics behind group collaborations for collective content creation, such as in Wikipedia, the Linux kernel, and laws.
+By combining the Bradley-Terry and Rasch models with collaborative filtering and natural language processing, we develop a model of edit acceptance in peer-production systems and in the European Union law-making process.
+This enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with high probability of edit acceptance.
+The latent representations capture non-linear interactions between components and users and cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, and defense and social security in European laws).
 % In peer-production systems, users with shared but competing interests attempt to edit components of the system.
 % We posit that the probability that an edit is accepted is a function of the editor’s skill, of the difficulty of editing the component, and of a user-component interaction term.
 % The model parameters lead to a ranking of "hard-to-edit" components and influential users.
@@ -32,18 +30,19 @@ The latent representations capture non-linear interactions between components an
 % Our model combines (a) explicit features of the parliamentarians, the laws, and the edits, (b) latent features of the parliamentarians and laws, and (c) text features of the edits.
 % This enables us to discover controversial laws, words and features of the parliamentarians that correlate with high probability of edit acceptance, and representations of laws in an ideological space.
 
-Second, we develop an algorithm for predicting the popular vote of elections by combining matrix factorization and generalized linear models.
-Our algorithm learns representations of votes and regions to capture ideological and cultural voting patterns (\textit{e.g.}, liberal/conservative and rural/urban) and makes predictions for unobserved regions on new votes from partial results.
-We test our model on synthetic data in Germany, Switzerland, and the United States, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
-% Our predictions reach less than 1\% of error by observing less than 5\% of the regions.
+Second, we develop an algorithm for predicting the popular vote of elections and referenda by combining matrix factorization and generalized linear models.
+Our algorithm learns representations of votes and regions to capture ideological and cultural voting patterns (\textit{e.g.}, liberal/conservative and rural/urban) and predicts the vote results in unobserved regions from partial observations.
+We test our model on synthetic data in Germany, Switzerland, and the US, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
+On average, our predictions reach~1\% of error by observing~5\% of the regions.
 
 Third, by observing that human choices are guided by our perception of our environment, we study how people perceive the carbon footprint of their day-to-day actions.
 We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between flying across continents and using household appliances) and develop a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
 The model learns the users’ perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to collect data efficiently.
+Our experiments show that users overestimate the emissions of low-footprint actions and underestimate high-footprint actions.
 % We enrich our model by incorporating perception biases (\textit{e.g.}, cultural, political, and gender) to interpret our results at a finer level of socio-demographics features.
 
-Finally, we develop a probabilistic model of pairwise-comparison outcomes that can capture a wide range of time dynamics.
-We achieve this by replacing the static parameters of a class of popular pairwise-comparison models by continuous-time Gaussian processes.
+Finally, we develop a probabilistic model of pairwise-comparison outcomes that capture a wide range of time dynamics.
+We achieve this by replacing the static parameters of a class of popular pairwise-comparison models with continuous-time Gaussian processes.
 We also develop an efficient inference algorithm that computes an approximate Bayesian posterior distribution with only a few linear-time iterations over the data.
 % We apply this algorithm to sports, and we deploy it on a Web platform to predict football matches in European leagues.
 
