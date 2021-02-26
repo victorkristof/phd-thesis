@@ -12,3 +12,4 @@ thesis.pdf
 *.out
 *.toc
 *.fdb_latexmk
+*.synctex.gz
