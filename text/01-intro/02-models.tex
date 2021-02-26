@@ -1,3 +1,4 @@
+%! TEX root = ../thesis.tex
 \section{Probabilistic Models of Choice}
 \label{in:sec:models}
 
@@ -9,28 +10,35 @@
 % - Example: Ranking from discrete comparisons
 % - Example: Search
 
-The history of studying choices to understand human behaviour dates from the 1920s.
 % Describe work of Thurstone and Zermelo.
 % In the psychometrics community.
+The history of studying choices to understand human behaviour originates from the 1920s in the psychometrics community.
+\citet{thurstone1927law} pioneered the ``law of comparative judgement'', which established the methodology of measuring the perception of physical \emph{stimuli}, \textit{e.g.}, the weight of different objects, from pairwise comparisons.
+The same year, \citet{thurstone1927method} used this new approach to study people's perception of the seriousness of crimes, a judgement for which no physical scale exists.
+Almost concurrently, \citet{zermelo1928berechnung} proposed a similar model to rank chess players from match outcomes\footnote{This approach is still used today by the World Chess Federation~\citep{elo1978rating}.}.
+Thurstone's model was then independently rediscovered in the early 1950s in the statistics community by~\citet{bradley1952rank}.
 
-The Thurstone model was independently rediscovered in the statistics community in the early 1950s by Bradley and Terry.
-% Describe work of Bradley and Terry.
-
-In the early 1960s, Marschak introduces Thurstone's work to the econometrics community.
 % Describe work of Marschak, Luce (IIA), and McFadden (conditional logit)
+Two decades later, \citet{marschak1959binary} introduced Thurstone's work to the econometrics community by interpreting the psychological stimuli of Thurstone's model as economic \emph{random utility}.
+In parallel, \cite{luce1959individual} proposed its \emph{choice axiom} and the property of \emph{independent and irrelevant alternatives}, which states that the relative comparison of two alternatives is unaffected by additions and subtractions of other alternatives.
+This property enabled Luce to extend the Bradley-Terry model to multi-way comparisons.
+This extension was also proposed by~\citet{mcfadden1973conditional} from a random utility viewpoint.
 
-Today, the availability of unprecedented computational power and large-scale datasets have enable new applications of discrete-choice models.
-% Describe the work of Anson for preference learning in virtual democracy.
+% After this, discrete-choice models were extended in various directions by making further hypotheses
+% Describe the research between 1970 until 2010.
+
+Today, the availability of unprecedented computational power and large-scale datasets have enabled new applications of discrete-choice models.
 % Describe the work of Lucas for ranking.
 % Describe the work of Daniyar for search.
+% Describe the work of Anson for preference learning in virtual democracy.
+% Describe its use in reinforcement learning.
 
-The interested reader can find a more detailed introduction to random utility models in Train's and Henscher's books.
-A fascinating, detailed history of the development of the discrete-choice models in econometrics is given by McFadden in his Nobel prize statement.
-Another approach to introducing probabilistic models of choice is given in Maystre's thesis introduction.
+In the next section, we introduce discrete-choice models from a \emph{random utility} perspective.
+The interested reader can find a more detailed introduction to random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
+A detailed history of the development of discrete-choice models in econometrics is given by~\citet{mcfadden2001economic} in his Nobel Prize lecture.
+An introduction to probabilistic models of choice from a statistics perspective is given by~\citet[Chapter~1]{maystre2018efficient}.
 
 \subsection{Random Utility Models}
-
-We introduce discrete-choice models from a \emph{random utility} perspective.
 
 \paragraph{Choice Set}
 % - Definition and notation of a choice set.
