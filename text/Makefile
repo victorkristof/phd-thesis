@@ -12,4 +12,4 @@ compress: $(PROJECT).pdf
 
 clean:
 	latexmk -c
-	rm *.bbl *.brf
+	rm *.bbl *.brf *.synctex.gz indent.log
