@@ -20,15 +20,22 @@ Thurstone's model was then independently rediscovered in the early 1950s in the 
 
 % Describe work of Marschak, Luce (IIA), and McFadden (conditional logit)
 Two decades later, \citet{marschak1959binary} introduced Thurstone's work to the econometrics community by interpreting the psychological stimuli of Thurstone's model as economic \emph{random utility}.
-In parallel, \cite{luce1959individual} proposed its \emph{choice axiom} and the property of \emph{independent and irrelevant alternatives}, which states that the relative comparison of two alternatives is unaffected by additions and subtractions of other alternatives.
+In parallel, \citet{luce1959individual} proposed its \emph{choice axiom} and the property of \emph{irrelevant and independent alternatives} (IIA), which states that the relative comparison of two alternatives is unaffected by additions and subtractions of other alternatives.
 This property enabled Luce to extend the Bradley-Terry model to multi-way comparisons.
-This extension was also proposed by~\citet{mcfadden1973conditional} from a random utility viewpoint.
+This extension was also proposed by~\citet{mcfadden1973conditional} to propose the \emph{conditional logit model}\footnote{This model is also often referred to as the \emph{multinomial logit model}.} from a random utility viewpoint.
 
-% After this, discrete-choice models were extended in various directions by making further hypotheses
-% Describe the research between 1970 until 2010.
+% Research between 1970 until today
+% Unification and new models to relax the IIA hypothesis and account for correlation between alternatives
+The following decades were dedicated to the development of new discrete-choice models.
+In particular, to relax the (rather restrictive) IIA hypothesis, researchers developed the \emph{nested logit model}~\citep{ben1973structure,williams1977formation,mcfadden1978modelling} and the \emph{mixed logit model}~\citep{boyd1980effect,cardell1980measuring,hensher2003mixed}.
+Some efforts were also deployed to unify the different formulations of the Bradley-Terry model by~\citet{yellot1977relationship}.
+% Ranking
+In parallel, pairwise-comparison data started to be used for \emph{ranking} items~\citep{ford1957solution,buehlmann1963pairwise,wauthier2013efficient,negahban2017rank}.
+% Inference
+Research around the inference of discrete-choice models was also conducted for \emph{sampling and simulations}~\citep{manski1981alternative,cosslett1981efficient}, \emph{maximum likelihood estimation}~\citep{hastie1998classification,hunter2004mm,maystre2015fast,vojnovic2016parameter}, and \emph{Bayesian inference}~\citep{guiver2009bayesian,caron2012efficient,houlsby2012collaborative}.
 
 Today, the availability of unprecedented computational power and large-scale datasets have enabled new applications of discrete-choice models.
-% Describe the work of Lucas for ranking.
+% Describe the work of Lucas for ranking and recommendation \citet{ailon2010preference,ammar2015ranked}
 % Describe the work of Daniyar for search.
 % Describe the work of Anson for preference learning in virtual democracy.
 % Describe its use in reinforcement learning.
