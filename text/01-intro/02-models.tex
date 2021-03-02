@@ -30,19 +30,25 @@ The following decades were dedicated to the development of new discrete-choice m
 In particular, to relax the (rather restrictive) IIA hypothesis, researchers developed the \emph{nested logit model}~\citep{ben1973structure,williams1977formation,mcfadden1978modelling} and the \emph{mixed logit model}~\citep{boyd1980effect,cardell1980measuring,hensher2003mixed}.
 Some efforts were also deployed to unify the different formulations of the Bradley-Terry model by~\citet{yellot1977relationship}.
 % Ranking
-In parallel, pairwise-comparison data started to be used for \emph{ranking} items~\citep{ford1957solution,buehlmann1963pairwise,wauthier2013efficient,negahban2017rank}.
+In parallel, pairwise-comparison data started to be used for \emph{ranking} items~\citep{ford1957solution,buehlmann1963pairwise,plackett1975analysis,wauthier2013efficient,negahban2017rank}.
 % Inference
 Research around the inference of discrete-choice models was also conducted for \emph{sampling and simulations}~\citep{manski1981alternative,cosslett1981efficient}, \emph{maximum likelihood estimation}~\citep{hastie1998classification,hunter2004mm,maystre2015fast,vojnovic2016parameter}, and \emph{Bayesian inference}~\citep{guiver2009bayesian,caron2012efficient,houlsby2012collaborative}.
 
-Today, the availability of unprecedented computational power and large-scale datasets have enabled new applications of discrete-choice models.
-% Describe the work of Lucas for ranking and recommendation \citet{ailon2010preference,ammar2015ranked}
-% Describe the work of Daniyar for search.
-% Describe the work of Anson for preference learning in virtual democracy.
+Today, the availability of unprecedented computational power and large-scale datasets has enabled new applications of discrete-choice models.
 % Describe its use in reinforcement learning.
+In reinforcement learning, pairwise comparison models are used to incorporate feedback from human supervisors into the reward function, such as proposed by~\citet{sadigh2017active} and~\citet{christiano2017deep}.
+% Describe the work of Lucas for ranking and recommendation \citet{ammar2015ranked}
+\citet{ammar2015ranked} suggests to use these models for making personalized recommendations.
+% Describe the work of Daniyar for search.
+\citet{chumbalov2020scalable} proposes a search algorithm to navigate large-scale databases of complex items (\textit{e.g.}, images) using pairwise comparisons.
+% Describe the work of Anson for preference learning in virtual democracy and AllOurIdeas.
+\citet{lee2019webuildai} used the Plackett-Luce in a \emph{virtual democracy} setting to learn people's preferences for making algorithmic policies.
+\citet{noothigattu2018voting} also used this model to train autonomous vehicles to make ethical decisions.
+Finally, \citet{salganik2015wiki} implemented the Thurstone model into the All Our Ideas\footnote{\href{http://www.allourideas.org/planyc_example?guides=true}{http://www.allourideas.org}} platform to help the New York City Mayor’s Office of Long-Term Planning and Sustainability understand New Yorkers' preferences for the city's sustainable development.
 
 In the next section, we introduce discrete-choice models from a \emph{random utility} perspective.
-The interested reader can find a more detailed introduction to random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
-A detailed history of the development of discrete-choice models in econometrics is given by~\citet{mcfadden2001economic} in his Nobel Prize lecture.
+The interested reader will find more details about random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
+A history of the development of discrete-choice models in econometrics is given by~\citet{mcfadden2001economic} in his Nobel Prize lecture.
 An introduction to probabilistic models of choice from a statistics perspective is given by~\citet[Chapter~1]{maystre2018efficient}.
 
 \subsection{Random Utility Models}
