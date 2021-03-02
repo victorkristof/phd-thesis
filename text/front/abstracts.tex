@@ -1,3 +1,4 @@
+%! TEX root = ../thesis.tex
 % English abstract
 \cleardoublepage
 \chapter*{Abstract}
@@ -6,13 +7,13 @@
 
 Global problems stemming from the decisions and behaviors of people, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions, can seem intractable and unpredictable.
 Fortunately, people are more predictable than we think, and with large enough datasets and machine-learning algorithms, we can design accurate models of human behavior in a variety of settings.
-In this thesis, we develop probabilistic models of choice to discover insights into social processes.
-We focus on designing models that are highly interpretable by drawing from the econometrics literature on discrete-choice models, which we combine with latent-factor models, Bayesian statistics, and generalized linear models.
+In this thesis, we develop probabilistic models of choice to gain insight into social processes.
+We focus on designing models that are highly interpretable by drawing from the econometrics literature on discrete-choice models that we combine with latent-factor models, Bayesian statistics, and generalized linear models.
 These predictive models enable interpretability through their learned parameters and latent factors.
 
 First, we study the social dynamics behind group collaborations for collective content creation, such as in Wikipedia, the Linux kernel, and laws.
 By combining the Bradley-Terry and Rasch models with collaborative filtering and natural language processing, we develop a model of edit acceptance in peer-production systems and in the European Union law-making process.
-This enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with high probability of edit acceptance.
+This enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with a high probability of edit acceptance.
 The latent representations capture non-linear interactions between components and users and cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, and defense and social security in European laws).
 % In peer-production systems, users with shared but competing interests attempt to edit components of the system.
 % We posit that the probability that an edit is accepted is a function of the editor’s skill, of the difficulty of editing the component, and of a user-component interaction term.
@@ -35,8 +36,8 @@ Our algorithm learns representations of votes and regions to capture ideological
 We test our model on synthetic data in Germany, Switzerland, and the US, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
 On average, our predictions reach~1\% of error by observing~5\% of the regions.
 
-Third, by observing that human choices are guided by our perception of our environment, we study how people perceive the carbon footprint of their day-to-day actions.
-We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between flying across continents and using household appliances) and develop a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
+Third, by observing that people make choices based on their perception of their environment, we study how they perceive the carbon footprint of their day-to-day actions.
+We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between flying across continents and using household appliances), and we develop a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
 The model learns the users’ perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to collect data efficiently.
 Our experiments show that users overestimate the emissions of low-footprint actions and underestimate high-footprint actions.
 % We enrich our model by incorporating perception biases (\textit{e.g.}, cultural, political, and gender) to interpret our results at a finer level of socio-demographics features.
