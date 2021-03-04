@@ -23,8 +23,9 @@
   $[N]$
     & Set of consecutive natural numbers $\{ 1, \ldots, N \}$. \\
   $i \succ j$
-    & Pairwise comparison outcome ``$i$ wins over $j$''. \\
-  $i \succeq \mathcal{A}$
+    & Pairwise comparison outcome ``$i$ is chosen over $j$''. \\
+  % $i \succeq \mathcal{A}$
+  $i \succ \mathcal{A}$
     & Multiway comparison outcome ``$i$ is chosen among alternatives $\mathcal{A}$''. \\
   $\Prob{\mathcal{A}}$
     & Probability of the event $\mathcal{A}$. \\
@@ -38,41 +39,41 @@
     & Covariance of the random variables $x$ and $y$. \\
   $\BigO{f(x)}$
     & $g(x) = \BigO{f(x)} \iff \limsup_{x \to \infty} \Abs{g(x)} / f(x) < \infty$. \\
-  $\LittleO{f(x)}$
-    & $g(x) = \LittleO{f(x)} \iff \lim_{x \to \infty} g(x) / f(x) = 0$. \\
-  $\BigOmega{f(x)}$
-    & $g(x) = \BigOmega{f(x)} \iff f(x) = \BigO{g(x)}$. \\
-  $\LittleOmega{f(x)}$
-    & $g(x) = \LittleOmega{f(x)} \iff f(x) = \LittleO{g(x)}$. \\
+  % $\LittleO{f(x)}$
+  %   & $g(x) = \LittleO{f(x)} \iff \lim_{x \to \infty} g(x) / f(x) = 0$. \\
+  % $\BigOmega{f(x)}$
+  %   & $g(x) = \BigOmega{f(x)} \iff f(x) = \BigO{g(x)}$. \\
+  % $\LittleOmega{f(x)}$
+  %   & $g(x) = \LittleOmega{f(x)} \iff f(x) = \LittleO{g(x)}$. \\
 \end{tabularx}
 
 \begin{tabularx}{\linewidth}{llX}
   Distribution & Domain & Density function $f(x)$ \\
   \midrule
   \rule{0pt}{5ex}%
-  $\DNorm{\bm{\mu}, \bm{\Sigma}}$
-    & $\mathbf{R}^D$
-    & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
-        \exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})^\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right]$ \\
+  % $\DNorm{\bm{\mu}, \bm{\Sigma}}$
+  %   & $\mathbf{R}^D$
+  %   & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
+  %       \exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})^\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right]$ \\
   \rule{0pt}{5ex}%
-  $\DUnif{a, b}$
-    & $[a, b]$
-    & $\displaystyle \frac{1}{b - a}$ \\
-  \rule{0pt}{5ex}%
-  $\DBeta{\alpha, \beta}$
-    & $[0, 1]$
-    & $\displaystyle \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1-x)^{\beta - 1}$ \\
-  $\DExp{\lambda}$
-    & $\mathbf{R}_{>0}$
-    & $\displaystyle \lambda \exp(- \lambda x)$ \\
-  \rule{0pt}{5ex}%
-  $\DGamma{\alpha, \beta}$
-    & $\mathbf{R}_{>0}$
-    & $\displaystyle \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} \exp(- \beta x)$ \\
-  \rule{0pt}{5ex}%
-  $\DGumbel{\mu, \beta}$
-    & $\mathbf{R}$
-    & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
+  % $\DLogistic{a, b}$
+  %   & $[a, b]$
+  %   & $\displaystyle \frac{1}{b - a}$ \\
+  % \rule{0pt}{5ex}%
+  % $\DBeta{\alpha, \beta}$
+  %   & $[0, 1]$
+  %   & $\displaystyle \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1-x)^{\beta - 1}$ \\
+  % $\DExp{\lambda}$
+  %   & $\mathbf{R}_{>0}$
+  %   & $\displaystyle \lambda \exp(- \lambda x)$ \\
+  % \rule{0pt}{5ex}%
+  % $\DGamma{\alpha, \beta}$
+  %   & $\mathbf{R}_{>0}$
+  %   & $\displaystyle \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} \exp(- \beta x)$ \\
+  % \rule{0pt}{5ex}%
+  % $\DGumbel{\mu, \beta}$
+  %   & $\mathbf{R}$
+  %   & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
 \end{tabularx}
 
 \endgroup
