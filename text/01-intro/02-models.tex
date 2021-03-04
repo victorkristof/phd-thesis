@@ -2,7 +2,7 @@
 \section{Probabilistic Models of Choice}
 \label{in:sec:models}
 
-\subsection{A Brief History of Choice Models}
+\subsection{A Brief History}
 % Why studying choices to study human behaviour is important and useful
 % - Long literature from psychometrics and econometrics
 % - New methods enabled by computer science to process large-scale datasets
@@ -13,66 +13,195 @@
 % Describe work of Thurstone and Zermelo.
 % In the psychometrics community.
 The history of studying choices to understand human behaviour originates from the 1920s in the psychometrics community.
-\citet{thurstone1927law} pioneered the ``law of comparative judgement'', which established the methodology of measuring the perception of physical \emph{stimuli}, \textit{e.g.}, the weight of different objects, from pairwise comparisons.
-The same year, \citet{thurstone1927method} used this new approach to study people's perception of the seriousness of crimes, a judgement for which no physical scale exists.
-Almost concurrently, \citet{zermelo1928berechnung} proposed a similar model to rank chess players from match outcomes\footnote{This approach is still used today by the World Chess Federation~\citep{elo1978rating}.}.
-Thurstone's model was then independently rediscovered in the early 1950s in the statistics community by~\citet{bradley1952rank}.
+\citet{thurstone1927law} pioneered the ``law of comparative judgement'', which established the methodology of measuring the perception of physical \emph{stimuli} (\textit{e.g.}, the weight of different objects) from pairwise comparisons.
+The same year, \citet{thurstone1927method} used this new approach, today known as the \emph{probit model}, to study people's perception of the seriousness of crimes, a judgement for which no physical scale exists.
+Almost concurrently, \citet{zermelo1928berechnung} proposed a similar model, known as the \emph{logit model}, to rank chess players from match outcomes\footnote{This approach is still used today by the World Chess Federation~\citep{elo1978rating}.}.
+Zermelo's model was then independently rediscovered in the early 1950s in the statistics community by~\citet{bradley1952rank}.
 
 % Describe work of Marschak, Luce (IIA), and McFadden (conditional logit)
-Two decades later, \citet{marschak1959binary} introduced Thurstone's work to the econometrics community by interpreting the psychological stimuli of Thurstone's model as economic \emph{random utility}.
-In parallel, \citet{luce1959individual} proposed its \emph{choice axiom} and the property of \emph{irrelevant and independent alternatives} (IIA), which states that the relative comparison of two alternatives is unaffected by additions and subtractions of other alternatives.
-This property enabled Luce to extend the Bradley-Terry model to multi-way comparisons.
-This extension was also proposed by~\citet{mcfadden1973conditional} to propose the \emph{conditional logit model}\footnote{This model is also often referred to as the \emph{multinomial logit model}.} from a random utility viewpoint.
+In the late 1950s, \citet{marschak1959binary} introduced Thurstone's work to the econometrics community by interpreting the psychological stimuli of Thurstone's model as economic \emph{random utility}.
+In parallel, \citet{luce1959individual} proposed its \emph{choice axiom} and the property of \emph{independence of irrelevant alternatives} (IIA), which states that the relative comparison of two alternatives is unaffected by additions and subtractions of other alternatives, \textit{i.e.}, the alternatives are uncorrelated.
+This property enabled Luce to extend the logit model to multi-way comparisons.
+This extension was also proposed by~\citet{mcfadden1973conditional} to introduce the \emph{multinomial logit model}\footnote{This model was first introduced as the \emph{conditional logit model}.} from a random utility viewpoint.
 
 % Research between 1970 until today
 % Unification and new models to relax the IIA hypothesis and account for correlation between alternatives
-The following decades were dedicated to the development of new discrete-choice models.
+The following decades were dedicated to extend discrete-choice models.
 In particular, to relax the (rather restrictive) IIA hypothesis, researchers developed the \emph{nested logit model}~\citep{ben1973structure,williams1977formation,mcfadden1978modelling} and the \emph{mixed logit model}~\citep{boyd1980effect,cardell1980measuring,hensher2003mixed}.
-Some efforts were also deployed to unify the different formulations of the Bradley-Terry model by~\citet{yellot1977relationship}.
+Some efforts were also deployed by~\citet{yellot1977relationship} to unify the different formulations of the logit model.
 % Ranking
-In parallel, pairwise-comparison data started to be used for \emph{ranking} items~\citep{ford1957solution,buehlmann1963pairwise,plackett1975analysis,wauthier2013efficient,negahban2017rank}.
+In parallel, pairwise-comparison data started to be used for \emph{ranking}~\citep{ford1957solution,buehlmann1963pairwise,plackett1975analysis,wauthier2013efficient,negahban2017rank}, a model often referred to as the \emph{Placket-Luce model}.
 % Inference
 Research around the inference of discrete-choice models was also conducted for \emph{sampling and simulations}~\citep{manski1981alternative,cosslett1981efficient}, \emph{maximum likelihood estimation}~\citep{hastie1998classification,hunter2004mm,maystre2015fast,vojnovic2016parameter}, and \emph{Bayesian inference}~\citep{guiver2009bayesian,caron2012efficient,houlsby2012collaborative}.
 
 Today, the availability of unprecedented computational power and large-scale datasets has enabled new applications of discrete-choice models.
 % Describe its use in reinforcement learning.
-In reinforcement learning, pairwise comparison models are used to incorporate feedback from human supervisors into the reward function, such as proposed by~\citet{sadigh2017active} and~\citet{christiano2017deep}.
+In reinforcement learning, \citet{sadigh2017active} and~\citet{christiano2017deep} proposes to use pairwise-comparison models to incorporate feedback from human supervisors into the reward function.
 % Describe the work of Lucas for ranking and recommendation \citet{ammar2015ranked}
 \citet{ammar2015ranked} suggests to use these models for making personalized recommendations.
 % Describe the work of Daniyar for search.
 \citet{chumbalov2020scalable} proposes a search algorithm to navigate large-scale databases of complex items (\textit{e.g.}, images) using pairwise comparisons.
 % Describe the work of Anson for preference learning in virtual democracy and AllOurIdeas.
-\citet{lee2019webuildai} used the Plackett-Luce in a \emph{virtual democracy} setting to learn people's preferences for making algorithmic policies.
-\citet{noothigattu2018voting} also used this model to train autonomous vehicles to make ethical decisions.
-Finally, \citet{salganik2015wiki} implemented the Thurstone model into the All Our Ideas\footnote{\href{http://www.allourideas.org/planyc_example?guides=true}{http://www.allourideas.org}} platform to help the New York City Mayor’s Office of Long-Term Planning and Sustainability understand New Yorkers' preferences for the city's sustainable development.
+\citet{lee2019webuildai} uses the Plackett-Luce model in a \emph{virtual democracy} setting to learn people's preferences for making algorithmic policies.
+\citet{noothigattu2018voting} also uses this model to train autonomous vehicles to make ethical decisions.
+Finally, \citet{salganik2015wiki} implemented the probit model into the online platform All Our Ideas\footnote{\href{http://www.allourideas.org/planyc_example?guides=true}{http://www.allourideas.org}} to help the New York City Mayor’s Office of Long-Term Planning and Sustainability understand New Yorkers' preferences for developing the city sustainably.
 
-In the next section, we introduce discrete-choice models from a \emph{random utility} perspective.
-The interested reader will find more details about random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
 A history of the development of discrete-choice models in econometrics is given by~\citet{mcfadden2001economic} in his Nobel Prize lecture.
+The interested reader will find more details about random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
 An introduction to probabilistic models of choice from a statistics perspective is given by~\citet[Chapter~1]{maystre2018efficient}.
+In the next section, we introduce discrete-choice models from a \emph{random utility} perspective.
 
 \subsection{Random Utility Models}
 
-\paragraph{Choice Set}
+\subsubsection{Choice Set}
 % - Definition and notation of a choice set.
 % - Three characteristics: mutually exclusive, exhaustive, finite
+Discrete-choice models enable the analysis of people's preferences that drive their choice.
+Making a choice is a decision-making process.
+When facing a set of (at least two) alternatives, a decision maker chooses one of the alternative over the others.
+This set of alternatives is defined as the \emph{choice set}.
 
-\paragraph{Random Utility}
+\begin{definition}[Choice Set]
+  Given the set of all possible alternatives~$\mathcal{A}$, the \emph{choice set}~$\mathcal{C} \subseteq \mathcal{A}$ is the set of alternatives faced by a decision maker.
+  It has the following three characteristics:
+  \begin{enumerate}
+    \item The alternatives are \emph{mutually exclusive}.
+    \item The choice set $\mathcal{C}$ is \emph{exhaustive}.
+    \item The number of alternatives is \emph{finite}.
+  \end{enumerate}
+\end{definition}
+
+The exclusiveness of alternatives means that, when choosing alternative $i \in \mathcal{C}$, the other alternatives of $\mathcal{C}$ are implicitly left aside.
+The exhaustiveness of the choice set means that the decision maker face all possible alternatives at decision time.
+Finally, the number of alternatives must be finite:
+The decision maker can count the alternatives.
+
+The first two characteristics are not restrictive because it is always possible to add artificial alternatives.
+For example, if $\mathcal{C} = \{i, j\}$, one can ensure exclusiveness by adding a third alternative $k = \text{"choose $i$ and $j$"}$.
+This allows the decision maker to choose both alternatives at the same time.
+Similarly, one can ensure exhaustiveness by adding another alternative $l = \text{"none of the alternatives"}$.
+This allows the decision maker to choose none of the alternatives, hence making the choice set exhaustive.
+
+The third characteristics is, however, restrictive.
+A finite number of alternatives is actually the defining characteristics of discrete-choice models.
+This contrasts with regression models, in which the target variable is continuous, and hence the number of alternatives is infinite.
+The choice set can also vary for each choice faced by a decision maker.
+For example, $\mathcal{C}_1 = \{ i, j \}$ and $\mathcal{C}_2 = \{ i, j, k \}$.
+This contrasts with classification models, in which the choice set (\textit{i.e.}, the domain of the target variable) is identical for every observation.
+For example, $\mathcal{C}_1 = \mathcal{C}_2 = \{ \text{``spam''}, \text{``ham''} \}$.
+
+\subsubsection{Random Utility}
 % Define a random utility and the error term.
 % Explain that the main assumption to be made is on the error term.
 
-\paragraph{Irrelevant and Independent Alternatives}
+Without loss of generality, we introduce the random utility models from an econometrics viewpoint by analyzing the behavior of decision makers.
+These models can, obviously, be used to model other processes.
+In particular, and as we will see in this thesis, these models can model \emph{implicit} choices.
+For example, in the context of collective-sport matches, team~$A$ wins over team~$B$, \textit{i.e.}, team~$A$ is implicitly chosen over team~$B$ (\textit{e.g.}, because it played better or was more lucky).
+
+In econometrics, we posit that a decision maker chooses the alternative which maximizes its personal gain.
+Let~$\bm{x}_i \in \mathbf{R}^M$ be a vector of $M$ observable features that might influence a decision maker's decision of choosing alternative~$i \in \mathcal{C}$, and let $\bm{w}\in \mathbf{R}^M$ be the associated $M$-dimensional parameter vector.
+Let also~$\epsilon_i$ be some random noise that captures all unobservable features affecting the decision maker's choice, and whose probability distribution is to be defined.
+The \emph{random utility}~$U_i$ of alternative~$i$ is given by
+\begin{equation}
+  U_i = \bm{x}_i\Tr \bm{w} + \epsilon_i,
+\end{equation}
+and the decision maker chooses alternative~$i$ if $U_i > U_j$, for all $j \neq i$, $i,j \in \mathcal{C}$.
+Hence, the probability that a decision maker chooses~$i$ over~$j$ is
+\begin{equation}
+  \Prob{i \succ j} = \Prob{U_i > U_j} = \Prob{ \bm{x}_i\Tr \bm{w} + \epsilon_i > \bm{x}_j\Tr \bm{w} + \epsilon_j} = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}}.
+\end{equation}
+The probability $\Prob{i \succ j}$ is called \emph{choice probability}.
+The notation ``$i \succ j$'' reads as ``alternative~$i$ is chosen over alternative~$j$'' or, equivalently, as ``$i$ wins over $j$''.
+
+The characterization of a discrete-choice model hence depends on the researcher's hypotheses on the noise model, \textit{i.e.}, what probability distribution captures best the unobserved features.
+Two popular choices of distribution, that we describe below, are (i) the Gaussian distribution, \textit{i.e.}, $\epsilon_i \sim \DNorm{0, 1}$, and (ii) the Gumbel distribution, \textit{i.e.}, $\epsilon_i \sim \DGumbel{0, 1}$.
 
 \paragraph{Probit Model}
+
+The probit model was first introduced by~\citet{thurstone1927law} in the context of psychometrics.
+In this model, the noise model is independently and identically distributed with the Gaussian distribution, \textit{i.e.}, $\epsilon_i, \epsilon_j \sim \DNorm{0, 1}$.
+As the difference of two Gaussian random variables is also Gaussian, \textit{i.e.}, $\epsilon_i - \epsilon_j \sim \DNorm{0, 1}$ in this special case, the choice probability for the probit model is
+\begin{equation}
+  \Prob{i \succ j} = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}} = \Phi \left( \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w} \right),
+\end{equation}
+where $\Phi( \cdot )$ is the cumulative distribution function of the standard normal distribution.
+When the random utility is parameterized by only one parameter, $U_i = \bm{x}_i\Tr \bm{w} + \epsilon_i = w_i + \epsilon_i$, and the model
+\begin{equation}
+  \Prob{i \succ j} = \Phi \left( w_i - w_j \right)
+\end{equation}
+is called the \emph{Thurstone model}.
+In this simpler scenario, the $M$ parameters~$\bm{w} = [w_1 \cdots w_M]\Tr$ capture a \emph{score} for each of the $M$~alternative.
+They can be interpreted as the \emph{perceived psychological stimuli} of the alternatives and enable us to rank them according to these stimuli.
 
 \paragraph{Logit Model}
 % Define the logit model, \textit{i.e.}, the Bradley-Terry model
 
-\paragraph{Conditional Logit Model}
+The logit model was introduced by~\citet{zermelo1928berechnung} and rediscovered two decades later by~\citet{bradley1952rank}.
+In this model, the random noise is assumed to be independently and identically distributed with a Gumbel distribution\footnote{This distribution is also called the (Type I) extreme value distribution.}, \textit{i.e.}, $\epsilon_i, \epsilon_j \sim \DGumbel{0, 1}$.
+By using the property that the difference of two Gumbel random variables follows a logistic distribution, the choice probability for the logit model is
+\begin{equation}
+  \Prob{i \succ j} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\exp(\bm{x}_i\Tr \bm{w}) + \exp(\bm{x}_j\Tr \bm{w})} = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}. %= \sigma(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}).
+\end{equation}
+When the random utility is parameterized by only one parameter, the model
+\begin{equation}
+  \label{eq:bradley-terry}
+  \Prob{i \succ j} = \frac{1}{1 + \exp[-(w_i - w_j)]}
+\end{equation}
+is called the \emph{Bradley-Terry model}.
+In this scenario, the parameters~$\bm{w}$ can be interpreted as the intrinsic \emph{strength} of each alternative.
+
+\paragraph{Rasch Model}
+% Describe the Rash model and make a connection to random utility model.
+While not categorized as a discrete-choice model, the Rasch model is closely related to the Bradley-Terry model.
+We present it here because we combine the Rasch model with the multinomial logit model in Chapter~\ref{ch:eu}.
+The Rasch model was introduced by~\citet{rasch1993probabilistic} in the context of \emph{item response theory} to measure people's ability to answer tests and understand the traits explaining their performance.
+It assumes that an individual~$u$ taking a test has an intrinsic strength~$s_u \in \mathbf{R}$, and that a question~$i$ in the test has an intrinsic difficulty~$d_i \in \mathbf{R}$.
+The probability that individual~$u$ answers correctly to question~$i$ is
+\begin{equation}
+  \label{eq:rasch}
+  \Prob{u \succ i} = \frac{1}{1 + \exp[-(s_u - d_i)]}.
+\end{equation}
+The relation with the Bradley-Terry model follows directly from comparing Equation~\ref{eq:bradley-terry} with Equation~\ref{eq:rasch}.
+
+\paragraph{Multinomial Logit Model}
 % Define the multinomial logit model by McFadden.
 
-\paragraph{Item Response Theory}
-% Describe Rash model and make a connection to random utility model.
+The multinomial logit model, also called conditional logit model, was first introduced by~\citet{luce1959individual} and later by~\citet{mcfadden1973conditional}.
+In the probit and logit models, the decision maker faces a binary choice, \textit{i.e.}, the size of the choice set is $\Abs{\mathcal{C}} = 2$.
+In the multinomial logit model, the decision maker faces multiple alternatives, and the choice set $\mathcal{C} = \{ i, j, \ldots k \}$ is larger than 2.
+The random noise is also assumed to be independently and identically distributed with the Gumbel distribution, such that the choice probability is
+\begin{equation}
+  \label{eq:multinomiallogit}
+  \Prob{i \succ \mathcal{C}} = \Prob{U_i > U_j, \ldots, U_i > U_k} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}.
+\end{equation}
+The notation ``$i \succ \mathcal{C}$'' reads as ``alternative~$i$ is chosen among all alternatives in the choice set $\mathcal{C}$''.
+
+\paragraph{Independence of Irrelevant Alternatives}
+
+The property of \emph{independence of irrelevant alternatives} (IIA) was first formulated by~\citet{luce1959individual} as a lemma derived from its choice axiom.
+The IIA states that, for any two alternatives~$i$ and~$k$, the ratio of the multinomial logit probabilities from Equation~\ref{eq:multinomiallogit} is independent of alternatives other than~$i$ and~$k$, \textit{i.e.},
+\begin{equation}
+  \frac{\Prob{i \succ \mathcal{C}}}{\Prob{k \succ \mathcal{C}}}
+  = \frac{\exp(\bm{x}_i\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}{\exp(\bm{x}_k\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}
+  = \exp(\bm{x}_i\Tr \bm{w} - \bm{x}_k\Tr \bm{w}).
+\end{equation}
+As this ratio depends only on alternatives~$i$ and $k$, adding or removing alternatives from the choice set~$\mathcal{C}$ will leave it unchanged.
+This is a powerful result because it implies that not all alternatives are necessary in order to obtain an estimate of the associated parameters.
+As a result, under the multinomial logit model (i) the computational cost of estimating the parameters of many alternatives can be reduced by sub-sampling the alternatives and (ii) if one is only interested in analyzing alternatives~$i,j \in \mathcal{A}$, the other alternatives~$k \in \mathcal{A} - \{i, j\}$ are irrelevant.
+If the multinomial logit model exhibits this property, it is also because Luce proved that this model stems for the IIA hypothesis.
+
+As shown by the blue-bus/red-bus paradox, however, the IIA assumption is restrictive.
+Suppose that, among a population of commuters, the probability of taking the bus (which is blue) compared to commuting by car is $\Prob{\text{``blue bus''} \succ \text{``car''}} = 1/3$, and hence $\Prob{\text{``car''} \succ \text{``blue bus''}} = 2/3$.
+The ratio between these two probabilities is equal to 2.
+Suppose now that the city adds a new bus (which is red) to their fleet.
+While this should not affect the probability of commuters to use their car, the multinomial logit model predicts that $\Prob{\text{``blue bus''} \succ \text{``car''}} = \Prob{\text{``red bus''} \succ \text{``car''}} = 1/4$ and $\Prob{\text{``car''} \succ \text{``blue/red bus''}} = 1/2$, so that the ratio is still equal to 2.
+It should be expected, however, that the probability of using one's car is unaffected by this new bus, \textit{i.e.}, $\Prob{\text{``blue bus''} \succ \text{``car''}} = \Prob{\text{``red bus''} \succ \text{``car''}} = 1/6$ and $\Prob{\text{``car''} \succ \text{``blue/red bus''}} = 2/3$.
+In this case, the ratio is equal to 4.
+
+To circumvent this issue, new models have been proposed in the econometrics literature.
+For example, the \emph{mixed logit model}, \emph{nested logit model}, and \emph{multinomial probit model} are all robust to the IIA hypothesis.
+They provide a model of choice probabilities when alternatives are correlated between each other or over time.
 
 \subsection{Parameter Estimation}
 % Derivation of stochastic gradient descent algorithm for the Bradley-Terry model
