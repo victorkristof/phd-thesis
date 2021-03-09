@@ -1,0 +1,43 @@
+% Linear Algebra.
+\newcommand{\Tr}{^\intercal}
+
+% Probability.
+\newcommand{\Prob}[1]{\ensuremath{\mathbf{P}\left( #1 \right)}}
+\newcommand{\Exp}[2][]{\ensuremath{%
+		\ifthenelse{\isempty{#1}}{\mathbf{E}\left[ #2 \right]}{\mathbf{E}_{#1}\left[ #2 \right]}}}
+\newcommand{\Cov}[2]{\ensuremath{\mathbf{Cov}\left[ #1, #2 \right]}}
+\newcommand{\Var}[1]{\ensuremath{\mathbf{Var}\left[ #1 \right]}}
+\newcommand{\Indic}[1]{\ensuremath{1_{\left \{ #1 \right \} }}}
+
+% Distributions.
+\newcommand{\DGumbel}[1]{\ensuremath{\mathrm{Gumbel}( #1 )}}
+\newcommand{\DLogistic}[1]{\ensuremath{\mathrm{Logistic}( #1 )}}
+\newcommand{\DNorm}[1]{\ensuremath{\mathrm{N}( #1 )}}
+
+% Asymptotics
+\newcommand{\BigO}[2][]{\ensuremath{%
+		\ifthenelse{\isempty{#1}}{O( #2 )}{O_{ #1 }( #2 )}}}
+\newcommand{\LittleO}[1]{\ensuremath{o(#1)}}
+\newcommand{\BigOmega}[1]{\ensuremath{\Omega(#1)}}
+\newcommand{\LittleOmega}[1]{\ensuremath{\omega(#1)}}
+
+% Paired delimiters.
+\DeclarePairedDelimiter{\Ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\Abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\Norm}{\lVert}{\rVert}
+
+% Algorithms.
+\algnewcommand{\OneLineFor}[1]{\State \algorithmicfor\ #1\ \algorithmicdo}
+\algnewcommand{\OneLineIf}[1]{\State \algorithmicif\ #1\ \algorithmicthen}
+
+% Various
+\newcommand{\Diag}[1]{\ensuremath{\text{diag} \left( #1 \right) }}
+\newcommand{\IntInt}[2]{\ensuremath{\{#1 \; .. \; #2 \}}}
+\newcommand{\Disp}[2][]{\ensuremath{%
+		\ifthenelse{\isempty{#1}}{\Delta( #2 )}{\Delta_{#1}( #2 )}}}
+\newcommand{\Id}{\ensuremath{\mathrm{id}}}
+\DeclareMathOperator{\BT}{BT}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator*{\Argmin}{arg\,min}
+\DeclareMathOperator*{\Argmax}{arg\,max}
+
