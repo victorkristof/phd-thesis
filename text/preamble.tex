@@ -45,7 +45,7 @@
 % No need to pass `pdftex` option to graphicx:
 % https://tex.stackexchange.com/a/82158/79036
 \usepackage{graphicx,xcolor}
-\graphicspath{{../figures/}}
+\graphicspath{{figures/}}
 
 \usepackage{booktabs}
 \usepackage[babel,final]{microtype}
@@ -211,5 +211,7 @@
 
 % Import mathematical definitions.
 \input{math.tex}
+% Import other definitions (such as typography of models).
+\input{misc.tex}
 
 \hyphenation{wahrscheinlichkeits-rechnung PageRank ChoiceRank}
