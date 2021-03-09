@@ -1,0 +1,91 @@
+\section{Statistical Models}
+\label{sec:models}
+
+In this section, we describe and explain two variants of a statistical model of edit outcomes based on \emph{who} edits \emph{what}.
+In other words, we develop models that are predictive of the outcome $q \in \{0, 1\}$ of a contribution of user $u$ on item $i$.
+To this end, we represent the probability $p_{ui}$ that an edit made by user $u$ on item $i$ is successful.
+In collaborative projects of interest, most users typically interact with only a small number of items.
+In order to deal with the sparsity of interactions, we postulate that the probabilities $\{ p_{ui} \}$ lie on a low-dimensional manifold and propose two model variants of increasing complexity.
+In both cases, the parameters of the model have intuitive effects and can be interpreted easily.
+
+\paragraph{Basic Variant}
+The first variant of our model is directly inspired by the Rasch model \citep{rasch1960probabilistic}.
+The probability that an edit is accepted is defined as
+\begin{align}
+\label{eq:basicmodel}
+p_{ui} = \frac{1}{1 + \exp[-(s_u - d_i + b)]},
+\end{align}
+where $s_u\in\mathbf{R}$ is the \emph{skill} of user $u$, $d_i\in\mathbf{R}$ is the \emph{difficulty} of item $i$, and $b \in \mathbf{R}$ is a global parameter that encodes the overall skew of the distribution of outcomes.
+We call this model variant \interank{basic}.
+Intuitively, the model predicts the outcome of a ``game'' between an item with inertia and a user who would like to effect change.
+The \emph{skill} quantifies the ability of the user to enforce a contribution, whereas the \emph{difficulty} quantifies how ``resistant'' to contributions the particular item is.
+%An increasing item difficulty $d_i$ monotonically decreases the probability $p_{ui}$, whereas an increasing user skill $s_u$ monotonically increases $p_{ui}$.
+%This corresponds to an appropriate first-order approximation to the outcome probability.
+
+Similarly to reputation systems \citep{adler2007content}, \interank{basic} learns a score for each user; this score is predictive of edit quality.
+However, unlike these systems, our model also takes into account that some items might be more challenging to edit than others.
+For example, on Wikipedia, we can expect high-traffic, controversial articles to be more difficult to edit than less popular articles.
+As with user skills, the article difficulty can be inferred \emph{automatically} from observed outcomes.
+
+\paragraph{Full Variant}
+Although the \emph{basic} variant is conceptually attractive, it might prove to be too simplistic in some instances.
+In particular, the \emph{basic} variant implies that if user $u$ is more skilled than user $v$, then $p_{ui} > p_{vi}$ for \emph{all} items $i$.
+In many peer-production systems, users tend to have their own specializations and interests, and each item in the project might require a particular mix of skills.
+For example, with the Linux kernel, an engineer specialized in file systems might be successful in editing a certain subset of software components, but might be less proficient in contributing to, say, network drivers, whereas the situation might be exactly the opposite for another engineer.
+In order to capture the multidimensional interaction between users and items, we add a bilinear term to the probability model~\eqref{eq:basicmodel}.
+Letting $\bm{x}_u, \bm{y}_i \in \mathbf{R}^D$ for some dimensionality $D \in \mathbf{N}_{>0}$, we define
+\begin{align}
+\label{eq:fullmodel}
+p_{ui} = \frac{1}{1 + \exp[-(s_u - d_i + \bm{x}_u^\top \bm{y}_i + b)]}.
+\end{align}
+We call the corresponding model variant \interank{full}.
+The vectors $\bm{x}_u$ and $\bm{y}_i$ can be thought of as embedding users and items as points in a latent $D$-dimensional space.
+Informally, $p_{ui}$ increases if the two points representing a user and an item are close to each other, and it decreases if they are far from each other (e.g., if the vectors have opposite signs).
+If we slightly oversimplify, the parameter $\bm{y}_i$ can be interpreted as describing the set of skills needed to successfully edit item $i$, whereas $\bm{x}_u$ describes the set of skills displayed by user~$u$.
+
+The bilinear term is reminiscent of matrix-factorization approaches in recommender systems \citep{koren2009matrix};
+indeed, this variant can be seen as a \emph{collaborative-filtering} method.
+In true collaborative-filtering fashion, our model is able to learn the latent feature vectors $\{ \bm{x}_i \}$ and $\{ \bm{y}_i \}$ \emph{jointly}, by taking into consideration all edits and without any additional content-based features.
+
+Finally, note that the skill and difficulty parameters are retained in this variant and can still be used to explain first-order effects.
+The bilinear term explains only the additional effect due to the user-item interaction.
+
+\subsection{Learning the Model}
+\label{sec:learning}
+
+From~\eqref{eq:basicmodel} and~\eqref{eq:fullmodel}, it should be clear that our probabilistic model assumes no data other than the identity of the user and that of the item.
+This makes it generally applicable to any peer-production system in which users contribute to discrete items.
+
+Given a dataset of $K$ independent observations $\mathcal{D} = \{ (u_k, i_k, q_k) \mid k = 1, \ldots, K \}$, we infer the parameters of the model by maximizing their likelihood under $\mathcal{D}$.
+That is, collecting all model parameters into a single vector $\bm{\theta}$, we seek to minimize the negative log-likelihood
+\begin{align}
+\label{eq:nll}
+- \ell (\bm{\theta} ; \mathcal{D}) = \sum_{(u,i,q) \in \mathcal{D}} \left[ -q \log p_{ui} - (1 - q) \log (1 - p_{ui}) \right],
+\end{align}
+where $p_{ui}$ depends on $\bm{\theta}$.
+In the \emph{basic} variant, the negative log-likelihood is convex, and we can easily find a global maximum by using standard methods from convex optimization.
+In the \emph{full} variant, the bilinear term breaks the convexity of the objective function, and we can no longer guarantee that we will find parameters that are global minimizers.
+In practice, we do not observe any convergence issues but reliably find good model parameters on all datasets.
+
+Note that~\eqref{eq:nll} easily generalizes from binary outcomes ($q \in \{0, 1\}$) to continuous-valued outcomes ($q \in [0, 1]$).
+Continuous values can be used to represent the \emph{fraction} of the edit that is successful.
+
+\paragraph{Implementation}
+We implement the models in Python by using the TensorFlow library \citep{abadi2016tensorflow}.
+Our code is publicly available online at \url{https://github.com/lca4/interank}.
+In order to avoid overfitting the model to the training data, we add a small amount of $\ell_2$ regularization to the negative log-likelihood.
+We minimize the negative log-likelihood by using stochastic gradient descent \citep{bishop2006pattern} with small batches of data.
+For \interank{full}, we set the number of latent dimensions to $D = 20$ by cross-validation.
+
+\paragraph{Running Time}
+Our largest experiment consists of learning the parameters of \interank{full} on the entire history of the French Wikipedia (c.f. Section~\ref{sec:wikipedia}), consisting of over \num{65} million edits by \num{5} million users on \num{2} million items.
+In this case, our TensorFlow implementation takes approximately \num{2} hours to converge on a single machine.
+In most other experiments, our implementation takes only a few minutes to converge.
+This demonstrates that our model effortlessly scales, even to the largest peer-production systems.
+
+\subsection{Applicability}
+Our approach models the difficulty of effecting change through the affected item's identity.
+As such, it applies particularly well to peer-production systems where users \emph{cooperate} to improve the project, i.e., where each edit is judged independently against an item's (latent) quality standards.
+This model is appropriate for a wide variety of projects, ranging from online knowledge bases (such as Wikipedia, c.f. Section~\ref{sec:wikipedia}) to open source software (such as the Linux kernel project, c.f. Section~\ref{sec:linux}).
+In some peer-production systems, however, the contributions of different users \emph{compete} against each other, such as multiple answers to a single question on a Q\&A platform.
+In these cases, our model can still be applied, but fails to capture the fact that edit outcomes are interdependent.

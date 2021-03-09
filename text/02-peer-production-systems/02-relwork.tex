@@ -1,0 +1,68 @@
+\section{Related Work}
+\label{sec:relwork}
+
+With the growing size and impact of online peer-production systems, the task of assessing contribution quality has been extensively studied.
+We review various approaches to the problem of quantifying and predicting the quality of user contributions and contrast them to our approach.
+
+\paragraph{User Reputation Systems}
+Reputation systems have been a long-standing topic of interest in relation to peer-production systems and, more generally, in relation to online services \citep{resnick2000reputation}.
+% Adler 2007 / de Alfaro 2013 / Adler 2008 / WikiTrust
+\citet{adler2007content} propose a point-based reputation system for Wikipedia and show that reputation scores are predictive of the future quality of editing.
+As almost all edits to Wikipedia are immediately accepted, the authors define an \emph{implicit} notion of edit quality by measuring how much of the introduced changes is retained in future edits.
+The ideas underpinning the computation of implicit edit quality are extended and refined in subsequent papers \citep{adler2008measuring, dealfaro2013content}.
+This line of work leads to the development of WikiTrust \citep{dealfaro2011reputation}, a browser add-on that highlights low-reputation texts in Wikipedia articles.
+When applying our methods to Wikipedia, we follow the same idea of measuring quality implicitly through the state of the article at subsequent revisions.
+We also demonstrate that by automatically learning properties of the \emph{item} that a user edits (in addition to learning properties of the user, such as a reputation score) we can substantially improve predictions of edit quality.
+This was also noted recently by \citet{tabibian2017distilling} in a setting similar to ours, but using a temporal point process framework.
+
+\paragraph{Specialized Classifiers}
+Several authors propose quality-prediction methods tailored to a specific peer-production system.
+Typically, these methods consist of a machine-learned classifier trained on a large number of content-based and system-based features of the users, the items and the edits themselves.
+\citet{druck2008learning} fit a maximum entropy classifier for estimating the lifespan of a given Wikipedia edit, using a definition of edit longevity similar to that of \citet{adler2007content}.
+They consider features based on the edit's content (such as: number of words added / deleted, type of change, capitalization and punctuation, etc.) as well as features based on the user, the time of the edit and the article.
+Their model significantly outperforms a baseline that only uses features of the user.
+Other methods use support vector machines \citep{bronner2012user}, random forests \citep{bronner2012user, javanmardi2011vandalism} or binary logistic regression \citep{potthast2008automatic}, with varying levels of success.
+In some cases, content-based features are refined using natural-language processing, leading to substantial performance improvements.
+However, these improvements are made to the detriment of general applicability.
+For example, competitive natural language processing tools have yet to be developed for the Turkish language (we investigate the Turkish Wikipedia in Section~\ref{sec:wikipedia}).
+In contrast to these methods, our approach is general and broadly applicable.
+Furthermore, the use of black-box classifiers can hinder the interpretability of predictions, whereas we propose a statistical model whose parameters are straightforward to interpret.
+
+\paragraph{Truth Inference}
+In crowdsourcing, a problem related to ours consists of \emph{jointly} estimating
+\begin{enuminline}
+\item model parameters (such as user skills or item difficulties) that are predictive of contribution quality, and
+\item the quality of each contribution,
+\end{enuminline}
+without ground truth \citep{dawid1979maximum}.
+Our problem is therefore easier, as we assume access to ground-truth information about the outcome (quality) of past edits.
+Nevertheless, some methods developed in the crowdsourcing context \citep{whitehill2009whose, welinder2010multidimensional, zhou2012learning} provide models that can be applied to our setting as well.
+In Sections~\ref{sec:wikipedia} and~\ref{sec:linux}, we compare our models to GLAD \citep{whitehill2009whose}.
+% \citep{rash} our basic model but used to infer labels
+% \citep{dawid} seminal work, inferring error-rate (skill) for practician and symptoms
+% \citep{zhou} generalize dawid and rash
+% \citep{welinder} generalizes whitehill
+% \citep{CV paper learning model at the same time} very task specific to images
+% \citep{whitehill} models the skills and difficulty as a product, provides a baseline for us
+
+%\paragraph{Finding Controversial Items}
+%On Wikipedia, some articles are highly controversial and result in so-called \emph{edit wars} \citep{sumi2011edit}.
+%\citet{rad2012identifying} compare different algorithms for quantifying the controversy surrounding an article.
+%\citet{yasseri2014most} look at the patterns of controversial articles across languages.
+%Both papers develop ad-hoc measures of controversy.
+%When applied to Wikipedia, our model is also able to identify controversial articles, as a by-product of learning a per-article parameter that is predictive of edit outcomes (c.f. Section~\ref{sec:wikipedia}).
+
+\paragraph{Pairwise Comparison Models}
+Our approach draws inspiration from probabilistic models of pairwise comparisons.
+These have been studied extensively over the last century in the context of psychometrics \citep{thurstone1927law, bradley1952rank}, item response theory \citep{rasch1960probabilistic}, chess rankings \citep{zermelo1928berechnung, elo1978rating}, and more.
+The main paradigm posits that every object $i$ has a latent \emph{strength} (skill or difficulty) parameter $\theta_i$, and that the probability $p_{ij}$ of observing object $i$ ``winning'' over object $j$ increases with the distance $\theta_i - \theta_j$.
+Conceptually, our model is closest to that of \citet{rasch1960probabilistic}.
+
+\paragraph{Collaborative Filtering}
+Our method also borrows from collaborative filtering techniques popular in the recommender systems community.
+In particular, some parts of our model are remindful of matrix-factorization techniques \citep{koren2009matrix}.
+These techniques automatically learn low-dimensional embeddings of users and items based on ratings, with the purpose of producing better recommendations.
+Our work shows that these ideas can also be helpful in addressing the problem of predicting outcomes of edits in peer-production systems.
+Like collaborative-filtering methods, our approach is exposed to the \emph{cold-start} problem:
+with no (or few) observations about a given user or item, the predictions are notably less accurate.
+In practice, this problem can be addressed, e.g., by using additional features of users and / or items \citep{schein2002methods, lam2008addressing} or by clustering users \citep{levi2012finding}.
