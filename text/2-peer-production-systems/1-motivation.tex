@@ -1,5 +1,6 @@
-\section{Introduction}
-\label{sec:intro}
+%! TEX root = ../thesis.tex
+\section{Motivation}
+\label{pps:sec:intro}
 
 Over the last two decades, the number and scale of online peer-production systems has become truly massive, driven by better information networks and advances in collaborative software.
 At the time of writing, \num{128643} editors contribute regularly to \num{5}+ million articles of the English Wikipedia \citep{wikipedia2017wikipedians} and over \num{15600} developers have authored code for the Linux kernel \citep{corbet2017linux}.
@@ -30,8 +31,7 @@ For example, edits that are unlikely to survive could be sent out for review imm
 
 Our approach borrows from probabilistic models of pairwise comparisons \citep{zermelo1928berechnung, rasch1960probabilistic}.
 These models learn a real-valued score for each object (user or item) such that the difference between two objects' scores is predictive of comparison outcomes.
-We take a similar perspective and view each edit in a collaborative project as a game between the user who tries to effect change and the item that resists change\footnote{Obviously, items do not really ``resist'' by themselves.
-Instead, this notion should be taken as a proxy for the combined action of other users (e.g., project maintainers) who can accept or reject an edit depending, among others, on standards of quality.}.
+We take a similar perspective and view each edit in a collaborative project as a game between the user who tries to effect change and the item that resists change\footnote{Obviously, items do not really ``resist'' by themselves. Instead, this notion should be taken as a proxy for the combined action of other users (e.g., project maintainers) who can accept or reject an edit depending, among others, on standards of quality.}.
 Similarly to pairwise-comparison models, our approach learns a real-valued score for each user and each item.
 In addition, it also learns latent features of users and items that capture interaction effects.
 
@@ -40,9 +40,9 @@ It does not use any explicit content-based features: instead, it simply learns b
 Furthermore, the resulting model parameters can be interpreted easily.
 They enable a principled way of
 \begin{enuminline}
-\item ranking users by the quality of their contributions,
-\item ranking items by the difficulty of editing them and
-\item understanding the main dimensions of the interaction between users and items.
+	\item ranking users by the quality of their contributions,
+	\item ranking items by the difficulty of editing them and
+	\item understanding the main dimensions of the interaction between users and items.
 \end{enuminline}
 
 We apply our approach on two different peer-production systems.
@@ -57,13 +57,13 @@ In addition, we give an interesting qualitative description of subsystems based 
 
 In short, our paper
 \begin{enuminline}
-\item gives evidence that observing \emph{who edits what} can yield valuable insights into peer-production systems and
-\item proposes a statistically grounded and computationally inexpensive method to do so.
+	\item gives evidence that observing \emph{who edits what} can yield valuable insights into peer-production systems and
+	\item proposes a statistically grounded and computationally inexpensive method to do so.
 \end{enuminline}
 The analysis of two peer-production systems with very distinct characteristics demonstrates the generality of the approach.
 
 \paragraph{Organization of the Paper}
-We start by reviewing related literature in Section~\ref{sec:relwork}.
-In Section~\ref{sec:models}, we describe our statistical model of edit outcomes and briefly discuss how to efficiently learn a model from data.
-In Sections~\ref{sec:wikipedia} and~\ref{sec:linux}, we investigate our approach in the context of Wikipedia and of the Linux kernel, respectively.
-Finally, we conclude in Section~\ref{sec:conclusion}.
+We start by reviewing related literature in Section~\ref{pps:sec:relwork}.
+In Section~\ref{pps:sec:models}, we describe our statistical model of edit outcomes and briefly discuss how to efficiently learn a model from data.
+In Sections~\ref{pps:sec:wikipedia} and~\ref{pps:sec:linux}, we investigate our approach in the context of Wikipedia and of the Linux kernel, respectively.
+Finally, we conclude in Section~\ref{pps:sec:conclusion}.

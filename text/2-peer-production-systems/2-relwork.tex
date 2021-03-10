@@ -1,5 +1,6 @@
+%! TEX root = ../thesis.tex
 \section{Related Work}
-\label{sec:relwork}
+\label{pps:sec:relwork}
 
 With the growing size and impact of online peer-production systems, the task of assessing contribution quality has been extensively studied.
 We review various approaches to the problem of quantifying and predicting the quality of user contributions and contrast them to our approach.
@@ -24,20 +25,20 @@ Their model significantly outperforms a baseline that only uses features of the 
 Other methods use support vector machines \citep{bronner2012user}, random forests \citep{bronner2012user, javanmardi2011vandalism} or binary logistic regression \citep{potthast2008automatic}, with varying levels of success.
 In some cases, content-based features are refined using natural-language processing, leading to substantial performance improvements.
 However, these improvements are made to the detriment of general applicability.
-For example, competitive natural language processing tools have yet to be developed for the Turkish language (we investigate the Turkish Wikipedia in Section~\ref{sec:wikipedia}).
+For example, competitive natural language processing tools have yet to be developed for the Turkish language (we investigate the Turkish Wikipedia in Section~\ref{pps:sec:wikipedia}).
 In contrast to these methods, our approach is general and broadly applicable.
 Furthermore, the use of black-box classifiers can hinder the interpretability of predictions, whereas we propose a statistical model whose parameters are straightforward to interpret.
 
 \paragraph{Truth Inference}
 In crowdsourcing, a problem related to ours consists of \emph{jointly} estimating
 \begin{enuminline}
-\item model parameters (such as user skills or item difficulties) that are predictive of contribution quality, and
-\item the quality of each contribution,
+	\item model parameters (such as user skills or item difficulties) that are predictive of contribution quality, and
+	\item the quality of each contribution,
 \end{enuminline}
 without ground truth \citep{dawid1979maximum}.
 Our problem is therefore easier, as we assume access to ground-truth information about the outcome (quality) of past edits.
 Nevertheless, some methods developed in the crowdsourcing context \citep{whitehill2009whose, welinder2010multidimensional, zhou2012learning} provide models that can be applied to our setting as well.
-In Sections~\ref{sec:wikipedia} and~\ref{sec:linux}, we compare our models to GLAD \citep{whitehill2009whose}.
+In Sections~\ref{pps:sec:wikipedia} and~\ref{pps:sec:linux}, we compare our models to GLAD \citep{whitehill2009whose}.
 % \citep{rash} our basic model but used to infer labels
 % \citep{dawid} seminal work, inferring error-rate (skill) for practician and symptoms
 % \citep{zhou} generalize dawid and rash
@@ -50,7 +51,7 @@ In Sections~\ref{sec:wikipedia} and~\ref{sec:linux}, we compare our models to GL
 %\citet{rad2012identifying} compare different algorithms for quantifying the controversy surrounding an article.
 %\citet{yasseri2014most} look at the patterns of controversial articles across languages.
 %Both papers develop ad-hoc measures of controversy.
-%When applied to Wikipedia, our model is also able to identify controversial articles, as a by-product of learning a per-article parameter that is predictive of edit outcomes (c.f. Section~\ref{sec:wikipedia}).
+%When applied to Wikipedia, our model is also able to identify controversial articles, as a by-product of learning a per-article parameter that is predictive of edit outcomes (c.f. Section~\ref{pps:sec:wikipedia}).
 
 \paragraph{Pairwise Comparison Models}
 Our approach draws inspiration from probabilistic models of pairwise comparisons.
