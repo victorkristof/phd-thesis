@@ -3,18 +3,18 @@
 \label{pps:sec:intro}
 
 Over the last two decades, the number and scale of online peer-production systems has become truly massive, driven by better information networks and advances in collaborative software.
-At the time of writing, \num{128643} editors contribute regularly to \num{5}+ million articles of the English Wikipedia \citep{wikipedia2017wikipedians} and over \num{15600} developers have authored code for the Linux kernel \citep{corbet2017linux}.
-On GitHub, \num{24} million users collaborate on \num{25.3} million active software repositories \citep{github2017octoverse}.
+At the time of writing, \num{128643} editors contribute regularly to \num{5}+ million articles of the English Wikipedia~\citep{wikipedia2017wikipedians} and over \num{15600} developers have authored code for the Linux kernel~\citep{corbet2017linux}.
+On GitHub, \num{24} million users collaborate on \num{25.3} million active software repositories~\citep{github2017octoverse}.
 
 In order to ensure that such projects advance towards their goals, it is necessary to identify whether edits made by users are beneficial.
 As the number of users and components of the project grows, this task becomes increasingly challenging.
 In response, two types of solutions are proposed.
-On the one hand, some advocate the use of \emph{user reputation systems} \citep{resnick2000reputation, adler2007content}.
-These systems are general, their predictions are easy to interpret and can be made resistant to manipulations \citep{dealfaro2013content}.
-On the other hand, a number of highly specialized methods are proposed to automatically predict the quality of edits in particular peer-production systems \citep{druck2008learning, wikimedia2015artificial}.
+On the one hand, some advocate the use of \emph{user reputation systems}~\citep{resnick2000reputation, adler2007content}.
+These systems are general, their predictions are easy to interpret and can be made resistant to manipulations~\citep{dealfaro2013content}.
+On the other hand, a number of highly specialized methods are proposed to automatically predict the quality of edits in particular peer-production systems~\citep{druck2008learning, wikimedia2015artificial}.
 %For example, Wikipedia has developed a service which predicts whether an edit will be damaging by analyzing \num{80}+ content-based and system-based features of the user, the article and the edit itself, such as:
-%the number of bad words introduced by the edit, the time since the user's registration and the length of the article \citep{wikimedia2015artificial}.
-These methods can attain excellent predictive performance \citep{heindorf2016vandalism} and usually significantly outperform predictors that are based on user reputation alone \citep{druck2008learning}, but they are tailored to a particular peer-production system, use domain-specific features and rely on models that are difficult to interpret.
+%the number of bad words introduced by the edit, the time since the user's registration and the length of the article~\citep{wikimedia2015artificial}.
+These methods can attain excellent predictive performance~\citep{heindorf2016vandalism} and usually significantly outperform predictors that are based on user reputation alone~\citep{druck2008learning}, but they are tailored to a particular peer-production system, use domain-specific features and rely on models that are difficult to interpret.
 
 In this work, we set out to explore another point in the solution space.
 We aim to keep the generality and simplicity of user reputation systems, while reaching the predictive accuracy of highly specialized methods.
@@ -25,11 +25,11 @@ We formalize the notion of collaborative project as follows.
 $N$ users can propose edits on $M$ distinct items (components of the project, such as articles on Wikipedia or a software's modules), and we assume that there is a process for validating edits (either immediately or over time).
 We observe triplets $(u, i, q)$ that describe a user $u \in \{1, \ldots, N\}$ editing an item $i \in \{1, \ldots, M\}$ and leading to outcome $q \in \{0, 1\}$;
 the outcome $q = 0$ represents a rejected edit, whereas $q = 1$ represents an accepted, beneficial edit.
-Given a dataset of such observations, we seek to learn a model of the probability $p_{ui}$ that an edit made by user $u$ on item $i$ is accepted.
+Given a dataset of such observations, we seek to learn a model of the probability $\Prob{u \succ i}$ that an edit made by user $u$ on item $i$ is accepted.
 This model can then be used to help moderators and project maintainers prioritize their efforts once new edits appear:
 For example, edits that are unlikely to survive could be sent out for review immediately.
 
-Our approach borrows from probabilistic models of pairwise comparisons \citep{zermelo1928berechnung, rasch1960probabilistic}.
+Our approach borrows from probabilistic models of pairwise comparisons~\citep{zermelo1928berechnung, rasch1960probabilistic}.
 These models learn a real-valued score for each object (user or item) such that the difference between two objects' scores is predictive of comparison outcomes.
 We take a similar perspective and view each edit in a collaborative project as a game between the user who tries to effect change and the item that resists change\footnote{Obviously, items do not really ``resist'' by themselves. Instead, this notion should be taken as a proxy for the combined action of other users (e.g., project maintainers) who can accept or reject an edit depending, among others, on standards of quality.}.
 Similarly to pairwise-comparison models, our approach learns a real-valued score for each user and each item.

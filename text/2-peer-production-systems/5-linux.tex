@@ -8,9 +8,9 @@ In contrast to Wikipedia, most contributors to the Linux kernel are highly skill
 \subsection{Background \& Dataset}
 
 The Linux kernel has fundamental impact on technology as a whole.
-In fact, the Linux operating system runs 90\% of the cloud workload and 82\% of the smartphones \citep{corbet2017linux}.
+In fact, the Linux operating system runs 90\% of the cloud workload and 82\% of the smartphones~\citep{corbet2017linux}.
 To collectively improve the source code, developers submit bug fixes or new features in the form of a \emph{patch} to collaborative repositories.
-Review and integration time depend on the project's structure, ranging from a few hours or days for Apache Server \citep{rigby2008open} to a couple of months for the Linux kernel \citep{jiang2013will}.
+Review and integration time depend on the project's structure, ranging from a few hours or days for Apache Server~\citep{rigby2008open} to a couple of months for the Linux kernel~\citep{jiang2013will}.
 In particular for the Linux kernel, developers submit patches to subsystem mailing lists, where they undergo several rounds of reviews.
 After suggestions are implemented and if the code is approved, the patch can be committed to the subsystem maintainer's software repository.
 Integration conflicts are spotted at this stage by other developers monitoring the maintainer's repository and any issues must be fixed by the submitter.
@@ -18,8 +18,8 @@ If the maintainer is satisfied with the patch, she commits it to Linus Torvalds'
 
 \subsubsection{Dataset Preprocessing}
 
-We use a dataset collected by \citet{jiang2013will} which spans Linux development activity between 2005 and 2012.
-It consists of \num{670 533} patches described using \num{62} features derived from e-mails, commits to software repositories, the developers' activity and the content of the patches themselves.
+We use a dataset collected by~\citet{jiang2013will} which spans Linux development activity between 2005 and 2012.
+It consists of \num{670533} patches described using \num{62} features derived from e-mails, commits to software repositories, the developers' activity and the content of the patches themselves.
 \citeauthor{jiang2013will} scraped patches from the various mailing lists and matched them with commits in the main repository.
 In total, they managed to trace back 75\% of the commits that appear in Linus Torvalds' repository to a patch submitted to a mailing list.
 A patch is labeled as \emph{accepted} ($q = 1$) if it eventually appears in a release of the Linux kernel, and \emph{rejected} ($q = 0$) otherwise.
@@ -45,7 +45,8 @@ Finally, as highlighted by the dotted, blue square, subsystems number three to s
 In fact, these four subsystems (\texttt{include/linux}, \texttt{arch/x86}, \texttt{kernel} and \texttt{mm}) are core subsystems of the Linux kernel.
 
 \begin{figure}
-	\includegraphics{pps-correlation-matrix}
+	\centering
+	\includegraphics[width=\linewidth/2]{pps-correlation-matrix}
 	\caption{Correlation matrix $ \bm{R} $ between developers ordered according to the subsystem they contribute to the most. The blocks on the diagonal correspond to subsystems.
 		Core subsystems form a strong cluster (blue square).}
 	\label{pps:fig:linux_correlation}
@@ -58,7 +59,7 @@ Similarly to Section~\ref{pps:sec:wikipedia}, we use \interank{basic} and \inter
 
 \subsubsection{Competing Approaches}
 Three baselines that we consider---\emph{average}, \emph{user-only} and \emph{GLAD}---are identical to those described in Section~\ref{pps:sec:wikicompeting}.
-In addition, we also compare our model to a random forest classifier trained on domain-specific features similar to the one used by \citet{jiang2013will}.
+In addition, we also compare our model to a random forest classifier trained on domain-specific features similar to the one used by~\citet{jiang2013will}.
 In total, this classifier has access to 21 features for each patch.
 Features include information about the developer's experience up to the time of submission (e.g., number of accepted commits, number of patches sent), the e-mail thread (e.g., number of developers in copy of the e-mail, size of e-mail, number of e-mails in thread until the patch) and the patch itself (e.g., number of lines changed, number of files changed).
 We optimize the hyperparameters of the random forest using a grid-search.
@@ -71,6 +72,7 @@ Table~\ref{pps:tab:linux_results} displays the average log-likelihood and area u
 In terms of AUPRC, it outperforms the random forest classifier by 4.4\%, GLAD by 5\%, and the \emph{user-only} baseline by 7.3\%.
 
 \begin{table}
+	\centering
 	\caption{Predictive performance on the \emph{accepted patch} classification task for the Linux kernel.
 		The best performance is highlighted in bold.}
 	\label{pps:tab:linux_results}
@@ -96,7 +98,8 @@ In the high-recall regime, the random forest attains a marginally better precisi
 The \emph{user-only} and GLAD baselines perform worse than all non-trivial models.
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{pps-linux-pr}
+	\centering
+	\includegraphics[width=\linewidth*3/4]{pps-linux-pr}
 	\caption{Precision-recall curves on the bad edit classification task for the Linux kernel. \textsc{interank} (solid orange and red) outperforms the user-only baseline (dotted green), the random forest classifier (dashed blue), and GLAD (dash-dotted purple).}
 	\label{pps:fig:linux_results}
 \end{figure}
@@ -113,6 +116,7 @@ On the other hand, the subsystems $i$ with smallest $d_i$ are \textit{peripheral
 These components can arguably tolerate a higher rate of bugs, and hence they evolve more frequently.
 
 \begin{table}
+	\centering
 	\caption{Top-five and bottom-five subsystems according to their difficulty $d_i$.}
 	\label{pps:tab:linux_subsystems}
 	\begin{tabular}{llrrr}
@@ -139,7 +143,7 @@ We approximate the number of commits to a subsystem as the number of patches sub
 The first quartile of subsystems according to their increasing difficulty, \textit{i.e.}, the least difficult subsystems, has an average churn of \num{687}.
 The third quartile, \textit{i.e.}, the most difficult subsystems, has an average churn of \num{833}.
 We verify hence that higher churn correlates with difficult subsystems.
-This corroborates the results obtained by \citeauthor{jiang2013will}
+This corroborates the results obtained by~\citeauthor{jiang2013will}
 
 As shown in Figure~\ref{pps:fig:linux_results}, if false negatives are not a priority, \interank{} will yield a substantially higher precision.
 In other words, if the task at hand requires that the patches classified as accepted are actually the ones integrated in a future release, then \interank{} will yield more accurate results.
