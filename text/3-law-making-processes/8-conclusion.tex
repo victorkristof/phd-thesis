@@ -1,0 +1,24 @@
+%! TEX root = ../thesis.tex
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper, we have introduced a new dataset of legislative edits and a model of edit outcomes.
+Our dataset provides rich information on a long-term, dynamical process of interactions between parliamentarians.
+Our proposed model learns a skill parameter for MEPs who propose edits and an inertia parameter for the law proposals that resist to change.
+We have provided an interpretation of the parameters, in terms of the influence of MEPs and of the controversy of the laws.
+We have also shown that MEPs in the role of rapporteur, hence in charge of a particular dossier, have more influence than other MEPs on the committee.
+
+\paragraph{Future Work}
+First, a limitation of our approach is that our model is agnostic to the actual text of the edits.
+A cosmetic edit correcting a typo is obviously not equivalent to a more substantial change of the law.
+It is however complex to discriminate these two types of edits, as even one word can have critical legal implications (e.g., "shall" versus "should" in the example of Figure~\ref{fig:amendment}).
+We plan to investigate this aspect more deeply.
+Second, the inclusion of the rapporteur feature, and its subsequent improvement in predictive performance, opens the perspective of including additional features related to the MEPs, the edits, and the dossiers.
+This would help improve the performance of our model and better understand what contributes to the success of edits.
+Finally, our model assumes that if MEP $u$ is more influential than MEP $v$, then $ p( u \succ_i v ) > p( v \succ_i u ) $ for all dossiers $i$.
+This strong assumption is clearly not always realistic: dossiers span a vast amount of different topics, and MEPs have their own specializations and interests.
+We plan to improve our model by capturing these dependencies.
+
+% On a more applied side, we believe that it would be valuable to the general public to have easy access to our data.
+% The legislative process is a complex process, and its documents are hardly accessible to non-experts.
+% In an effort to create transparency and trust, we plan to develop an interactive platform for visualizing our dataset.

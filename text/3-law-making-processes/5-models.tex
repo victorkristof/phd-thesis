@@ -1,0 +1,78 @@
+%! TEX root = ../thesis.tex
+\section{Statistical models}
+\label{sec:models}
+
+We propose a statistical model of edit outcomes from conflicts.
+We incorporate assumptions reminiscent of the Bradley-Terry model \cite{bradley1952rank} and of the Rasch model \cite{rasch1960probabilistic}, as follows.
+We model the amending process as a "game" between (a) the MEPs themselves (similar to the Bradley-Terry model) and (b) the MEPs and the status quo (similar to the Rasch model).
+For simplicity, let us suppose that an edit proposed by MEP $u$ is accepted on dossier $i$ over a conflicting edit proposed by MEP $v$.
+As an example, a MEP from one party might propose a modification favoring economic interests, whereas another MEP from another party proposes a modification at the same position in the proposal favoring social interests.
+We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, i.e., the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
+\begin{align}
+	\label{eq:basemodel}
+	p( u \succ_i v )
+	 & = \frac{\exp(s_u)}{\exp(s_u) + \exp(s_v) + \exp(d_i + b)} \nonumber  \\
+	 & = \frac{1}{1 + \exp[ -( s_u - s_v ) ] + \exp[ -( s_u - d_i ) + b ]},
+\end{align}
+where $ s_u, s_v \in \mathbf{R} $ are the \textit{skills} of MEPs $u$ and $v$, $ d_i \in \mathbf{R} $ is the \textit{inertia} of dossier $i$, and $ b \in \mathbf{R} $ is a global bias parameter.
+The first exponential in the denominator of \eqref{eq:basemodel} encodes the MEP-MEP interaction.
+The second exponential encodes the MEP-dossier interaction.
+If an edit proposed by MEP $u$ does not conflict with any other edits, the MEP-MEP term vanishes, leaving only the MEP-dossier term.
+
+The parameters in this model enable interpretation.
+The skill $s_u$ quantifies the ability of MEP $u$ to pass an edit representing their views.
+We interpret a high skill as a high \textit{influence}.
+The inertia $d_i$ quantifies the resistance to change of dossier~$i$.
+This resistance is not due to the dossier resisting \textit{per se} but rather to the effect of other MEPs voting the edits or proposing conflicting edits.
+In this sense, we interpret a high inertia as a sign of possible high \textit{controversy}.
+The general bias term $b$ tunes the importance that the model gives to the MEP-MEP term relative to the MEP-dossier term.
+We conduct an in-depth analysis of the parameters in Section~\ref{sec:results}.
+
+\paragraph{Multiple Authors and Multiple Conflicts}
+As explained in Section~\ref{sec:data} and Section~\ref{sec:collconf}, one or more MEPs can propose an edit, and an edit can be in conflict with one or more other edits.
+It is easy to generalize~\eqref{eq:basemodel} to multiple authors and multiple conflicts.
+To model multiple authors, we simply sum the skills of each author of an edit.
+To model multiple conflicts, we observe that each conflict generates a new MEP-MEP interaction term.
+Call \mbox{$\mathcal{C} = \{ a, b, \dots \}$} the set of conflicting edits proposed by authors $ \mathcal{A}_a, \mathcal{A}_b, \dots $.
+Note that $ \mathcal{C} $ forms a clique in the edit graph $ G $ of Section~\ref{sec:collconf}.
+The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ is given by
+\begin{equation}
+	\label{eq:multiple}
+	p\left( a \succ_i \mathcal{C} - \{ a\} \right) =
+	\frac{\exp(s_a) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c) + \exp(d_i + b) },
+\end{equation}
+where $s_a = \sum_{u \in \mathcal{A}_a} s_u$ is the cumulated skill of all authors of edit~$a$.
+We refer to this model as the \wow\ model.
+The probability that all edits are rejected, i.e., the status quo of dossier~$i$ wins, is given by
+\begin{equation*}
+	p\left(i \succ \mathcal{C} \right)
+	= 1 - \sum_{a \in \mathcal{C} } p( a \succ_i \mathcal{C} - \{ a \})
+	= \frac{\exp(d_i + b) }{ \sum\limits_{a \in \mathcal{C} } \exp(s_a) + \exp(d_i + b) }.
+\end{equation*}
+
+
+\paragraph{Rapporteur Feature}
+We focus on the role of \textit{rapporteur}, explained in Section~\ref{sec:background}.
+A rapporteur is a MEP with a special role in shaping a dossier, which plausibly confers additional influence compared to other MEPs.
+In order to validate this hypothesis, we add a parameter~$r \in \mathbf{R}$ to the skill~$s_u$ of a MEP~$u$ if they are the rapporteur for the dossier~$i$, i.e., we replace $s_a$ in~\eqref{eq:multiple} by
+\begin{equation*}
+	s_a = \sum_{u \in \mathcal{A}_a} s_u + r\vec{1}_{\{u \text{ is rapporteur for } i\}}.
+\end{equation*}
+We refer to this model as the \wowr\ model.
+
+\paragraph{Learning the Model}
+Each observation $k$ is a triplet $ ( \mathcal{C}_k, i_k, \ell_k )$ of (a) a set of conflicting edits $ \mathcal{C}_k $ with $ | \mathcal{C}_k | = c_k > 0 $ , (b) a dossier $ i_k $ on which the edits are proposed, and (c) a label $ \ell_k \in \mathcal{C}_k \cup \{ i_k \} $ indicating which of the $c_k$ edits or the status quo is accepted.
+Given a dataset of $K$ independent triplets \mbox{$\mathcal{D} = \{ ( \mathcal{C}_k, i_k, \ell_k )~\vert~k = 1, ..., K \}$}, we learn the parameters by maximizing their log-likelihood under $ \mathcal{D} $.
+That is, by collecting all the parameters into a single vector $ \vec{\theta} $, we seek to minimize the negative log-likelihood
+\begin{align}
+	\label{eq:log_likelihood}
+	- \ell(\vec{\theta} ; \mathcal{D})
+	= \sum_{k = 1}^K  \sum_{a \in \mathcal{C}_k} \Biggl[ & \vec{1}_{\{\ell_k = a\}} \log p\left(a \succ_{i_k} \mathcal{C}_k - \{ a \} \right)  \nonumber \\
+	                                                     & + \vec{1}_{\{\ell_k = i_k\}} \log p\left(i_k \succ \mathcal{C}_k \right) \Biggr],
+\end{align}
+where $ p\left(a \succ_{i_k} \mathcal{C}_k - \{ a \} \right) $ and $ p\left(i_k \succ \mathcal{C}_k \right) $ depend on~$\vec{\theta}$.
+In order to avoid overfitting, we add $L_2$-regularization to the negative log-likelihood.
+We pre-process our dataset by keeping only the dossiers for which more than 10 edits were proposed and by keeping only the MEPs who proposed more than 10 edits.
+Hence, we obtain a dataset of $K=125733$ data points for EP7 and $K=140763$ data points for EP8.
+We split them into 70\% for training and validation, and we keep 30\% as a test set.
+The log-likelihood~\eqref{eq:log_likelihood} is convex, and we find optimal parameters by using a convex optimizer, such as L-BFGS-B \cite{byrd1995limited}.

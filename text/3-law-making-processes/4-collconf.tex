@@ -1,0 +1,42 @@
+%! TEX root = ../thesis.tex
+\section{Edit Graph}
+\label{sec:collconf}
+
+We describe the dynamics of the legislative process in terms of the conflicts between edits.
+%We take a graph theoretical approach to explain our model in Section~\ref{sec:models}.
+For each dossier, we construct the edit graph $ G = (V_G, E_G) $, such that each node $ v \in V_G $ is an edit and such that there is an undirected edge $ (u, v) \in E_G $ if edits $u$ and $v$ overlap.
+A component of size at least~2 in $G$ is therefore a group of overlapping edits. % removed ``connected'' -> it's part of the definition of ``component'', so unnecessary
+An isolated node corresponds to an edit that does not overlap with any other edit.
+
+In Figure~\ref{fig:edit_graph}, we show the edit graphs of three regulations of EP7.
+We depict each node with a green dot if the edit is accepted, and with a red cross if the edit is rejected.
+The "transportable pressure equipment" (left), a very specific legislation, exhibits a graph with 96 nodes, among which 97\% are accepted.
+The graph contains only isolated nodes, meaning that no edits overlap: all its components are size 1.
+The "European capitals of culture" (center), which can affect some cities of member states, exhibits a graph with 58 nodes, among which 48\% are accepted.
+The graph contains 16 cliques and the average component size is 1.49.
+The GDPR (right), with high stakes for both businesses and consumers, exhibits a graph with 3154 nodes, among which only 9\% are accepted.
+The graph contains 1298 cliques, meaning that many edits are conflicting, and has an average component size of 3.44.
+
+Conflicts are inherent in the ordinary legislative procedure defined in Section~\ref{sec:background}, as every proposed edit reflects a disagreement with the initial law proposal.
+A first class of conflicts occur between the proposal and each edit proposed by MEPs.
+These conflicts appear as components of any size in $G$.
+Hence, every isolated node and every clique in $G$ are such conflicts.
+We call them "conflicts with the status quo", as they are in disagreement with the proposal.
+For example, each edit of Amendments 108 and 5 in Figure~\ref{fig:amendment} is such a conflict.
+In Figure~\ref{fig:edit_graph} (left), each green node is an edit accepted over the status quo, and each red node is an edit rejected over the status quo.
+Similarly, in Figure~\ref{fig:edit_graph} (center), the cliques with all red nodes are rejected over the status quo.
+
+Another class of conflicts occur between two or more edits proposed by MEPs.
+If several MEPs propose different edits on the same part of a text, they compete with each other for the acceptance of their suggestions.
+In this case, the edits conflict with the status quo \textit{and} with edits proposed by other MEPs.
+These conflicts appear as a clique of size at least~2 in $G$, as there is an edge between overlapping edits.
+For example, in Figure~\ref{fig:amendment}, the first edit in Amendment 108 and the first edit in Amendment 5 form such a conflict.
+It corresponds to a clique of size~2.
+In Figure~\ref{fig:edit_graph} (left), there are no such conflicts.
+As no edge links any two nodes, all conflicts are only with the status quo.
+In Figure~\ref{fig:edit_graph} (center), however, the cliques with one green node and one or more red nodes are conflicts between several edits, where one edit is accepted over the others and over the status quo.
+
+In $G$, two green nodes cannot appear at both ends of the same edge, as only one edit can be accepted among those that are conflicting.
+% Hence, any clique can have at most one green node, and green nodes can only appear as an independent set on the components.
+Hence, green nodes can only appear as an independent set on the components.
+Two red nodes, however, can appear at both ends of the same edge, as they can both be rejected: this is the case with the first edit in Amendments 108 and 5.

@@ -1,0 +1,33 @@
+%! TEX root = ../thesis.tex
+\section{Introduction}
+\label{sec:intro}
+
+The past decade has seen the emergence of several open-government initiatives, such as the one proposed by the former US president, Barack Obama, on the first day of his presidency \cite{open2009barack}.
+Similar efforts followed in France, Belgium, Sweden, the United Kingdom, Tunisia, and the European Union.
+Open-government data published on the Web are of great interest to citizens, companies, sub- and supra-government entities, and researchers.
+These initiatives increase the transparency and trust associated with government, and enable novel analyses to be carried out about their processes.
+
+We are specifically interested in the process by which the laws of a jurisdiction are maintained and in how they evolve over time.
+Not surprisingly, the dynamics of the legislative process is complex, given the confluence of many stakeholders, topics, special interests, and lobbying groups.
+Until open-government was introduced, the work of parliaments had not been systematically accessible to the general public, and internal documents -- when they existed -- were difficult to find.
+We propose (i) a new dataset of legislative edits obtained via rich, openly accessible data from the European Parliament, and (ii) a methodology to better understand the dynamics of legislative processes.
+Using edits proposed by parliamentarians on legislative texts, we study the competitive dynamics of collaborations and conflicts between parliamentarians.
+
+We curate our dataset from the European Parliament's online document repository.
+It is composed of edits, proposed by parliamentarians, on laws under consideration by the Parliament.
+Each data point consists of edit metadata, such as the nationality and the political affiliation of its author(s), the type of edit, its length, and which law it is modifying.
+The dataset contains \numprint{449493} edits proposed by \numprint{1214} parliamentarians on \numprint{1889} dossiers over ten years (two legislature periods).
+In Section~\ref{sec:background}, we set the framework by giving some background on the European legislative process.
+In Section~\ref{sec:data}, we describe our dataset in detail.
+In Section~\ref{sec:collconf}, we use our dataset to describe the evolution of a law via a graph-theoretical viewpoint.
+
+Our model focuses on the interplay of collaboration and competition between parliamentarians as they modify laws.
+They can collaborate on a proposed modification of a law by jointly submitting an {\em edit} for consideration.
+An important feature of our model accounts for the way an edit benefits from the support of multiple parliamentarians.
+We posit a measure of {\em strength} for each parliamentarian, and an edit inherits the strengths of its supporters.
+There are two sources of competition in the process.
+First, a proposed edit competes with the status quo, because the edit can be rejected in favor of not changing the existing state of a law.
+Our model incorporates this by endowing each law with a measure of {\em inertia} that represents the level of controversy of a law.
+Second, proposed edits of a law are frequently mutually exclusive, because they overlap and are incompatible.
+These edits then compete against each other, as well as against the status quo.
+This parsimonious set of assumptions underlies our model, formulated in Section~\ref{sec:models}; and we will show, in Section~\ref{sec:results}, that it is sufficient to capture the salient features of the law-making dynamics.

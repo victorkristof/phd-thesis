@@ -1,0 +1,65 @@
+%! TEX root = ../thesis.tex
+\section{Results}
+\label{sec:results}
+
+\begin{table}
+	\caption{
+		Average cross entropy of a baseline and our model.
+	}
+	\label{tab:results}
+	\begin{tabular}{lrrr}
+		\toprule
+		Legislature & Random & \wow\  & \wowr          \\
+		\midrule
+		EP7         & 0.886  & 0.714  & \textbf{0.690} \\
+		EP8         & 0.942  & 0.748  & \textbf{0.726} \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+We use the average cross-entropy loss to measure the predictive power of our probabilistic models.
+Let $ ( \mathcal{C}_k, i_k, \ell_k )$ be an observation.
+We compute $ -\log p(\ell_k \succ_{i_k} \mathcal{C}_k - \{\ell_k\} ) $, and we report the average value for all points in our test set.
+A lower value of the loss means better calibrated probabilities.
+We compare our models against a random predictor that randomly chooses one of the edits or the status quo as the winner.
+We show in Table~\ref{tab:results} the overall performance of our model over EP7 and EP8.
+
+The \wow\ model outperforms the random predictor, and including the rapporteur feature~$r$ in the \wowr\ model provides a greater decrease in loss.
+The value of $r$ is positive for both EP7 ($ r=1.18 $) and EP8 ($ r=1.31 $).
+This "rapporteur advantage" complements the findings of \cite{costello2010policy}, conducted by interviewing key informants over EP5 (1999--2004) and EP6 (2004--2009).
+They show that the rapporteur, with their particular role, has some influence on the legislative process, although constrained.
+The value of $r$ is nonetheless higher in EP8 than in EP7 .
+This suggests that the rapporteur's influence increased in EP8.
+
+\begin{table*}
+	\caption{Top-3 and bottom-3 dossiers in EP8 according to their inertia parameters $d_i$.}
+	\label{tab:inertia_params}
+	\begin{tabular}{rllrrrr}
+		\toprule
+		$d_i$  & Type    & Title                                                         & \# nodes & \# cliques & avg. clique size & \% accepted \\
+		\midrule
+
+		3.304  & report  & Screening of foreign direct investments                       & 1040     & 272        & 3.1              & 2.6         \\
+		3.204  & report  & Copyright in the Digital Single Market                        & 2657     & 577        & 4.3              & 2.6         \\
+		3.106  & report  & Energy efficiency labelling                                   & 1292     & 319        & 3.4              & 6.0         \\
+
+		\midrule
+
+		-2.611 & opinion & Financial support for customs control equipment               & 60       & 1          & 2.0              & 90.0        \\
+		-2.644 & opinion & Establishing the supervisory authorities on financial markets & 69       & 0          & 0.0              & 98.6        \\
+		-2.849 & opinion & Unfair trading practices in the food supply chain             & 63       & 6          & 2.0              & 84.1        \\
+
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+\paragraph{Influence and Inertia}
+Table~\ref{tab:inertia_params} provides a list of the three dossiers in EP8 with the highest inertia parameter~$d_i$ and the three dossiers with the lowest~$ d_i $.
+The values of $d_i$ correlate well with the number of nodes, the number of cliques, the average size of cliques, and the edit acceptance rate.
+The top-three dossiers include laws with high stakes:
+The "Screening of foreign direct investments" sets a framework to better equip the EU for investments from non-EU countries.
+It has crucial implications for companies, workers, governments, and citizens.
+The infamous "Copyright in the Digital Single Market", considered to be a threat to freedom of expression on the Web by its opponents, sparked public protests in several cities.
+The reporting committee publicized that "MEPs have rarely or never been subject to a similar degree of lobbying before"\cite{europarl2019questions}.
+Finally, the "Energy efficiency labelling" updated famous labels for electrical appliances, which guide consumers in their purchases.
+The bottom-three dossiers are all opinions, which are intrinsically less important than reports, as explained in Section~\ref{sec:background}.
