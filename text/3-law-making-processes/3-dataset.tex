@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Dataset}
-\label{sec:data}
+\label{lmp:sec:data}
 
 \subsection{Amendments \& Edits}
 
@@ -8,7 +8,7 @@ We collected a dataset of \numprint{237177} legislative amendments from the Euro
 The dataset spans the 7\th legislature~(referred to as EP7), from 2009 to 2014, and the 8\th legislature~(EP8), from 2014 to 2019.
 MEPs come from 28 different countries, and they belong to one of the 8 (EP7) or 9 (EP8) political groups.
 An amendment consists of (i) one or several authors, (ii) the original text by the European Commission, and (iii) the amended text by the author(s).
-We show an example of two amendments in their raw format in Figure~\ref{fig:amendment}.
+We show an example of two amendments in their raw format in Figure~\ref{lmp:fig:amendment}.
 The two amendments are proposed on Article 13 of a proposal about copyrights on the Internet.
 Amendment 802 is proposed by three MEPs and consists of three edits:
 (a) Inserting ``copyright'' (in green), (b) replacing ``by'' by ``uploaded by users of'' (in yellow), and (c) deleting the end of the title after ``providers'' (in red).
@@ -19,10 +19,10 @@ Edit (c) of the first amendment is in conflict with Edit (d), and it is also in 
 All these edits are also implicitly in conflict with the original text proposed by the European Commission.
 Out of these five edits, only Edit (d) was accepted.
 All other edits were rejected, \textit{i.e.}, the status quo was voted and the text proposed by the Commission was maintained.
-% We summarize our dataset in Table~\ref{tab:dataset} and we refer to it as the \warofwords\ dataset.
+% We summarize our dataset in Table~\ref{lmp:tab:dataset} and we refer to it as the \warofwords\ dataset.
 % In the next paragraphs, we describe the data that we extract from amendments and that we use for the subsequent analysis.
 % We extract \textit{edits} and \textit{conflicts}, and we explain the labelization process.
-% Technical details about data processing are given in Appendix~\ref{sec:dataproc}.
+% Technical details about data processing are given in Appendix~\ref{lmp:sec:dataproc}.
 
 \begin{figure}
   \centering
@@ -46,7 +46,7 @@ All other edits were rejected, \textit{i.e.}, the status quo was voted and the t
 		The last edit of Amendment 802 (deleting the end of the title) conflicts with both edits of Amendment 803.
 		Only the first edit of Amendment 803 (replacing ``large'' by ``significant'') was accepted, and all other edits were rejected.
 	}
-	\label{fig:amendment}
+	\label{lmp:fig:amendment}
 \end{figure}
 
 \paragraph{Edits}
@@ -79,7 +79,7 @@ Otherwise, we label them as \emph{rejected}.
 Out of the proposed edits, 37.7\% are accepted for EP7 and 25.7\% for EP8.
 
 \paragraph{Timestamps}
-The timeline of the legislative process described in Section~\ref{sec:background} varies from one dossier to another.
+The timeline of the legislative process described in Section~\ref{lmp:sec:background} varies from one dossier to another.
 Depending on the dossier, MEPs can propose edits during a window of one to six months, after which all the edits related to that dossier are published together.
 As a result, the actual, detailed chronology of the edits is unfortunately hidden, and we do not have access to the precise time the edits are proposed and when they are voted.
 Furthermore, there is a delay between the time an edit is proposed and the time it is voted: recent edits might be voted \emph{before} older ones.
@@ -87,18 +87,18 @@ The timestamps associated with each edit are, therefore, noisy.
 
 %This departs from reality, because we do not have access to the precise time the edits are proposed and when they are voted.
 %We only know when a proposal has reached a reporting committee (respectively, an opinion committee), and when the report (respectively, the opinion) is transferred to the Parliament (respectively, the reporting committee).
-%In Section~\ref{sec:cold-start}, we will explore ways of emulating an amending process that is closer to the actual process.
-%As shown in Section~\ref{sec:results}, these simplistic assumptions enable us, nonetheless, to take advantage of the available data to gain insights into the EU legislative process.
+%In Section~\ref{lmp:sec:cold-start}, we will explore ways of emulating an amending process that is closer to the actual process.
+%As shown in Section~\ref{lmp:sec:results}, these simplistic assumptions enable us, nonetheless, to take advantage of the available data to gain insights into the EU legislative process.
 
 
 In total, we collect \numprint{449493} edits from \numprint{237177} amendments in the European Parliament during the 7\th and the 8\th legislature periods\footnote{We do not collect data from EP9 (2019 -- 2023), as the amount of published data is too small at this time: The legislature period started in Fall 2019 and the Parliament's activities were slowed down due to the COVID-19 crisis in Spring 2020.} (referred to as EP7 and EP8), between 2009 and 2019 (each period lasts 5 years).
 After gathering the edits according to the conflicts, we obtain \numprint{267451} conflicts for both EP7 and EP8, covering 1889 dossiers.
-We summarize this dataset in Table~\ref{tab:dataset}.
+We summarize this dataset in Table~\ref{lmp:tab:dataset}.
 
 \begin{table}
   \centering
 	\caption{Descriptive statistics of our extended dataset.}
-	\label{tab:dataset}
+	\label{lmp:tab:dataset}
 	\begin{tabular}{lrr}
 		\toprule
     & EP7 (2009--2014) &EP8 (2014--2019) \\
@@ -130,12 +130,12 @@ We determine whether an edit in a reporting committee comes from an opinion comm
 Finally, we note whether an edit comes with an optional justification.
 For each dossier, we identify its type (report or opinion) and the committee that is in charge.
 We also note if the proposal is a regulation (legally binding for all member states of the EU), a directive (sets general goals that member states can implement however they want), or a decision (binding to one member state or company only).
-We describe these explicit features in Table~\ref{tab:features}.
+We describe these explicit features in Table~\ref{lmp:tab:features}.
 
 \begin{table}
   \centering
 	\caption{List of features for MEPs and edits.}
-	\label{tab:features}
+	\label{lmp:tab:features}
 	\begin{tabular}{lll}
 		\toprule
 		Category & Feature            & Type [Values]                     \\
@@ -167,23 +167,23 @@ We describe these explicit features in Table~\ref{tab:features}.
 We further augment the dataset by collecting text features of the edit itself.
 It is reasonable to expect that certain words and phrases are predictive of the success of an edit.
 We extract the deleted words~$w_-$ from the proposal and the inserted words~$w_+$ from  the amendment.
-In Figure~\ref{fig:amendment}, for example, Edit (b) of Amendment 802 has~$w_- = \textit{``by''}$ and~$w_+ = \textit{``uploaded by users of''}$.
+In Figure~\ref{lmp:fig:amendment}, for example, Edit (b) of Amendment 802 has~$w_- = \textit{``by''}$ and~$w_+ = \textit{``uploaded by users of''}$.
 We also consider the context of an edit by extracting the original text of the whole amended article.
 For Amendment 802, the context is the portion of text labelled as \textit{``Text proposed by the Commission''}.
 Finally, we also extract the title of the law proposal; we will use it as a text feature of the dossier.
 For Amendments 802 and 803, the title is \textit{``Copyright in the Digital Single Market''}.
 We map all words to lower case, and we replace digits in the title by the letter ``D'', as there are many reference numbers that are unlikely to be useful for our task.
 
-We give some statistics of the distribution of the length of the deleted text~$w_-$, the inserted text~$w_+$, the context, and the title in Table~\ref{tab:text}.
+We give some statistics of the distribution of the length of the deleted text~$w_-$, the inserted text~$w_+$, the context, and the title in Table~\ref{lmp:tab:text}.
 We report the lower quartile~$Q_1$ and the upper quartile~$Q_3$, as well as the median.
 About half of the inserted and deleted texts are short (7 words or less), but the distribution of lengths has a long tail, as shown by the larger values of the upper quartile~$Q_3$.
 The context provides large portions of text (the median is at 42 for EP7 and 49 for EP8), which will be useful for making predictions.
-In Section~\ref{sec:models}, we describe how we incorporate the explicit features and the text features into our models.
+In Section~\ref{lmp:sec:models}, we describe how we incorporate the explicit features and the text features into our models.
 
 \begin{table}
   \centering
 	\caption{Distribution of text lengths in number of words.}
-	\label{tab:text}
+	\label{lmp:tab:text}
 	\begin{tabular}{llrrr}
 		\toprule
 		Legislature & Type            & $Q_1$ & Median & $Q_3$ \\

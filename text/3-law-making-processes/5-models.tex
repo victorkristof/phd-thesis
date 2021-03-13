@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Statistical models}
-\label{sec:models}
+\label{lmp:sec:models}
 
 
 \subsection{Problem Statement}
@@ -14,7 +14,7 @@
 We build a model that predicts the vote outcome of edits that will form the reports and the opinions.
 Formally, we take a supervised approach to solve the following prediction problem:
 Let~$\mathcal{C} = \{ a, b, \ldots \}$ be a set of conflictive edits proposed on a dossier~$i$, for which we have observed other edits.
-Note that~$\mathcal{C}$ forms a clique in the edit graph~$G$ of Section~\ref{sec:collconf}.
+Note that~$\mathcal{C}$ forms a clique in the edit graph~$G$ of Section~\ref{lmp:sec:collconf}.
 % Let~$\mathcal{A}_a$ be the set of MEPs proposing edit~$a$.
 We want to predict which of the conflictive edits in~$\mathcal{C}$ or the status quo of the proposal for dossier~$i$ will be accepted within the committee.
 This task differs from multinomial classification as the number of classes varies for each data point:
@@ -35,24 +35,24 @@ For simplicity, let us suppose that an edit proposed by MEP $u$ is accepted on d
 As an example, a MEP from one party might propose a modification favoring economic interests, whereas another MEP from another party proposes a modification at the same position in the proposal favoring social interests.
 We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, i.e., the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
 \begin{align}
-	\label{eq:basemodel}
+	\label{lmp:eq:basemodel}
   \Prob{ u \succ_i v }
 	 & = \frac{\exp(s_u)}{\exp(s_u) + \exp(s_v) + \exp(d_i + b)} \nonumber  \\
 	 & = \frac{1}{1 + \exp[ -( s_u - s_v ) ] + \exp[ -( s_u - d_i ) + b ]},
 \end{align}
 where $ s_u, s_v \in \mathbf{R} $ are the \textit{skills} of MEPs $u$ and $v$, $ d_i \in \mathbf{R} $ is the \textit{inertia} of dossier $i$, and $ b \in \mathbf{R} $ is a global bias parameter.
-The first exponential in the denominator of \eqref{eq:basemodel} encodes the MEP-MEP interaction.
+The first exponential in the denominator of~\eqref{lmp:eq:basemodel} encodes the MEP-MEP interaction.
 The second exponential encodes the MEP-dossier interaction.
 If an edit proposed by MEP $u$ does not conflict with any other edits, the MEP-MEP term vanishes, leaving only the MEP-dossier term.
 
-As explained in Section~\ref{sec:data} and Section~\ref{sec:collconf}, one or more MEPs can propose an edit, and an edit can be in conflict with one or more other edits.
-It is easy to generalize~\eqref{eq:basemodel} to multiple authors and multiple conflicts.
+As explained in Section~\ref{lmp:sec:data} and Section~\ref{lmp:sec:collconf}, one or more MEPs can propose an edit, and an edit can be in conflict with one or more other edits.
+It is easy to generalize~\eqref{lmp:eq:basemodel} to multiple authors and multiple conflicts.
 To model multiple authors, we simply sum the skills of each author of an edit.
 To model multiple conflicts, we observe that each conflict generates a new MEP-MEP interaction term.
 Call \mbox{$\mathcal{C} = \{ a, b, \dots \}$} the set of conflicting edits proposed by authors $ \mathcal{A}_a, \mathcal{A}_b, \dots $.
 The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ is given by
 \begin{equation}
-	\label{eq:multiple}
+	\label{lmp:eq:wowmodel}
 	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
 	\frac{\exp(s_a) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c) + \exp(d_i + b) },
 \end{equation}
@@ -72,35 +72,35 @@ The inertia $d_i$ quantifies the resistance to change of dossier~$i$.
 This resistance is not due to the dossier resisting \textit{per se} but rather to the effect of other MEPs voting the edits or proposing conflicting edits.
 In this sense, we interpret a high inertia as a sign of possible high \textit{controversy}.
 The general bias term $b$ tunes the importance that the model gives to the MEP-MEP term relative to the MEP-dossier term.
-We conduct an in-depth analysis of the parameters in Section~\ref{sec:results}.
+We conduct an in-depth analysis of the parameters in Section~\ref{lmp:sec:results}.
 
 
 \subsection{Enriched Models}
-\label{sec:enriched}
+\label{lmp:sec:enriched}
 
 \paragraph{Explicit Features}
 % - Introduce the model including explicit features.
 
-We extend the \wow{} model by augmenting it with explicit features of the MEPs (e.g., nationality), the edits (e.g., length of inserted text), and the dossiers (e.g., report or opinion), as described in Table~\ref{tab:features}.
-From \eqref{eq:wowmodel}, we replace the skill parameters~$s_a$ with the inner product between a feature vector~$\vec{s}_a \in \mathbf{R}^{M_E}$ of~$M_E$ features of edit~$a$ and the associated parameter vector~$\vec{w}_E \in \mathbf{R}^{M_E}$.
+We extend the \wow{} model by augmenting it with explicit features of the MEPs (e.g., nationality), the edits (e.g., length of inserted text), and the dossiers (e.g., report or opinion), as described in Table~\ref{lmp:tab:features}.
+From~\eqref{lmp:eq:wowmodel}, we replace the skill parameters~$s_a$ with the inner product between a feature vector~$\vec{s}_a \in \mathbf{R}^{M_E}$ of~$M_E$ features of edit~$a$ and the associated parameter vector~$\vec{w}_E \in \mathbf{R}^{M_E}$.
 We also replace the difficulty parameter~$d_i$ by the product of a feature vector~$\vec{d}_i \in \mathbf{R}^{M_D}$ of~$M_D$ features of dossier~$i$ and its associated parameter vector~$\vec{w}_D \in \mathbf{R}^{M_D}$.
 We then have
 \begin{equation}
-	\label{eq:wowexplicit}
+	\label{lmp:eq:wowexplicit}
 	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
 	\frac{\exp(\vec{s}_a\Tr \vec{w}_E) }{ \sum\limits_{c \in \mathcal{C} } \exp(\vec{s}_c\Tr \vec{w}_E) + \exp(\vec{d}_i \Tr \vec{w}_D + b) }.
 \end{equation}
 We refer to this model as \wow{Explicit} (or \wow{X}, for conciseness).
-In \eqref{eq:wowmodel}, the feature vector~$\vec{s}_a$ is the indicator of the authors of an edit~$a$:
+In~\eqref{lmp:eq:wowmodel}, the feature vector~$\vec{s}_a$ is the indicator of the authors of an edit~$a$:
 Its entries~$s_u$ are 1 for all~$u \in \mathcal{A}_a$ and 0 otherwise.
 Similarly, the feature vector~$\vec{d}_i$ is the indicator of dossier~$i$.
-In \eqref{eq:wowexplicit}, the feature vectors~$\vec{s}_a$ and~$\vec{d}_i$ represent features related to MEPs, edits, and dossiers derived from our dataset.
+In~\eqref{lmp:eq:wowexplicit}, the feature vectors~$\vec{s}_a$ and~$\vec{d}_i$ represent features related to MEPs, edits, and dossiers derived from our dataset.
 
 \paragraph{Latent Features}
 % - Introduce the model including latent features.
 
 Consider the simple case of an MEP~$u$ proposing an edit on dossier~$i$, and suppose that this edit conflicts with another edit, proposed by MEP~$v$.
-From \eqref{eq:wowmodel}, let~$p( u \succ_i v)$ be the probability that, for dossier~$i$, the edit proposed by MEP~$u$ is accepted over the edit proposed by MEP~$v$.
+From~\eqref{lmp:eq:wowmodel}, let~$p( u \succ_i v)$ be the probability that, for dossier~$i$, the edit proposed by MEP~$u$ is accepted over the edit proposed by MEP~$v$.
 The assumption made in the \wow{} model is strong:
 It posits that if MEP~$u$ is more influential than MEP~$v$, then, all other things being equal,~$\Prob{u \succ_i v} > \Prob{v \succ_i u}$ for all dossiers~$i$.
 This assumption is not always realistic:
@@ -109,9 +109,9 @@ For example, an MEP familiar with fisheries might not be knowledgeable about res
 
 In order to capture these dependencies, we incorporate a bi-linear term into the \wow{} model.
 We assign a vector~$\vec{x}_u \in \mathbf{R}^L$ to each MEP~$u$, and a vector~$\vec{y}_i \in \mathbf{R}^L$ to each dossier~$i$, for some dimensionality~$L > 0$.
-We then rewrite \eqref{eq:wowmodel} as
+We then rewrite~\eqref{lmp:eq:wowmodel} as
 \begin{equation}
-	\label{eq:wowlatent}
+	\label{lmp:eq:wowlatent}
 	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
 	\frac{\exp( s_a + \vec{x}_a\Tr \vec{y}_i) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c + \vec{x}_c\Tr \vec{y}_i) + \exp(d_i + b) },
 \end{equation}
@@ -130,16 +130,16 @@ Similarly,~$ \vec{y}_i$ can be interpreted as the set of skills required to edit
 
 The features described so far ignore the text content of the edit itself.
 It is reasonable to expect that the presence of certain words or phrases in the original or amended text of an edit, and in the title of the dossier, are predictive of the success of the edit.
-Hence, we incorporate text features to the \wow{} model by rewriting \eqref{eq:wowmodel} as
+Hence, we incorporate text features to the \wow{} model by rewriting~\eqref{lmp:eq:wowmodel} as
 \begin{equation}
-	\label{eq:wowtext}
+	\label{lmp:eq:wowtext}
 	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =\frac{\exp(s_a + \vec{r}_a \Tr \vec{w}_T  ) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c + \vec{r}_c\Tr \vec{w}_T) + \exp(d_i + \vec{r}_i \Tr \vec{w}_{T'} + b) },
 \end{equation}
 where~$\vec{r}_a\in \mathbf{R}^{D}$,~$\vec{r}_i \in \mathbf{R}^{D'}$  are, respectively, representations of the text of the edit~$a$ and the title of dossier~$i$, and~$\vec{w}_T  \in \mathbf{R}^{D}$, $\vec{w}_{T'}  \in \mathbf{R}^{D'}$ are, respectively, the associated parameter vectors.
 We refer to this model as the \wow{Text} model (or \wow{T}).
 
 We explore different ways of learning the representations~$\vec{r}_a$ and~$\vec{r}_i$ from (a) pre-trained word embeddings and (2) by training embeddings on our dataset.
-With pre-trained embeddings,~$\vec{r}_a$ is the concatenation of three vectors that are the representations of the deleted text, inserted text, and the context of the edit, as explained in Section~\ref{sec:dataset}.
+With pre-trained embeddings,~$\vec{r}_a$ is the concatenation of three vectors that are the representations of the deleted text, inserted text, and the context of the edit, as explained in Section~\ref{lmp:sec:dataset}.
 Each of these vectors are the averages of the pre-trained word embeddings of the words in these parts of the text, and~$\vec{r}_i$ is the average of the pre-trained embeddings of the words in the title of dossier~$i$.
 We use two sets of pre-trained embeddings trained with the word2vec algorithm~\cite{mikolov2013distributed}: (a) 300-dimensional embeddings trained on Google News~\cite{google2013word2vec} and (b) 200-dimensional Law2Vec embeddings trained on legal texts of the EU, the US, the UK, Canada, and Japan\cite{chalkidis2019deep}.
 % Note that in this case~$D'_T$ would be same as dimensionality of the pre-trained embeddings,~$D_T = 3D'_T$.
@@ -155,42 +155,42 @@ We solve the first problem by prepending tags (\texttt{<del>}, \texttt{<ins>}, a
 We solve the second problem by training the embeddings on a binary classification task of edit acceptance (based only on the text), and by using the embeddings learned on this ad-hoc task into the \wow{} models.
 We learn the embeddings for the words in the title by training a different fastText model to predict the acceptance of an edit from the title only.
 This is equivalent to predicting the probability of acceptance of the status quo for each dossier, given its title.
-For our experiments in Section~\ref{sec:results}, we use the fastText embeddings rather than pre-trained embeddings, because the former performed better on the ad-hoc binary classification task.
+For our experiments in Section~\ref{lmp:sec:results}, we use the fastText embeddings rather than pre-trained embeddings, because the former performed better on the ad-hoc binary classification task.
 % Once the embeddings have been learned using the edits in the training set,~$\vec{r}_a$ and~$\vec{r}_i$ are computed as the average of the embeddings of the words and bigrams in the edit and the title, respectively.
-% They are then used as features while training the full model as described in Section-\ref{sec:training}, where we use the same training set.
+% They are then used as features while training the full model as described in Section-\ref{lmp:sec:training}, where we use the same training set.
 % % Thus in this case, the dimensionality of~$\vec{r}_a$,~$\vec{r}_i$ and the word and bigram embeddings are the same ($D_T$).
 
 \paragraph{Hybrid Models}
 
 We combine \wow{Explicit}, \wow{Latent}, and \wow{Text} together to obtain hybrid models with different components.
-This helps us understand the contribution of each type of features to the performance, in Section~\ref{sec:results}.
-We summarize all the possible combinations in Table~\ref{tab:models}, and we sort them by increasing levels of complexity.
+This helps us understand the contribution of each type of features to the performance, in Section~\ref{lmp:sec:results}.
+We summarize all the possible combinations in Table~\ref{lmp:tab:models}, and we sort them by increasing levels of complexity.
 The \wow{} model has no features at all and will serve as a baseline.
 The \wow{XLT} combines explicit, latent, and text features together, and it has the highest complexity.
 
 \begin{table}
   \centering
 	\caption{Variations of our model by combination of features (explicit, latent, and text features).}
-	\label{tab:models}
+	\label{lmp:tab:models}
 	\begin{tabular}{llccc}
 		\toprule
 		Model          & Equation                                                           & Explicit   & Latent     & Text       \\
 		\midrule
-    \wow{}           & \eqref{eq:wowmodel}                                                & --         & --         & --         \\
-		\wow{Explicit} & \eqref{eq:wowexplicit}                                             & \checkmark & --         & --         \\
-		\wow{Latent}   & \eqref{eq:wowlatent}                                               & --         & \checkmark & --         \\
-		\wow{Text}     & \eqref{eq:wowtext}                                                 & --         & --         & \checkmark \\
-		\wow{XL}       & \eqref{eq:wowexplicit} \& \eqref{eq:wowlatent}                     & \checkmark & \checkmark & --         \\
-		\wow{XT}       & \eqref{eq:wowexplicit} \& \eqref{eq:wowtext}                       & \checkmark & --         & \checkmark \\
-		\wow{LT}       & \eqref{eq:wowlatent} \& \eqref{eq:wowtext}                         & --         & \checkmark & \checkmark \\
-		\wow{XLT}      & \eqref{eq:wowexplicit}, \eqref{eq:wowlatent} \& \eqref{eq:wowtext} & \checkmark & \checkmark & \checkmark \\
+    \wow{}           & \eqref{lmp:eq:wowmodel}                                                & --         & --         & --         \\
+		\wow{Explicit} & \eqref{lmp:eq:wowexplicit}                                             & \checkmark & --         & --         \\
+		\wow{Latent}   & \eqref{lmp:eq:wowlatent}                                               & --         & \checkmark & --         \\
+		\wow{Text}     & \eqref{lmp:eq:wowtext}                                                 & --         & --         & \checkmark \\
+		\wow{XL}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowlatent}                     & \checkmark & \checkmark & --         \\
+		\wow{XT}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowtext}                       & \checkmark & --         & \checkmark \\
+		\wow{LT}       & \eqref{lmp:eq:wowlatent} \& \eqref{lmp:eq:wowtext}                         & --         & \checkmark & \checkmark \\
+		\wow{XLT}      & \eqref{lmp:eq:wowexplicit}, \eqref{lmp:eq:wowlatent} \& \eqref{lmp:eq:wowtext} & \checkmark & \checkmark & \checkmark \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
 
 \subsection{Learning the Parameters}
-\label{sec:training}
+\label{lmp:sec:training}
 % - Add a table, describing the different models (echoes the table in the dataset section).
 % - Give the likelihood of the model and explain training procedure.
 %   - Make it explicit how the regularization is used in the likelihood
@@ -216,5 +216,5 @@ Hence, we obtain a dataset of~$N=125733$ data points for EP7 and~$N=140763$ data
 In the \wow{Explicit} and the \wow{Text} models, the log-likelihood is convex, and we find optimal parameters by using an off-the-shelf convex optimizer (L-BFGS-B~\cite{byrd1995limited}).
 In the \wow{Latent} model, the bi-linear term breaks the convexity, and we can no longer ensure that we will find parameters that are global optimizers.
 In practice, by using a stochastic gradient descent algorithm (Adagrad~\cite{duchi2011adaptive}), we are still able to find good model parameters without convergence issues.
-% Please refer to Appendix~\ref{sec:hyperparams} for details about hyperparameters.
+% Please refer to Appendix~\ref{lmp:sec:hyperparams} for details about hyperparameters.
 

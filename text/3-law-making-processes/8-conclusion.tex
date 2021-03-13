@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Summary}
-\label{sec:conclusion}
+\label{lmp:sec:conclusion}
 
 In this chapter, we have introduced a new dataset of legislative edits and a model of edit outcomes.
 Our dataset provides rich information on a long-term, dynamical process of interactions between parliamentarians.
@@ -15,7 +15,7 @@ We have also analyzed the performance of our model on subsets of the test set ba
 Finally, we have described how to use our model for predicting edits made on new, unseen dossiers.
 
 \paragraph{Ethical Considerations}
-After submitting our paper~\citep{kristof2021war} to the Web Conference 2021, one anonymous reviewer expressed concerns regarding the use of machine learning for making decisions in law making, and whether our findings in Section~\ref{sec:results} could help adversarial attacks.
+After submitting our paper~\citep{kristof2021war} to the Web Conference 2021, one anonymous reviewer expressed concerns regarding the use of machine learning for making decisions in law making, and whether our findings in Section~\ref{lmp:sec:results} could help adversarial attacks.
 However, we do not propose to rely on our models for making decisions, such as whether an edit should be accepted or not.
 Our goal is to understand the factors correlated with the acceptance of edits, and thereby gain insights into the law-making processes.
 These correlations do not imply a causal relationship that would benefit potential adversarial attackers.
@@ -30,7 +30,7 @@ Finally, the greater transparency that results from these insights can enhance t
 \paragraph{Perspective}
 First, we currently use pre-trained word embeddings and embeddings trained on an ad-hoc binary classification task.
 We plan to explore how to learn text embeddings in an end-to-end manner using the conflictive structure of the \warofwords{} model.
-Second, as shown in Section~\ref{sec:cold-start}, our model has only limited predictive power on edits made on future dossiers.
+Second, as shown in Section~\ref{lmp:sec:cold-start}, our model has only limited predictive power on edits made on future dossiers.
 We plan to further explore how to exploit the temporality of the data and how to develop a dynamical model able to take into account the non-stationarity of the law-making process.
 Finally, the current setting of the predictive task assumes that conflicts are independent of each other; because an edit can be involved in multiple conflicts, they are not always independent.
 We plan to develop more advanced models by leveraging these correlations between conflicts.
