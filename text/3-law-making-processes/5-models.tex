@@ -2,6 +2,32 @@
 \section{Statistical models}
 \label{sec:models}
 
+
+\subsection{Problem Statement}
+% - Formal definition of the prediction task
+%   - Supervised approach to make predictions
+%   - 1) Make it explicit that we train on amendment for a dossier and evaluate on other amendments on the same dossier
+%     - Predicting a new edit
+%   - 2) Explain how we could make predictions for ``future'' edits, solving to cold-start problem with the explicit and text features
+%     -Predicting an edit for a new dossier
+
+We build a model that predicts the vote outcome of edits that will form the reports and the opinions.
+Formally, we take a supervised approach to solve the following prediction problem:
+Let~$\mathcal{C} = \{ a, b, \ldots \}$ be a set of conflictive edits proposed on a dossier~$i$, for which we have observed other edits.
+Note that~$\mathcal{C}$ forms a clique in the edit graph~$G$ of Section~\ref{sec:collconf}.
+% Let~$\mathcal{A}_a$ be the set of MEPs proposing edit~$a$.
+We want to predict which of the conflictive edits in~$\mathcal{C}$ or the status quo of the proposal for dossier~$i$ will be accepted within the committee.
+This task differs from multinomial classification as the number of classes varies for each data point:
+If an edit~$a$ is in conflict only with the original text proposed by the Commission, then~$\vert \mathcal{C} \vert = 1$.
+If several edits~$a, b, \ldots \in \mathcal{C}$ are in conflict against each other, then~$\vert \mathcal{C} \vert > 1$.
+
+According to Rule 180 of the Rules of Procedure of the European Parliament~\cite{europarl2021rule180}, the committee sets a deadline by which MEPs must propose amendments to a dossier.
+The voting takes place after this time.
+Hence, at the time of voting, an edit is expected to confront all alternatives:
+If edits~$a$,~$b$, and~$c$ are in conflict, the MEPs vote on all three of them and the status quo to select only one outcome.
+
+\subsection{The War of Words Model}
+
 We propose a statistical model of edit outcomes from conflicts.
 We incorporate assumptions reminiscent of the Bradley-Terry model \cite{bradley1952rank} and of the Rasch model \cite{rasch1960probabilistic}, as follows.
 We model the amending process as a "game" between (a) the MEPs themselves (similar to the Bradley-Terry model) and (b) the MEPs and the status quo (similar to the Rasch model).
@@ -10,7 +36,7 @@ As an example, a MEP from one party might propose a modification favoring econom
 We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, i.e., the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
 \begin{align}
 	\label{eq:basemodel}
-	p( u \succ_i v )
+  \Prob{ u \succ_i v }
 	 & = \frac{\exp(s_u)}{\exp(s_u) + \exp(s_v) + \exp(d_i + b)} \nonumber  \\
 	 & = \frac{1}{1 + \exp[ -( s_u - s_v ) ] + \exp[ -( s_u - d_i ) + b ]},
 \end{align}
@@ -18,6 +44,26 @@ where $ s_u, s_v \in \mathbf{R} $ are the \textit{skills} of MEPs $u$ and $v$, $
 The first exponential in the denominator of \eqref{eq:basemodel} encodes the MEP-MEP interaction.
 The second exponential encodes the MEP-dossier interaction.
 If an edit proposed by MEP $u$ does not conflict with any other edits, the MEP-MEP term vanishes, leaving only the MEP-dossier term.
+
+As explained in Section~\ref{sec:data} and Section~\ref{sec:collconf}, one or more MEPs can propose an edit, and an edit can be in conflict with one or more other edits.
+It is easy to generalize~\eqref{eq:basemodel} to multiple authors and multiple conflicts.
+To model multiple authors, we simply sum the skills of each author of an edit.
+To model multiple conflicts, we observe that each conflict generates a new MEP-MEP interaction term.
+Call \mbox{$\mathcal{C} = \{ a, b, \dots \}$} the set of conflicting edits proposed by authors $ \mathcal{A}_a, \mathcal{A}_b, \dots $.
+The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ is given by
+\begin{equation}
+	\label{eq:multiple}
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
+	\frac{\exp(s_a) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c) + \exp(d_i + b) },
+\end{equation}
+where $s_a = \sum_{u \in \mathcal{A}_a} s_u$ is the cumulated skill of all authors of edit~$a$.
+We refer to this model as the \warofwords{} model, or simply as the \wow{} model.
+The probability that all edits are rejected, i.e., the status quo of dossier~$i$ wins, is given by
+\begin{equation*}
+	\Prob{i \succ \mathcal{C} }
+	= 1 - \sum_{a \in \mathcal{C} } \Prob{ a \succ_i \mathcal{C} - \{ a \}}
+	= \frac{\exp(d_i + b) }{ \sum\limits_{a \in \mathcal{C} } \exp(s_a) + \exp(d_i + b) }.
+\end{equation*}
 
 The parameters in this model enable interpretation.
 The skill $s_u$ quantifies the ability of MEP $u$ to pass an edit representing their views.
@@ -28,51 +74,147 @@ In this sense, we interpret a high inertia as a sign of possible high \textit{co
 The general bias term $b$ tunes the importance that the model gives to the MEP-MEP term relative to the MEP-dossier term.
 We conduct an in-depth analysis of the parameters in Section~\ref{sec:results}.
 
-\paragraph{Multiple Authors and Multiple Conflicts}
-As explained in Section~\ref{sec:data} and Section~\ref{sec:collconf}, one or more MEPs can propose an edit, and an edit can be in conflict with one or more other edits.
-It is easy to generalize~\eqref{eq:basemodel} to multiple authors and multiple conflicts.
-To model multiple authors, we simply sum the skills of each author of an edit.
-To model multiple conflicts, we observe that each conflict generates a new MEP-MEP interaction term.
-Call \mbox{$\mathcal{C} = \{ a, b, \dots \}$} the set of conflicting edits proposed by authors $ \mathcal{A}_a, \mathcal{A}_b, \dots $.
-Note that $ \mathcal{C} $ forms a clique in the edit graph $ G $ of Section~\ref{sec:collconf}.
-The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ is given by
+
+\subsection{Enriched Models}
+\label{sec:enriched}
+
+\paragraph{Explicit Features}
+% - Introduce the model including explicit features.
+
+We extend the \wow{} model by augmenting it with explicit features of the MEPs (e.g., nationality), the edits (e.g., length of inserted text), and the dossiers (e.g., report or opinion), as described in Table~\ref{tab:features}.
+From \eqref{eq:wowmodel}, we replace the skill parameters~$s_a$ with the inner product between a feature vector~$\vec{s}_a \in \mathbf{R}^{M_E}$ of~$M_E$ features of edit~$a$ and the associated parameter vector~$\vec{w}_E \in \mathbf{R}^{M_E}$.
+We also replace the difficulty parameter~$d_i$ by the product of a feature vector~$\vec{d}_i \in \mathbf{R}^{M_D}$ of~$M_D$ features of dossier~$i$ and its associated parameter vector~$\vec{w}_D \in \mathbf{R}^{M_D}$.
+We then have
 \begin{equation}
-	\label{eq:multiple}
-	p\left( a \succ_i \mathcal{C} - \{ a\} \right) =
-	\frac{\exp(s_a) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c) + \exp(d_i + b) },
+	\label{eq:wowexplicit}
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
+	\frac{\exp(\vec{s}_a\Tr \vec{w}_E) }{ \sum\limits_{c \in \mathcal{C} } \exp(\vec{s}_c\Tr \vec{w}_E) + \exp(\vec{d}_i \Tr \vec{w}_D + b) }.
 \end{equation}
-where $s_a = \sum_{u \in \mathcal{A}_a} s_u$ is the cumulated skill of all authors of edit~$a$.
-We refer to this model as the \wow\ model.
-The probability that all edits are rejected, i.e., the status quo of dossier~$i$ wins, is given by
+We refer to this model as \wow{Explicit} (or \wow{X}, for conciseness).
+In \eqref{eq:wowmodel}, the feature vector~$\vec{s}_a$ is the indicator of the authors of an edit~$a$:
+Its entries~$s_u$ are 1 for all~$u \in \mathcal{A}_a$ and 0 otherwise.
+Similarly, the feature vector~$\vec{d}_i$ is the indicator of dossier~$i$.
+In \eqref{eq:wowexplicit}, the feature vectors~$\vec{s}_a$ and~$\vec{d}_i$ represent features related to MEPs, edits, and dossiers derived from our dataset.
+
+\paragraph{Latent Features}
+% - Introduce the model including latent features.
+
+Consider the simple case of an MEP~$u$ proposing an edit on dossier~$i$, and suppose that this edit conflicts with another edit, proposed by MEP~$v$.
+From \eqref{eq:wowmodel}, let~$p( u \succ_i v)$ be the probability that, for dossier~$i$, the edit proposed by MEP~$u$ is accepted over the edit proposed by MEP~$v$.
+The assumption made in the \wow{} model is strong:
+It posits that if MEP~$u$ is more influential than MEP~$v$, then, all other things being equal,~$\Prob{u \succ_i v} > \Prob{v \succ_i u}$ for all dossiers~$i$.
+This assumption is not always realistic:
+Dossiers span a vast amount of different topics, and the MEPs have their own specializations and interests.
+For example, an MEP familiar with fisheries might not be knowledgeable about research and academia.
+
+In order to capture these dependencies, we incorporate a bi-linear term into the \wow{} model.
+We assign a vector~$\vec{x}_u \in \mathbf{R}^L$ to each MEP~$u$, and a vector~$\vec{y}_i \in \mathbf{R}^L$ to each dossier~$i$, for some dimensionality~$L > 0$.
+We then rewrite \eqref{eq:wowmodel} as
+\begin{equation}
+	\label{eq:wowlatent}
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
+	\frac{\exp( s_a + \vec{x}_a\Tr \vec{y}_i) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c + \vec{x}_c\Tr \vec{y}_i) + \exp(d_i + b) },
+\end{equation}
+where~$\vec{x}_a = \sum_{u \in \mathcal{A}_a} \vec{x}_u$ is the sum of the latent features~$\vec{x}_u$ of each author~$u$ of edit~$a$.
+We refer to this model as the \wow{Latent} model (or \wow{L}).
+The latent vectors~$\vec{x}_u$ and~$\vec{y}_i$ can be viewed as the embeddings of MEP~$u$ and of dossier~$i$ in a Euclidean latent space.
+Informally, the probability~$\Prob{ a \succ_i \mathcal{C} - \{ a\} }$ increases when the MEP embedding~$ \vec{x}_a$ is co-linear with the dossier embedding~$ \vec{y}_i$ in the latent space.
+It decreases when the two vectors point in opposite directions.
+Furthermore, vector~$ \vec{x}_u$ can be interpreted as the set of skills of MEP~$u$.
+Similarly,~$ \vec{y}_i$ can be interpreted as the set of skills required to edit dossier~$i$.
+
+\paragraph{Text Features}
+% - Introduce the model including text features.
+% - Describe the different pre-trained embeddings that we tried.
+%   - In particular, explain how fasttext embeddings are learned
+
+The features described so far ignore the text content of the edit itself.
+It is reasonable to expect that the presence of certain words or phrases in the original or amended text of an edit, and in the title of the dossier, are predictive of the success of the edit.
+Hence, we incorporate text features to the \wow{} model by rewriting \eqref{eq:wowmodel} as
+\begin{equation}
+	\label{eq:wowtext}
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =\frac{\exp(s_a + \vec{r}_a \Tr \vec{w}_T  ) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c + \vec{r}_c\Tr \vec{w}_T) + \exp(d_i + \vec{r}_i \Tr \vec{w}_{T'} + b) },
+\end{equation}
+where~$\vec{r}_a\in \mathbf{R}^{D}$,~$\vec{r}_i \in \mathbf{R}^{D'}$  are, respectively, representations of the text of the edit~$a$ and the title of dossier~$i$, and~$\vec{w}_T  \in \mathbf{R}^{D}$, $\vec{w}_{T'}  \in \mathbf{R}^{D'}$ are, respectively, the associated parameter vectors.
+We refer to this model as the \wow{Text} model (or \wow{T}).
+
+We explore different ways of learning the representations~$\vec{r}_a$ and~$\vec{r}_i$ from (a) pre-trained word embeddings and (2) by training embeddings on our dataset.
+With pre-trained embeddings,~$\vec{r}_a$ is the concatenation of three vectors that are the representations of the deleted text, inserted text, and the context of the edit, as explained in Section~\ref{sec:dataset}.
+Each of these vectors are the averages of the pre-trained word embeddings of the words in these parts of the text, and~$\vec{r}_i$ is the average of the pre-trained embeddings of the words in the title of dossier~$i$.
+We use two sets of pre-trained embeddings trained with the word2vec algorithm~\cite{mikolov2013distributed}: (a) 300-dimensional embeddings trained on Google News~\cite{google2013word2vec} and (b) 200-dimensional Law2Vec embeddings trained on legal texts of the EU, the US, the UK, Canada, and Japan\cite{chalkidis2019deep}.
+% Note that in this case~$D'_T$ would be same as dimensionality of the pre-trained embeddings,~$D_T = 3D'_T$.
+
+We also learn embeddings from our dataset by using the supervised fastText model for text classification~\cite{joulin2017bag}.
+In the simplest version of this model, a~$D$-dimensional embedding is learned for each word (and $n$-grams) in a dataset.
+A piece of text is then classified with a softmax layer by representing it as the average of the word embeddings.
+We use the learned word and bigram embeddings to construct~$\vec{r}_a$ and~$\vec{r}_i$.
+
+The original fastText model is defined, however, for classification of homogeneous pieces of text into a fixed set of classes.
+This does not directly apply to our problem, as (a) the text features for the edit are of three types (deleted text, inserted text, and context) and (b) the size of a conflict~$\vert \mathcal{C} \vert = K$ varies from a data point to another.
+We solve the first problem by prepending tags (\texttt{<del>}, \texttt{<ins>}, and \texttt{<con>}) to each word to enable the model to learn separate embeddings for the same word in different types of text feature.
+We solve the second problem by training the embeddings on a binary classification task of edit acceptance (based only on the text), and by using the embeddings learned on this ad-hoc task into the \wow{} models.
+We learn the embeddings for the words in the title by training a different fastText model to predict the acceptance of an edit from the title only.
+This is equivalent to predicting the probability of acceptance of the status quo for each dossier, given its title.
+For our experiments in Section~\ref{sec:results}, we use the fastText embeddings rather than pre-trained embeddings, because the former performed better on the ad-hoc binary classification task.
+% Once the embeddings have been learned using the edits in the training set,~$\vec{r}_a$ and~$\vec{r}_i$ are computed as the average of the embeddings of the words and bigrams in the edit and the title, respectively.
+% They are then used as features while training the full model as described in Section-\ref{sec:training}, where we use the same training set.
+% % Thus in this case, the dimensionality of~$\vec{r}_a$,~$\vec{r}_i$ and the word and bigram embeddings are the same ($D_T$).
+
+\paragraph{Hybrid Models}
+
+We combine \wow{Explicit}, \wow{Latent}, and \wow{Text} together to obtain hybrid models with different components.
+This helps us understand the contribution of each type of features to the performance, in Section~\ref{sec:results}.
+We summarize all the possible combinations in Table~\ref{tab:models}, and we sort them by increasing levels of complexity.
+The \wow{} model has no features at all and will serve as a baseline.
+The \wow{XLT} combines explicit, latent, and text features together, and it has the highest complexity.
+
+\begin{table}
+  \centering
+	\caption{Variations of our model by combination of features (explicit, latent, and text features).}
+	\label{tab:models}
+	\begin{tabular}{llccc}
+		\toprule
+		Model          & Equation                                                           & Explicit   & Latent     & Text       \\
+		\midrule
+    \wow{}           & \eqref{eq:wowmodel}                                                & --         & --         & --         \\
+		\wow{Explicit} & \eqref{eq:wowexplicit}                                             & \checkmark & --         & --         \\
+		\wow{Latent}   & \eqref{eq:wowlatent}                                               & --         & \checkmark & --         \\
+		\wow{Text}     & \eqref{eq:wowtext}                                                 & --         & --         & \checkmark \\
+		\wow{XL}       & \eqref{eq:wowexplicit} \& \eqref{eq:wowlatent}                     & \checkmark & \checkmark & --         \\
+		\wow{XT}       & \eqref{eq:wowexplicit} \& \eqref{eq:wowtext}                       & \checkmark & --         & \checkmark \\
+		\wow{LT}       & \eqref{eq:wowlatent} \& \eqref{eq:wowtext}                         & --         & \checkmark & \checkmark \\
+		\wow{XLT}      & \eqref{eq:wowexplicit}, \eqref{eq:wowlatent} \& \eqref{eq:wowtext} & \checkmark & \checkmark & \checkmark \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\subsection{Learning the Parameters}
+\label{sec:training}
+% - Add a table, describing the different models (echoes the table in the dataset section).
+% - Give the likelihood of the model and explain training procedure.
+%   - Make it explicit how the regularization is used in the likelihood
+
+Each observation~$n$ is a triplet~$( \mathcal{C}_n, i_n, l_n )$ of (a) a set of conflicting edits~$\mathcal{C}_n$ with $| \mathcal{C}_n | = K_n > 0$ , (b) a dossier~$i_n$ on which the edits are proposed, and (c) a label~$l_n \in \mathcal{C}_k \cup \{ i_n \}$ indicating which of the~$K_n$ edits or the status quo is accepted.
+Given a dataset of~$N$ independent triplets \mbox{$\mathcal{D} = \{ ( \mathcal{C}_n, i_n, l_n )~\vert~n = 1, ..., N \}$} and given a vector~$\vec{\theta}$ of all the parameters in our model, we learn~$\vec{\theta}$ by minimizing their negative log-likelihood under~$\mathcal{D}$
 \begin{equation*}
-	p\left(i \succ \mathcal{C} \right)
-	= 1 - \sum_{a \in \mathcal{C} } p( a \succ_i \mathcal{C} - \{ a \})
-	= \frac{\exp(d_i + b) }{ \sum\limits_{a \in \mathcal{C} } \exp(s_a) + \exp(d_i + b) }.
-\end{equation*}
-
-
-\paragraph{Rapporteur Feature}
-We focus on the role of \textit{rapporteur}, explained in Section~\ref{sec:background}.
-A rapporteur is a MEP with a special role in shaping a dossier, which plausibly confers additional influence compared to other MEPs.
-In order to validate this hypothesis, we add a parameter~$r \in \mathbf{R}$ to the skill~$s_u$ of a MEP~$u$ if they are the rapporteur for the dossier~$i$, i.e., we replace $s_a$ in~\eqref{eq:multiple} by
-\begin{equation*}
-	s_a = \sum_{u \in \mathcal{A}_a} s_u + r\vec{1}_{\{u \text{ is rapporteur for } i\}}.
-\end{equation*}
-We refer to this model as the \wowr\ model.
-
-\paragraph{Learning the Model}
-Each observation $k$ is a triplet $ ( \mathcal{C}_k, i_k, \ell_k )$ of (a) a set of conflicting edits $ \mathcal{C}_k $ with $ | \mathcal{C}_k | = c_k > 0 $ , (b) a dossier $ i_k $ on which the edits are proposed, and (c) a label $ \ell_k \in \mathcal{C}_k \cup \{ i_k \} $ indicating which of the $c_k$ edits or the status quo is accepted.
-Given a dataset of $K$ independent triplets \mbox{$\mathcal{D} = \{ ( \mathcal{C}_k, i_k, \ell_k )~\vert~k = 1, ..., K \}$}, we learn the parameters by maximizing their log-likelihood under $ \mathcal{D} $.
-That is, by collecting all the parameters into a single vector $ \vec{\theta} $, we seek to minimize the negative log-likelihood
-\begin{align}
-	\label{eq:log_likelihood}
 	- \ell(\vec{\theta} ; \mathcal{D})
-	= \sum_{k = 1}^K  \sum_{a \in \mathcal{C}_k} \Biggl[ & \vec{1}_{\{\ell_k = a\}} \log p\left(a \succ_{i_k} \mathcal{C}_k - \{ a \} \right)  \nonumber \\
-	                                                     & + \vec{1}_{\{\ell_k = i_k\}} \log p\left(i_k \succ \mathcal{C}_k \right) \Biggr],
-\end{align}
-where $ p\left(a \succ_{i_k} \mathcal{C}_k - \{ a \} \right) $ and $ p\left(i_k \succ \mathcal{C}_k \right) $ depend on~$\vec{\theta}$.
-In order to avoid overfitting, we add $L_2$-regularization to the negative log-likelihood.
-We pre-process our dataset by keeping only the dossiers for which more than 10 edits were proposed and by keeping only the MEPs who proposed more than 10 edits.
-Hence, we obtain a dataset of $K=125733$ data points for EP7 and $K=140763$ data points for EP8.
-We split them into 70\% for training and validation, and we keep 30\% as a test set.
-The log-likelihood~\eqref{eq:log_likelihood} is convex, and we find optimal parameters by using a convex optimizer, such as L-BFGS-B \cite{byrd1995limited}.
+	= \sum_{n = 1}^N  \sum_{a \in \mathcal{C}_n} \Biggl[ \Indic{l_n = a} \log \Prob{a \succ_{i_n} \mathcal{C}_n - \{ a \} }
+  + \Indic{l_n = i_n} \log \Prob{i_n \succ \mathcal{C}_n } \Biggr],
+\end{equation*}
+where~$\Prob{a \succ_{i_n} \mathcal{C}_n - \{ a \} }$ and~$\Prob{i_n \succ \mathcal{C}_n }$ depend on~$\vec{\theta}$.
+In order to avoid overfitting, we add regularization to the negative log-likelihood.
+We pre-process our dataset by keeping only the dossiers for which more than 10 edits have been proposed and only the MEPs who have proposed more than 10 edits.
+Hence, we obtain a dataset of~$N=125733$ data points for EP7 and~$N=140763$ data points for EP8.
+% TODO: Explain regularization.
+% We regularize the parameters differently if they are associated with the explicit features, the latent features, or the text features.
+% For example, we regularize the negative log-likelihood for the \wowstar\ model with text features as
+% \begin{align*}
+%   - \ell(\vec{\theta} ; \mathcal{D}) + \lambda^{(E)} \Vert \vec{w} \Vert_2+ \lambda^{(L)} \sum_{i, u} \Vert + \lambda^{(T)},
+% \end{align*}
+% where~$\lambda^{(E)}$ is the regularizer of the features associated with the explicit features.
+In the \wow{Explicit} and the \wow{Text} models, the log-likelihood is convex, and we find optimal parameters by using an off-the-shelf convex optimizer (L-BFGS-B~\cite{byrd1995limited}).
+In the \wow{Latent} model, the bi-linear term breaks the convexity, and we can no longer ensure that we will find parameters that are global optimizers.
+In practice, by using a stochastic gradient descent algorithm (Adagrad~\cite{duchi2011adaptive}), we are still able to find good model parameters without convergence issues.
+% Please refer to Appendix~\ref{sec:hyperparams} for details about hyperparameters.
+

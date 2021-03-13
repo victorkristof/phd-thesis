@@ -2,32 +2,45 @@
 \section{Introduction}
 \label{sec:intro}
 
-The past decade has seen the emergence of several open-government initiatives, such as the one proposed by the former US president, Barack Obama, on the first day of his presidency \cite{open2009barack}.
-Similar efforts followed in France, Belgium, Sweden, the United Kingdom, Tunisia, and the European Union.
+The process of maintaining a body of law in a democratic society shares many features with peer-production systems.
+The work of parliaments is governed by complex rules, processes, and conventions, in order to foster compromises among competing viewpoints and priorities.
+How well this process works, to what extent it is subject to biases and to benign or undue influences is of obvious concern to citizens and to scientists alike.
+An exciting recent development in this regard is the adoption of {\em open government initiatives}, such as in the United States~\citep{open2009barack}, Switzerland~\citep{switzerland2021open}, Brazil~\citep{brazil2021dado}, and the European Union~\citep{european2021data}.
 Open-government data published on the Web are of great interest to citizens, companies, sub- and supra-government entities, and researchers.
-These initiatives increase the transparency and trust associated with government, and enable novel analyses to be carried out about their processes.
+These initiatives aim to improve the transparency of the law-making process and the accountability of its protagonists.
 
-We are specifically interested in the process by which the laws of a jurisdiction are maintained and in how they evolve over time.
-Not surprisingly, the dynamics of the legislative process is complex, given the confluence of many stakeholders, topics, special interests, and lobbying groups.
+Not surprisingly, the dynamics of this process is complex, given the confluence of many stakeholders, topics, special interests, and lobbying groups.
 Until open-government was introduced, the work of parliaments had not been systematically accessible to the general public, and internal documents -- when they existed -- were difficult to find.
-We propose (i) a new dataset of legislative edits obtained via rich, openly accessible data from the European Parliament, and (ii) a methodology to better understand the dynamics of legislative processes.
-Using edits proposed by parliamentarians on legislative texts, we study the competitive dynamics of collaborations and conflicts between parliamentarians.
+The European Union (EU), however, has been a pioneer in opening the mechanics of its parliament.
+It publishes detailed records of the process by which bills are written and amended, until they finally become law.
+Once an initial draft of a new law has been published, parliamentarians (MEPs, for Members of the European Parliament) in one or several specialized committees examine the draft and propose amendments.
+Several amendments can be in conflict if they attempt to modify the same part of the law draft.
+To be instituted, an amendment needs to be approved by the committee in charge, and ultimately by the full plenary.
+The European Parliament publishes every proposed amendment and its authorship, along with various other details.
+This makes it possible to build detailed models of the interplay between MEPs, laws, amendments, and committees.
 
-We curate our dataset from the European Parliament's online document repository.
-It is composed of edits, proposed by parliamentarians, on laws under consideration by the Parliament.
-Each data point consists of edit metadata, such as the nationality and the political affiliation of its author(s), the type of edit, its length, and which law it is modifying.
-The dataset contains \numprint{449493} edits proposed by \numprint{1214} parliamentarians on \numprint{1889} dossiers over ten years (two legislature periods).
-In Section~\ref{sec:background}, we set the framework by giving some background on the European legislative process.
-In Section~\ref{sec:data}, we describe our dataset in detail.
-In Section~\ref{sec:collconf}, we use our dataset to describe the evolution of a law via a graph-theoretical viewpoint.
+In this work, we (i) curate a large-scale dataset of amendments proposed by MEPs over two legislature periods (2009--2019) and (ii) develop a predictive model for the success and failure of proposed amendments.
+Specifically, we collect explicit features for each MEP, including their party membership, country of origin, and gender.
+We also collect explicit features of the amendments and dossiers (law drafts), including  their type and the committee in charge.
+Finally, we extract the actual text of the amendments, which consists of \emph{edits} of the proposed law.
+Our dataset contains \numprint{449493} edits proposed by \numprint{1214} parliamentarians on \numprint{1889} dossiers
 
-Our model focuses on the interplay of collaboration and competition between parliamentarians as they modify laws.
-They can collaborate on a proposed modification of a law by jointly submitting an {\em edit} for consideration.
-An important feature of our model accounts for the way an edit benefits from the support of multiple parliamentarians.
+Our model relies mostly on the structure of incompatible edits, which can be viewed as a {\em conflict graph} among all edits that target the same law.
 We posit a measure of {\em strength} for each parliamentarian, and an edit inherits the strengths of its supporters.
 There are two sources of competition in the process.
 First, a proposed edit competes with the status quo, because the edit can be rejected in favor of not changing the existing state of a law.
 Our model incorporates this by endowing each law with a measure of {\em inertia} that represents the level of controversy of a law.
 Second, proposed edits of a law are frequently mutually exclusive, because they overlap and are incompatible.
 These edits then compete against each other, as well as against the status quo.
-This parsimonious set of assumptions underlies our model, formulated in Section~\ref{sec:models}; and we will show, in Section~\ref{sec:results}, that it is sufficient to capture the salient features of the law-making dynamics.
+
+We further include explicit features and text features into the model.
+This combination gives rise to models with improved predictive performance and enables us to make predictions for unseen laws.
+We also endow our model with a set of latent features for both laws and MEPs, which capture richer interactions between them.
+Indeed, it would seem plausible that an MEP might be an expert in one subject matter, but less knowledgeable in another, which would bear upon their effectiveness in promoting a particular amendment.
+
+% TODO: Adapt with new sections.
+The remainder of this chapter is structured as follows.
+In Section~\ref{sec:dataset}, we state the problem and provide a detailed description of our dataset.
+We describe our statistical models in Section~\ref{sec:models}.
+We give the results and interpretations of our experiments in Section~\ref{sec:results}.
+We describe related work in Section~\ref{sec:relwork} and conclude in Section~\ref{sec:conclusion}.

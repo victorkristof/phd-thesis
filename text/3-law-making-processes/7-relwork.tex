@@ -2,20 +2,33 @@
 \section{Related Work}
 \label{sec:relwork}
 
-Amendment analysis was pioneered by \cite{kreppel1999affects}.
-The author compares the influence of the Parliament--as an institution rather than individual MEPs--over the Commission during EP3 (1989--1994) and EP4 (1994--1999).
-They do so by modeling the acceptance rate of \numprint{500} amendments.
-Similar analyses are developed in \cite{tsebelis2001legislative} and \cite{kreppel2002moving} with datasets of, respectively, \numprint{1000} and \numprint{5000} amendments.
-Our work introduces a large dataset of more than \numprint{450000} amendments spanning EP7 and EP8.
+%- Cite papers about text of amendments and peer-production systems
+Amendment analysis in the European Parliament has been studied by the political science community on datasets of small size~\cite{kreppel1999affects,tsebelis2001legislative,kreppel2002moving,baller2017specialists}.
+The effect of the rapporteur on the success of an amendment has been studied in previous legislature periods and in specific committees~\cite{finke2012proposal,hurka2013changing}.
+Predicting edits on collaborative corpora of documents has been studied in the context of peer-production systems, such as Wikipedia~\cite{druck2008learning,adler2007content,sarkar2019stre} and the Linux kernel~\cite{jiang2013will,yardim2018can}.
+A whole body of literature covers the conflicts between two Wikipedia edits \cite{sumi2011edit,yasseri2012dynamics} and the quantification of controversy of Wikipedia articles \cite{sepehri2012leveraging,rad2012identifying}.
+The notion of conflict is, however, different in our setting, where multiple edits can be in conflict at the same time:
+The task of predicting which edit will be accepted out of all the conflicting edits is more complex, and classic approaches cannot be used.
+In this work, we take a peer-production viewpoint on the law-making process and propose a model of the acceptance of the legislative edits.
+Our approach generalizes to any peer-production system in which (meta) features of the users and items can be extracted and in which edits can be in conflict with one another.
 
-Predicting the success of edits has been widely studied in the context of Wikipedia \cite{druck2008learning,adler2007content,yardim2018can}.
-Similarly, a whole body of literature covers the conflicts between two Wikipedia edits \cite{sumi2011edit,yasseri2012dynamics} and the quantification of controversy of Wikipedia articles \cite{sepehri2012leveraging,rad2012identifying}.
-The notion of conflict is, however, different in our setting, where multiple edits can be in conflict at the same time.
-In this case, the task of predicting which edit will be accepted out of all the conflicting edits is more complex, and classic approaches cannot be used.
+We use the text of the edits and dossiers as features for classification.
+Text classification is a well-studied problem in natural language processing.
+A simple baseline is to apply linear classifiers to term-frequency inverse document-frequency (TF-IDF) vectors~\cite{joachims1998text}.
+However, these models do not capture the synonymy relation between words, hence suffer from poor generalization.
+Models based on neural networks show better performance on this task~\cite{zhang2015character}.
+They tend, however, to require larger datasets, and the features they learn are harder to interpret.
+The fastText model~\cite{joulin2017bag} bridges the gap between the two:
+It learns embeddings from linear models.
+We adapt this approach to our problem of edit classification, as edits are inhomogeneous pieces of text.
+Edit modelling has been studied using neural models\cite{yin2018learning,guu2018generating} that suffer from the aforementioned issues of dataset size and interpretability.
+In the \warofwords{} models, we combine text features and non-text features to take into account the dynamics of the legislative process.
+Legal texts also have features and structures that set them apart from other domains.
+For example, the word "should" has a strong legal significance, whereas it is commonly removed as a stop word.
 
-Our model draws inspiration from the discrete choice models.
-First, it borrows from the Bradley-Terry model in the pairwise-comparisons literature \cite{zermelo1928berechnung,thurstone1927method,bradley1952rank} to model the competitive dynamics between MEPs.
+Our model draws inspiration from probabilistic models of choice, described in Section~\ref{in:sec:models}.
+First, it borrows from the logit model to model the competitive dynamics between MEPs.
 These approaches learn a real-valued score for individuals and model the probability that one individual wins over another as a function of the difference of their scores.
-Second, it borrows from the Rasch model in the item-response theory \cite{rasch1960probabilistic} to model the competitive dynamics between MEPs and the status quo.
+Second, it borrows from the Rasch model to model the competitive dynamics between MEPs and the status quo.
 These approaches learn a real-valued strength for each individual and a real-valued difficulty for each item, and they model the probability that an individual wins over the item as a function of the difference of the strength and the difficulty.
 Our model unifies both approaches by learning a strength for each MEP and a difficulty for each dossier, considering (i) conflicts between MEPs and (ii) conflicts between MEPs and the status quo.

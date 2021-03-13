@@ -1,9 +1,13 @@
 %! TEX root = ../thesis.tex
 
-Similar to a peer-production system, a body of law is an example of a dynamic corpus of text documents that are jointly maintained by a group of editors who compete and collaborate in complex constellations.
-Our goal is to develop predictive models for this process, thereby shedding light on the competitive dynamics of parliamentarians who make laws.
-For this purpose, we curated a dataset of \numprint{450000} legislative edits introduced by European parliamentarians over the last ten years.
+Comparable to peer-production systems, a body of law is an example of a dynamic corpus of text documents that are jointly maintained by a group of editors who compete and collaborate in complex constellations.
+In this chapter\footnote{This chapter is based on \citet{kristof2020war, kristof2021war}.}, we develop predictive models for this process, thereby shedding light on the competitive dynamics of parliamentarians who make laws.
+For this purpose, we curated a rich dataset of \numprint{450000} law edits introduced by European parliamentarians over ten years.
 An \textit{edit} modifies the status quo of a law, and could be in competition with another edit if it modifies the same part of that law.
-We propose a model for predicting the success of such edits, in the face of both the \textit{inertia} of the status quo and the \textit{competition} between overlapping edits.
+We adapt the \interank{} model from Chapter~\ref{ch:pps} for predicting the success of such edits, in the face of both the \textit{inertia} of the status quo and the \textit{competition} between overlapping edits.
+This model combines three different categories of features:
+(a) \emph{Explicit} features extracted from data related to the edits, the parliamentarians, and the laws, (b) \emph{latent} features that capture bi-linear interactions between parliamentarians and laws, and (c) \emph{text} features of the edits.
+We show experimentally that this combination enables us to accurately predict the success of the edits.
 The parameters of this model can be interpreted in terms of the influence of parliamentarians and of the controversy of laws.
-%We show that parliamentarians in charge of a law under consultation by a legislative committee have influence on the success of edits.
+They also help us understand what explicit and text features contribute to the acceptance of edits.
+The latent features cluster well into distinct topics discussed in the European Parliament.

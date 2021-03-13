@@ -1,4 +1,5 @@
 % Linear Algebra.
+\renewcommand{\vec}[1]{\bm{#1}}
 \newcommand{\Tr}{^\intercal}
 
 % Probability.
@@ -7,7 +8,7 @@
 		\ifthenelse{\isempty{#1}}{\mathbf{E}\left[ #2 \right]}{\mathbf{E}_{#1}\left[ #2 \right]}}}
 \newcommand{\Cov}[2]{\ensuremath{\mathbf{Cov}\left[ #1, #2 \right]}}
 \newcommand{\Var}[1]{\ensuremath{\mathbf{Var}\left[ #1 \right]}}
-\newcommand{\Indic}[1]{\ensuremath{1_{\left \{ #1 \right \} }}}
+\newcommand{\Indic}[1]{\ensuremath{\bm{1}_{\left \{ #1 \right \} }}}
 
 % Distributions.
 \newcommand{\DGumbel}[1]{\ensuremath{\mathrm{Gumbel}( #1 )}}
