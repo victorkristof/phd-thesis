@@ -33,7 +33,7 @@ We incorporate assumptions reminiscent of the Bradley-Terry model \cite{bradley1
 We model the amending process as a "game" between (a) the MEPs themselves (similar to the Bradley-Terry model) and (b) the MEPs and the status quo (similar to the Rasch model).
 For simplicity, let us suppose that an edit proposed by MEP $u$ is accepted on dossier $i$ over a conflicting edit proposed by MEP $v$.
 As an example, a MEP from one party might propose a modification favoring economic interests, whereas another MEP from another party proposes a modification at the same position in the proposal favoring social interests.
-We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, i.e., the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
+We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, \textit{i.e.}, the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
 \begin{align}
 	\label{lmp:eq:basemodel}
   \Prob{ u \succ_i v }
@@ -58,7 +58,7 @@ The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ 
 \end{equation}
 where $s_a = \sum_{u \in \mathcal{A}_a} s_u$ is the cumulated skill of all authors of edit~$a$.
 We refer to this model as the \warofwords{} model, or simply as the \wow{} model.
-The probability that all edits are rejected, i.e., the status quo of dossier~$i$ wins, is given by
+The probability that all edits are rejected, \textit{i.e.}, the status quo of dossier~$i$ wins, is given by
 \begin{equation*}
 	\Prob{i \succ \mathcal{C} }
 	= 1 - \sum_{a \in \mathcal{C} } \Prob{ a \succ_i \mathcal{C} - \{ a \}}
@@ -81,7 +81,7 @@ We conduct an in-depth analysis of the parameters in Section~\ref{lmp:sec:result
 \paragraph{Explicit Features}
 % - Introduce the model including explicit features.
 
-We extend the \wow{} model by augmenting it with explicit features of the MEPs (e.g., nationality), the edits (e.g., length of inserted text), and the dossiers (e.g., report or opinion), as described in Table~\ref{lmp:tab:features}.
+We extend the \wow{} model by augmenting it with explicit features of the MEPs (\textit{e.g.}, nationality), the edits (\textit{e.g.}, length of inserted text), and the dossiers (\textit{e.g.}, report or opinion), as described in Table~\ref{lmp:tab:features}.
 From~\eqref{lmp:eq:wowmodel}, we replace the skill parameters~$s_a$ with the inner product between a feature vector~$\vec{s}_a \in \mathbf{R}^{M_E}$ of~$M_E$ features of edit~$a$ and the associated parameter vector~$\vec{w}_E \in \mathbf{R}^{M_E}$.
 We also replace the difficulty parameter~$d_i$ by the product of a feature vector~$\vec{d}_i \in \mathbf{R}^{M_D}$ of~$M_D$ features of dossier~$i$ and its associated parameter vector~$\vec{w}_D \in \mathbf{R}^{M_D}$.
 We then have

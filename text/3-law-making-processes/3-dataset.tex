@@ -53,7 +53,7 @@ All other edits were rejected, \textit{i.e.}, the status quo was voted and the t
 MEPs propose amendments on a specific article of the legislation, and they can modify several parts within a single amendment.
 As a result, we decompose the difference between the original and the amended text into one or several \emph{edits}, as defined below.
 An edit is a sequence of words that are inserted or deleted or both.
-We extract edits by computing the \emph{diff}, i.e., the difference between the words in two texts, between the original and the amended text of each amendment.
+We extract edits by computing the \emph{diff}, \textit{i.e.}, the difference between the words in two texts, between the original and the amended text of each amendment.
 We normalize the texts by removing special characters and by putting the words in lower case.
 We keep punctuation because the structure of sentences is important in legal texts.
 We merge identical edits proposed by different MEPs, thus considering them as one edit proposed by all authors together.
@@ -74,7 +74,7 @@ Adding the conflicts to isolated edits, we obtain a dataset of \numprint{126417}
 The votes on each edit are not publicly available, and we need to infer their outcomes from the raw data.
 Reports and opinions contain only the amendments accepted within the committees.
 Draft reports, draft opinions, and other documents containing all proposed amendments are published separately.
-Therefore, if the edits extracted from the latter documents  appear in the former documents, we label them as \emph{accepted}, i.e., the committee votes to include these edits in their report or opinion.
+Therefore, if the edits extracted from the latter documents  appear in the former documents, we label them as \emph{accepted}, \textit{i.e.}, the committee votes to include these edits in their report or opinion.
 Otherwise, we label them as \emph{rejected}.
 Out of the proposed edits, 37.7\% are accepted for EP7 and 25.7\% for EP8.
 
