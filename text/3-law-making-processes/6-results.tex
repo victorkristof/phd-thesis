@@ -12,24 +12,24 @@
 
 We start by introducing the baselines against which we compare our models.
 For each baseline and for our models, we assume a set of~$K$ conflicting edits \mbox{$\mathcal{C} = \{ a, b, \ldots \}$} proposed on dossier~$i$, for which we want to model the probability that an edit~$a \in \mathcal{C}$ is accepted over edits~$b, \ldots$ on this dossier.
-We denote this probability by~$p\left( a \succ_i \mathcal{C} - \{ a\} \right)$, and we denote the probability that the status quo wins, \textit{i.e.}, that the original text proposed by the Commission is kept, by~$p\left( i \succ \mathcal{C} \right) = 1 - \sum_{a\in \mathcal{C}} p\left( a \succ_i \mathcal{C} - \{a\} \right)$.
+We denote this probability by~$\Prob{ a \succ_i \mathcal{C} - \{ a\} }$, and we denote the probability that the status quo wins, \textit{i.e.}, that the original text proposed by the Commission is kept, by~$\Prob{ i \succ \mathcal{C} } = 1 - \sum_{a\in \mathcal{C}} \Prob{ a \succ_i \mathcal{C} - \{a\} }$.
 
 \paragraph{Naive Classifier}
 
 The \textit{naive classifier} predicts a uniform probability for each outcome, \textit{i.e.}, for each of the conflicting edits or the status quo to win, as
 \begin{equation*}
-	p\left( a \succ_i \mathcal{C} - \{ a\} \right) = p\left( i \succ \mathcal{C} \right) = \frac{1}{K + 1}.
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } = \Prob{ i \succ \mathcal{C} } = \frac{1}{K + 1}.
 \end{equation*}
 
 \paragraph{Random Classifier}
 
 The \textit{random classifier} learns the prior probability~$p^{(K)}$ that the status quo wins for each conflict size~$\vert \mathcal{C} \vert = K$, and it predicts
 \begin{equation*}
-	p\left( i \succ \mathcal{C} \right) = p^{(K)}.
+	\Prob{ i \succ \mathcal{C} } = p^{(K)}.
 \end{equation*}
 It predicts uniformly each of the edits to win as
 \begin{equation*}
-	p\left( a \succ_i \mathcal{C} - \{ a\} \right) = \frac{1-p^{(K)}}{K}.
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } = \frac{1-p^{(K)}}{K}.
 \end{equation*}
 
 \subsection{Experimental Setting}
@@ -40,8 +40,8 @@ Let~$( \mathcal{C}_n, i_n, l_n )$ be an observation.
 We compute
 \begin{equation}
 	\ell_n = \begin{cases}
-		-\log p(l_n \succ_{i_n} \mathcal{C}_n - \{l_n\} ) & \text{if $l_n \in \mathcal{C}_n$}, \\
-		-\log p(i_n \succ \mathcal{C}_n)                  & \text{if $l_n = i_n$}.
+		-\log \Prob{l_n \succ_{i_n} \mathcal{C}_n - \{l_n\} } & \text{if $l_n \in \mathcal{C}_n$}, \\
+		-\log \Prob{i_n \succ \mathcal{C}_n}                  & \text{if $l_n = i_n$}.
 	\end{cases}
 \end{equation}
 We report the average value for all~$N$ points in our test set as~$\ell = \frac{1}{N} \sum_n \ell_n$.
