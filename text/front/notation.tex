@@ -55,10 +55,6 @@
 	  & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
 	      \exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right] $ \\
 	\rule{0pt}{5ex}%
-	$\DLogistic{\mu, \beta}$
-	  & $\mathbf{R}$
-    & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
-	\rule{0pt}{5ex}%
 	% $\DBeta{\alpha, \beta}$
 	%   & $[0, 1]$
 	%   & $\displaystyle \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1-x)^{\beta - 1}$ \\
@@ -73,6 +69,10 @@
 	$\DGumbel{\mu, \beta}$
 	  & $\mathbf{R}$
 	  & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
+	\rule{0pt}{5ex}%
+	$\DLogistic{\mu, \beta}$
+	  & $\mathbf{R}$
+    & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
 \end{tabularx}
 
 \endgroup

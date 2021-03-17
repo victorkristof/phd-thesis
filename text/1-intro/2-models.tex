@@ -63,13 +63,13 @@ When facing a set of (at least two) alternatives, a decision maker chooses one o
 This set of alternatives is defined as the \emph{choice set}.
 
 \begin{definition}[Choice Set]
-  Given the set of all possible alternatives~$\mathcal{A}$, the \emph{choice set}~$\mathcal{C} \subseteq \mathcal{A}$ is the set of alternatives faced by a decision maker.
-  It has the following three characteristics:
-  \begin{enumerate}
-    \item The alternatives are \emph{mutually exclusive}.
-    \item The choice set $\mathcal{C}$ is \emph{exhaustive}.
-    \item The number of alternatives is \emph{finite}.
-  \end{enumerate}
+	Given the set of all possible alternatives~$\mathcal{A}$, the \emph{choice set}~$\mathcal{C} \subseteq \mathcal{A}$ is the set of alternatives faced by a decision maker.
+	It has the following three characteristics:
+	\begin{enumerate}
+		\item The alternatives are \emph{mutually exclusive}.
+		\item The choice set $\mathcal{C}$ is \emph{exhaustive}.
+		\item The number of alternatives is \emph{finite}.
+	\end{enumerate}
 \end{definition}
 
 The exclusiveness of alternatives means that, when choosing alternative $i \in \mathcal{C}$, the other alternatives of $\mathcal{C}$ are implicitly left aside.
@@ -105,19 +105,27 @@ Let~$\bm{x}_i \in \mathbf{R}^M$ be a vector of $M$ observable features that migh
 Let also~$\epsilon_i$ be some random noise that captures all unobservable features affecting the decision maker's choice, and whose probability distribution is to be defined.
 The \emph{random utility}~$U_i$ of alternative~$i$ is given by
 \begin{equation*}
-  U_i = \bm{x}_i\Tr \bm{w} + \epsilon_i,
+	U_i = \bm{x}_i\Tr \bm{w} + \epsilon_i,
 \end{equation*}
 and the decision maker chooses alternative~$i$ if $U_i > U_j$, for all $j \neq i$, $i,j \in \mathcal{C}$.
 Hence, the probability that a decision maker chooses~$i$ over~$j$ is
 \begin{align*}
-  \Prob{i \succ j} & \coloneqq \Prob{U_i > U_j} \\
-                   & = \Prob{ \bm{x}_i\Tr \bm{w} + \epsilon_i > \bm{x}_j\Tr \bm{w} + \epsilon_j} \\
-                   & = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}}.
+	\Prob{i \succ j} & \coloneqq \Prob{U_i > U_j}                                                  \\
+	                 & = \Prob{ \bm{x}_i\Tr \bm{w} + \epsilon_i > \bm{x}_j\Tr \bm{w} + \epsilon_j} \\
+	                 & = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}}.
 \end{align*}
 The probability $\Prob{i \succ j}$ is called \emph{choice probability}.
 The notation ``$i \succ j$'' reads as ``alternative~$i$ is chosen over alternative~$j$'' or, equivalently, as ``$i$ wins over $j$''.
 The characterization of a discrete-choice model hence depends on the researcher's hypotheses on the noise model, \textit{i.e.}, what probability distribution captures best the unobserved features.
 Two popular choices of distribution, that we describe below, are (i) the Normal distribution $\epsilon_i \sim \DNorm{0, 1}$ and (ii) the Gumbel distribution $\epsilon_i \sim \DGumbel{0, 1}$.
+We show an example of these two distributions in Figure~\ref{in:fig:pdf}.
+
+\begin{figure}
+	\centering
+	\includegraphics{in-pdf}
+	\caption{Probability density functions of Gaussian and Gumbel distributions.}
+	\label{in:fig:pdf}
+\end{figure}
 
 \paragraph{Probit Model}
 
@@ -125,30 +133,37 @@ The probit model was first introduced by~\citet{thurstone1927law} in the context
 In this model, the noise model is independently and identically distributed with the Gaussian distribution $\epsilon_i, \epsilon_j \sim \DNorm{0, 1}$.
 As the difference of two Gaussian random variables is also Gaussian, \textit{i.e.}, $\epsilon_i - \epsilon_j \sim \DNorm{0, 1}$ in this special case, the choice probability for the probit model is
 \begin{equation*}
-  \Prob{i \succ j} = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}} = \Phi \left( \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w} \right),
+	\Prob{i \succ j} = \Prob{\epsilon_i - \epsilon_j > \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}} = \Phi \left( \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w} \right),
 \end{equation*}
-where $\Phi( \cdot )$ is the cumulative distribution function of the standard normal distribution.
+where $\Phi( \cdot )$ is the cumulative distribution function of the standard normal distribution, as shown in Figure~\ref{in:fig:cdf}.
 When the random utility is parameterized by only one parameter, $U_i = \bm{x}_i\Tr \bm{w} + \epsilon_i = w_i + \epsilon_i$, and the model
 \begin{equation*}
-  \Prob{i \succ j} = \Phi \left( w_i - w_j \right)
+	\Prob{i \succ j} = \Phi \left( w_i - w_j \right)
 \end{equation*}
 is called the \emph{Thurstone model}.
 In this simpler scenario, the $M$ parameters~$\bm{w} = [w_1 \cdots w_M]\Tr$ capture a \emph{score} for each of the $M$~alternative.
 They can be interpreted as the \emph{perceived psychological stimuli} of the alternatives and enable us to rank them according to these stimuli.
+
+\begin{figure}
+	\centering
+	\includegraphics{in-cdf}
+	\caption{Cumulative density functions of Gaussian and logistic distributions.}
+	\label{in:fig:cdf}
+\end{figure}
 
 \paragraph{Logit Model}
 % Define the logit model, \textit{i.e.}, the Bradley-Terry model
 
 The logit model was introduced by~\citet{zermelo1928berechnung} and rediscovered two decades later by~\citet{bradley1952rank}.
 In this model, the random noise is assumed to be independently and identically distributed with a Gumbel distribution\footnote{This distribution is also called the (Type I) extreme value distribution.} $\epsilon_i, \epsilon_j \sim \DGumbel{0, 1}$.
-By using the property that the difference of two Gumbel random variables follows a logistic distribution, the choice probability for the logit model is
+By using the property that the difference of two Gumbel random variables follows a logistic distribution (see Figure~\ref{.fig:cdf}), the choice probability for the logit model is
 \begin{equation*}
-  \Prob{i \succ j} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\exp(\bm{x}_i\Tr \bm{w}) + \exp(\bm{x}_j\Tr \bm{w})} = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}. %= \sigma(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}).
+	\Prob{i \succ j} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\exp(\bm{x}_i\Tr \bm{w}) + \exp(\bm{x}_j\Tr \bm{w})} = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}. %= \sigma(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}).
 \end{equation*}
 When the random utility is parameterized by only one parameter, the model
 \begin{equation}
-  \label{eq:bradley-terry}
-  \Prob{i \succ j} = \frac{1}{1 + \exp[-(w_i - w_j)]}
+	\label{eq:bradley-terry}
+	\Prob{i \succ j} = \frac{1}{1 + \exp[-(w_i - w_j)]}
 \end{equation}
 is called the \emph{Bradley-Terry model}.
 In this scenario, the parameters~$\bm{w}$ can be interpreted as the intrinsic \emph{strength} of each alternative.
@@ -161,8 +176,8 @@ The Rasch model was introduced in the context of \emph{item response theory} to 
 It assumes that an individual~$u$ taking a test has an intrinsic strength~$s_u \in \mathbf{R}$, and that a question~$i$ in the test has an intrinsic difficulty~$d_i \in \mathbf{R}$.
 The probability that individual~$u$ answers correctly to question~$i$ is
 \begin{equation}
-  \label{eq:rasch}
-  \Prob{u \succ i} = \frac{1}{1 + \exp[-(s_u - d_i)]}.
+	\label{eq:rasch}
+	\Prob{u \succ i} = \frac{1}{1 + \exp[-(s_u - d_i)]}.
 \end{equation}
 The relation with the Bradley-Terry model follows directly from comparing Equation~\ref{eq:bradley-terry} with Equation~\ref{eq:rasch}.
 
@@ -174,8 +189,8 @@ In the probit and logit models, the decision maker faces a binary choice, \texti
 In the multinomial logit model, the decision maker faces multiple alternatives, and the choice set $\mathcal{C} = \{ i, j, \ldots k \}$ is larger than 2.
 The random noise is also assumed to be independently and identically distributed with the Gumbel distribution, such that the choice probability is
 \begin{equation}
-  \label{eq:multinomiallogit}
-  \Prob{i \succ \mathcal{C}} = \Prob{U_i > U_j, \ldots, U_i > U_k} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}.
+	\label{eq:multinomiallogit}
+	\Prob{i \succ \mathcal{C}} = \Prob{U_i > U_j, \ldots, U_i > U_k} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}.
 \end{equation}
 The notation ``$i \succ \mathcal{C}$'' reads as ``alternative~$i$ is chosen among all alternatives in the choice set $\mathcal{C}$''.
 
@@ -184,9 +199,9 @@ The notation ``$i \succ \mathcal{C}$'' reads as ``alternative~$i$ is chosen amon
 The property of \emph{independence of irrelevant alternatives} (IIA) was first formulated by~\citet{luce1959individual} as a lemma derived from its choice axiom.
 The IIA states that, for any two alternatives~$i$ and~$k$, the ratio of the multinomial logit probabilities from Equation~\ref{eq:multinomiallogit} is independent of alternatives other than~$i$ and~$k$, \textit{i.e.},
 \begin{equation}
-  \frac{\Prob{i \succ \mathcal{C}}}{\Prob{k \succ \mathcal{C}}}
-  = \frac{\exp(\bm{x}_i\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}{\exp(\bm{x}_k\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}
-  = \exp(\bm{x}_i\Tr \bm{w} - \bm{x}_k\Tr \bm{w}).
+	\frac{\Prob{i \succ \mathcal{C}}}{\Prob{k \succ \mathcal{C}}}
+	= \frac{\exp(\bm{x}_i\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}{\exp(\bm{x}_k\Tr \bm{w}) / \sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}
+	= \exp(\bm{x}_i\Tr \bm{w} - \bm{x}_k\Tr \bm{w}).
 \end{equation}
 As this ratio depends only on alternatives~$i$ and $k$, adding or removing alternatives from the choice set~$\mathcal{C}$ will leave it unchanged.
 This is a powerful result because it implies that not all alternatives are necessary in order to obtain an estimate of the associated parameters.
@@ -200,8 +215,8 @@ Suppose now that the city adds a new bus, which is red, to their fleet.
 While this should not affect the probability of commuters to use their car, the multinomial logit model predicts that $\Prob{\text{``blue bus''} \succ \text{``car''}} = \Prob{\text{``red bus''} \succ \text{``car''}} = 1/4$ and $\Prob{\text{``car''} \succ \text{``blue/red bus''}} = 1/2$, so that the ratio is still equal to 2.
 It should be expected, however, that the probability of using one's car is unaffected by this new bus, \textit{i.e.},
 \begin{align*}
-  \Prob{\text{``blue bus''} \succ \text{``car''}} =  \Prob{\text{``red bus''} \succ \text{``car''}} =& \frac{1}{6} \\
-  \Prob{\text{``car''} \succ \text{``blue/red bus''}} =&  \frac{2}{3}.
+	\Prob{\text{``blue bus''} \succ \text{``car''}} =  \Prob{\text{``red bus''} \succ \text{``car''}} = & \frac{1}{6}  \\
+	\Prob{\text{``car''} \succ \text{``blue/red bus''}} =                                               & \frac{2}{3}.
 \end{align*}
 In this case, the ratio is equal to 4.
 
