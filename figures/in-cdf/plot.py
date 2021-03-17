@@ -2,7 +2,7 @@ import fire
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
-from thesis import setup_plotting
+from thesis import save_fig, setup_plotting
 
 
 def plot_cdf(ax):
@@ -39,7 +39,7 @@ def plot(save_as=None):
     plot_cdf(ax)
 
     if save_as is not None:
-        plt.savefig(save_as)
+        save_fig(fig, save_as, tight=True)
     else:
         plt.show()
 

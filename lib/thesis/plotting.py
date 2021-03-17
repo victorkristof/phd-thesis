@@ -1,3 +1,7 @@
+import os
+import subprocess
+import tempfile
+
 import matplotlib
 from matplotlib.backends.backend_pgf import FigureCanvasPgf
 
@@ -36,7 +40,7 @@ def set_rcparams(size):
         "legend.fontsize": 9,  # Make the legend/label fonts a little smaller
         "legend.frameon": True,  # Remove the black frame around the legend
         "pgf.texsystem": "xelatex",  # Use Xelatex which is TTF font aware
-        "pgf.rcfonts": False,  # Use pgf.preamble, ignore standard Matplotlib RC
+        "pgf.rcfonts": False,  # Use pgf.preamble, ignore Matplotlib RC
         "pgf.preamble": ''.join(
             [
                 r'\usepackage{fontspec}',
@@ -52,4 +56,28 @@ def set_rcparams(size):
 def setup_plotting(size=None):
     matplotlib.backend_bases.register_backend('pdf', FigureCanvasPgf)
     matplotlib.rcParams.update(set_rcparams(size))
-    # print("Thesis settings loaded!")
+
+
+def save_fig(fig, file_name, tight=True):
+    """Saves a Matplotlib figure as PDF to the given path and crops it."""
+
+    # Create file name.
+    extension = '.pdf'
+    if not file_name.endswith(extension):
+        file_name += extension
+
+    # Create tmp file for cropping.
+    file_name = os.path.abspath(file_name)
+    with tempfile.NamedTemporaryFile() as tmp_file:
+        tmp_name = tmp_file.name + extension
+
+    # Save figure
+    if tight:
+        fig.savefig(tmp_name, bbox_inches='tight')
+    else:
+        fig.savefig(tmp_name)
+
+    # Crop it.
+    subprocess.call('pdfcrop %s %s' % (tmp_name, file_name), shell=True)
+
+    print(f'Saved figure to {file_name}')
