@@ -1,5 +1,8 @@
 PROJECT=thesis
 
+# Define targets that are not related to files and folders.
+.PHONY: all clean figures
+
 all: $(PROJECT).tex $(PROJECT).bib
 	pdflatex $(PROJECT)
 	bibtex $(PROJECT)
@@ -12,4 +15,7 @@ compress: $(PROJECT).pdf
 
 clean:
 	latexmk -c
-	rm *.bbl *.brf *.synctex* indent.log
+	@rm *.bbl *.brf *.synctex* indent.log
+
+figures:
+	@./../figures/plot.sh
