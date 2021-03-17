@@ -26,9 +26,8 @@ def plot_pdf(ax):
     )
 
     # Plot settings.
-    ax.set_title('Probability density functions')
     ax.legend()
-    ax.set_ylabel(r'$f(x)$')
+    ax.set_ylabel(r'Probability density $f(x)$')
     ax.set_xlabel(r'$x$')
 
 

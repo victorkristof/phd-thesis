@@ -26,9 +26,8 @@ def plot_cdf(ax):
     )
 
     # Plot settings.
-    ax.set_title('Cumulative density functions')
     ax.legend()
-    ax.set_ylabel(r'$F(x)$')
+    ax.set_ylabel(r'Cumulative density $F(x)$')
     ax.set_xlabel(r'$x$')
 
 
