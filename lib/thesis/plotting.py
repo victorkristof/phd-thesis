@@ -5,15 +5,20 @@ import tempfile
 import matplotlib
 from matplotlib.backends.backend_pgf import FigureCanvasPgf
 
-WIDTH = 5.78  # textwidth = 146.8mm, c.f. preamble.tex
-HEIGHT = 3.0
+GOLDEN_RATIO = (5 ** 0.5 + 1) / 2
+TEXTWIDTH = 5.78  # 146.8mm = 5.78in, c.f. preamble.tex
 
 
-def set_rcparams(size):
+def set_rcparams(size, factor=0.75, subplots=(1, 1)):
+    # Set height and width.
+    width = TEXTWIDTH
+    # Scale height according to golden ratio and number of subplots.
+    height = width / GOLDEN_RATIO * subplots[0] / subplots[1]
+
     if size == 'full' or size is None:
-        figsize = (WIDTH, HEIGHT)
+        figsize = (width, height)
     elif size == 'single':
-        figsize = (WIDTH * 0.75, HEIGHT)
+        figsize = (width * factor, height * factor)
     elif type(size) is tuple:
         figsize = size
     else:
