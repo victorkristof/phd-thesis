@@ -156,7 +156,7 @@ They can be interpreted as the \emph{perceived psychological stimuli} of the alt
 
 The logit model was introduced by~\citet{zermelo1928berechnung} and rediscovered two decades later by~\citet{bradley1952rank}.
 In this model, the random noise is assumed to be independently and identically distributed with a Gumbel distribution\footnote{This distribution is also called the (Type I) extreme value distribution.} $\epsilon_i, \epsilon_j \sim \DGumbel{0, 1}$.
-By using the property that the difference of two Gumbel random variables follows a logistic distribution (see Figure~\ref{.fig:cdf}), the choice probability for the logit model is
+By using the property that the difference of two Gumbel random variables follows a logistic distribution (see Figure~\ref{in:fig:cdf}), the choice probability for the logit model is
 \begin{equation*}
 	\Prob{i \succ j} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\exp(\bm{x}_i\Tr \bm{w}) + \exp(\bm{x}_j\Tr \bm{w})} = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}. %= \sigma(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w}).
 \end{equation*}

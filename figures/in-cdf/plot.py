@@ -22,7 +22,7 @@ def plot_cdf(ax):
         stats.logistic.cdf(x, loc, scale),
         color='black',
         linestyle='--',
-        label='Gumbel$(0, 1)$',
+        label='Logistic$(0, 1)$',
     )
 
     # Plot settings.
