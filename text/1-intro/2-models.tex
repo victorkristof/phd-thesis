@@ -149,9 +149,10 @@ We show in Figure~\ref{in:fig:pdf} an example of these two distributions with $\
 The probit model was first introduced by~\citet{thurstone1927law} in the context of psychometrics.
 In this model, the random noise is independently and identically distributed (i.i.d.) with a Normal distribution $\epsilon_i, \epsilon_j \sim \DNorm{0, 1}$.
 As the difference of two Gaussian random variables is also Gaussian, \textit{i.e.}, $\epsilon_i - \epsilon_j \sim \DNorm{0, 1}$ in this special case, the choice probability for the probit model is
-\begin{equation*}
+\begin{equation}
+	\label{in:eq:probit}
 	\Prob{i \succ j} = \Prob{\epsilon_i - \epsilon_j > \bm{x}_j\Tr \bm{w} - \bm{x}_i\Tr \bm{w}} = \Phi \left( \bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w} \right),
-\end{equation*}
+\end{equation}
 where $\Phi( \cdot )$ is the cumulative distribution function of the standard normal distribution, as shown in Figure~\ref{in:fig:cdf}.
 When the random utility is parameterized by only one parameter, each alternative~$i$ is represented by a one-dimension parameter~$w_i \in \mathbf{R}$.
 The feature vector $\bm{x}_i$ becomes a one-hot vector that is 0 everywhere except in~$i$ where it is 1, \textit{i.e.}, it ``selects'' the parameter associated with alternative~$i$.
@@ -186,16 +187,17 @@ We show in Figure~\ref{in:fig:cdf} an example of the cumulative distribution fun
 
 In the logit model, the random noise is assumed to be i.i.d.\ with a Gumbel distribution $\epsilon_i, \epsilon_j \sim \DGumbel{0, 1}$.
 Hence, $\epsilon_i - \epsilon_j \sim \DLogistic{0, 1}$, and  the choice probability for this model is
-\begin{align*}
-	\Prob{i \succ j} & = \Prob{\epsilon_i - \epsilon_j > \bm{x}_j\Tr \bm{w} - \bm{x}_i\Tr \bm{w}}              \\
+\begin{align}
+	\label{in:eq:logit}
+	\Prob{i \succ j} & = \Prob{\epsilon_i - \epsilon_j > \bm{x}_j\Tr \bm{w} - \bm{x}_i\Tr \bm{w}}              \nonumber \\
 	% & = \sigma(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})                                       \\
-	                 & = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}                        \\
+	                 & = \frac{1}{1 + \exp[-(\bm{x}_i\Tr \bm{w} - \bm{x}_j\Tr \bm{w})]}                        \nonumber \\
 	                 & = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\exp(\bm{x}_i\Tr \bm{w}) + \exp(\bm{x}_j\Tr \bm{w})}.
-\end{align*}
+\end{align}
 
 When the random utility is parameterized by only one parameter, the model
 \begin{equation}
-	\label{eq:bradley-terry}
+	\label{in:eq:bradley-terry}
 	\Prob{i \succ j} = \frac{1}{1 + \exp[-(w_i - w_j)]}
 \end{equation}
 is called the \emph{Bradley-Terry model}.
@@ -209,10 +211,10 @@ This model was introduced by~\citet{rasch1993probabilistic} in the context of \e
 It assumes that an individual~$u$ taking a test has an intrinsic strength~$s_u \in \mathbf{R}$, and that a question~$i$ in the test has an intrinsic difficulty~$d_i \in \mathbf{R}$.
 The probability that individual~$u$ answers correctly to question~$i$ is
 \begin{equation}
-	\label{eq:rasch}
+	\label{in:eq:rasch}
 	\Prob{u \succ i} = \frac{1}{1 + \exp[-(s_u - d_i)]}.
 \end{equation}
-The relation with the Bradley-Terry model follows directly from comparing~\eqref{eq:bradley-terry} and~\eqref{eq:rasch}.
+The relation with the Bradley-Terry model follows directly from comparing~\eqref{in:eq:bradley-terry} and~\eqref{in:eq:rasch}.
 
 \paragraph{Multinomial Logit Model}
 % Define the multinomial logit model by McFadden.
@@ -222,7 +224,7 @@ In the probit and logit models, the decision maker faces a binary choice, \texti
 In the multinomial logit model, the decision maker faces multiple alternatives, and the choice set $\mathcal{C} = \{ i, j, \ldots, k \}$ is larger than 2.
 The random noise is also assumed to be i.i.d.\ with the Gumbel distribution, so that the choice probability is
 \begin{equation}
-	\label{eq:multinomiallogit}
+	\label{in:eq:multinomiallogit}
 	\Prob{i \succ \mathcal{C}} = \Prob{U_i > U_j, \ldots, U_i > U_k} = \frac{\exp(\bm{x}_i\Tr \bm{w})}{\sum_{j \in \mathcal{C}} \exp(\bm{x}_j\Tr \bm{w})}.
 \end{equation}
 The notation ``$i \succ \mathcal{C}$'' reads as ``alternative~$i$ is chosen among all alternatives in the choice set $\mathcal{C}$''.
@@ -230,7 +232,7 @@ The notation ``$i \succ \mathcal{C}$'' reads as ``alternative~$i$ is chosen amon
 \paragraph{Independence of Irrelevant Alternatives}
 
 The property of \emph{independence of irrelevant alternatives} (IIA) was formulated by~\citet{luce1959individual} as a lemma derived from its choice axiom.
-The IIA states that, for any two alternatives~$i$ and~$j$, the ratio of the multinomial logit probabilities from~\eqref{eq:multinomiallogit} is independent of alternatives other than~$i$ and~$j$, \textit{i.e.},
+The IIA states that, for any two alternatives~$i$ and~$j$, the ratio of the multinomial logit probabilities from~\eqref{in:eq:multinomiallogit} is independent of alternatives other than~$i$ and~$j$, \textit{i.e.},
 \begin{equation}
 	\frac{\Prob{i \succ \mathcal{C}}}{\Prob{j \succ \mathcal{C}}}
 	= \frac{\exp(\bm{x}_i\Tr \bm{w}) / \sum_{k \in \mathcal{C}} \exp(\bm{x}_k\Tr \bm{w})}{\exp(\bm{x}_j\Tr \bm{w}) / \sum_{k \in \mathcal{C}} \exp(\bm{x}_k\Tr \bm{w})}
