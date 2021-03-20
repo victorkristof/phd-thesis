@@ -24,10 +24,10 @@ where the invertible function~$g : \calD \rightarrow \mathbf{R}$ is called the l
 This function links the natural parameter and the mean parameter.
 The choice of link function depends on the choice of distribution in the GLM.
 Equation~\eqref{pdk:eq:glm} can be easily generalized to~$K$ outputs~$\vy \in \calD$ (\textit{e.g.}, for multi-party elections) by setting the domain~$\calD$ to be~$K$-dimensional.
-One advantage of GLMs is that they can be efficiently fit to data by using convex optimization methods \cite{boyd2004convex}.
+One advantage of GLMs is that they can be efficiently fit to data by using convex optimization methods~\cite{boyd2004convex}.
 In Table~\ref{pdk:tab:glm}, we summarize four popular GLMs and their corresponding link functions, natural parameters, mean parameters, and support of~$g$.
 We will use these models in our algorithm to predict referenda and elections, as described in the next sections.
-We refer the curious reader to \citet[Chapter~9]{murphy2012machine} for a detailed introduction to GLMs.
+We refer the curious reader to~\citet[Chapter~9]{murphy2012machine} for a detailed introduction to GLMs.
 
 \begin{table}
 	\caption{
@@ -76,7 +76,7 @@ Figure~\ref{pdk:fig:structure} depicts the structure of the matrix~$\vY$.
 	\label{pdk:fig:structure}
 \end{figure}
 
-To predict the missing entries of~$\vy^{(\Ubs)}_{V+1}$, \citet{etter2016online} use standard matrix factorization with alternating least-squares (ALS) to minimize the non-convex loss based on the Frobenius norm
+To predict the missing entries of~$\vy^{(\Ubs)}_{V+1}$,~\citet{etter2016online} use standard matrix factorization with alternating least-squares (ALS) to minimize the non-convex loss based on the Frobenius norm
 \begin{equation}
 	\label{pdk:eq:matrix_factorization}
 	\min_{\vA, \vB} \left\Vert \vY^{(\Obs)} - \rnd{\vA\vB^T}^{(\Obs)} \right\Vert_F,
@@ -189,27 +189,27 @@ In Equation~\eqref{pdk:eq:svd} and Equation~\eqref{pdk:eq:projection}, our algor
 In Equation~\eqref{pdk:eq:log_likelihood}, it learns the latent features of the votes~$\vb_v = \argmin_{\vb} -\ell_p(\vb ; \vX, \vy_v)$ as the parameters of a GLM~$p$.
 
 So far, we have considered that each region has the same number of voters.
-If we have access to data about the number of voters in each region (\textit{e.g.}, the number of valid votes, the number of eligible voters, or the population), we can include this information by replacing the regularized log-likelihood in \eqref{pdk:eq:log_likelihood} by
+If we have access to data about the number of voters in each region (\textit{e.g.}, the number of valid votes, the number of eligible voters, or the population), we can include this information by replacing the regularized log-likelihood in~\eqref{pdk:eq:log_likelihood} by
 \begin{equation}
 	\label{pdk:eq:weighted}
 	-\ell_p(\vw ; \vX, \vy_{V+1}) = \sum_{r \in \Obs} N_r \log p(y_{r,V+1} \given \vw, \vx_r) + \lambda \Vert \vw \Vert_2^2,
 \end{equation}
 where $N_r \in \mathbf{R}$ is a count related to the number of voters in region~$r$.
 We refer to the variation of the algorithm that uses this log-likelihood as \textit{weighted}.
-We refer to the variation of the algorithm that uses the log-likelihood in \eqref{pdk:eq:log_likelihood} as \textit{unweighted}.
+We refer to the variation of the algorithm that uses the log-likelihood in~\eqref{pdk:eq:log_likelihood} as \textit{unweighted}.
 A similar argument can be trivially made for elections by letting~$P_{rv}^{(i)} \sim \categorical(p_{rv}, K)$ be a random variable describing the vote cast by voter~$i$ in region~$r$ on vote~$v$ for $K$ political parties.
 
 \subsection{Limitations}
 
 By design, our approach suffers from the cold-start problem of collaborative filtering~\cite{koren2009matrix}.
 We can make predictions only when at least one past observation is available, \textit{i.e.}, when~$\vert \Obs \vert = 1$.
-To bypass this problem, \citet{etter2016online} include features of the regions, such as the geographical location, the population size, and the elevation, and features of the votes, such as the voting recommendation by political parties.
+To bypass this problem,~\citet{etter2016online} include features of the regions, such as the geographical location, the population size, and the elevation, and features of the votes, such as the voting recommendation by political parties.
 These features are, however, not systematically and programmatically available, making it difficult to use them in a real-world system such as the one we describe in Section~\ref{pdk:sec:depsys}.
 
 Our approach also makes the hypothesis that regional and vote representations are static over time.
 In particular, the algorithm learns the regional representations over the whole training set.
 The latest results might, however, provide more information than older results.
-To bypass this problem, we could weigh the SVD by using a sliding window or by exploiting a temporal SVD algorithm \cite{bamler2017dynamic} to capture the dynamics of the voting process.
+To bypass this problem, we could weigh the SVD by using a sliding window or by exploiting a temporal SVD algorithm~\cite{bamler2017dynamic} to capture the dynamics of the voting process.
 
 % Other sources of data, \textit{e.g.}, polling data, could be used to make predictions prior to a vote.
 % However, the business model of polling agencies often solely relies on their data, which prevents them from sharing their datasets.

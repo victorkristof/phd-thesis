@@ -75,7 +75,7 @@ To simulate a real setting where results arrive sequentially, we incrementally a
 Current political forecasting methods for real-time estimation of the outcomes (\textit{e.g.}, by media outlets) rely mostly on weighted averages of the regional results on the day of the vote.
 More sophisticated methods (developed, \textit{e.g.}, by polling agencies) can also be used, but their technical details are not available.
 Hence, we compare our algorithm against weighted averaging as a baseline.
-For the binary classification task, we also compare against standard matrix factorization (MF) trained with alternating least squares, as proposed by \citet{etter2016online} and as formulated in Equation~\eqref{pdk:eq:matrix_factorization}.
+For the binary classification task, we also compare against standard matrix factorization (MF) trained with alternating least squares, as proposed by~\citet{etter2016online} and as formulated in Equation~\eqref{pdk:eq:matrix_factorization}.
 For the multiple outcome task, we restrict our comparison to weighted averaging.
 
 \subsection{Swiss Referenda}
@@ -168,7 +168,7 @@ This is because the Democratic candidate won in 21 of 51 regions (41\%) and won 
 \subsection{German Legislative Election}
 
 German legislative elections take place every four years.
-We obtain two datasets \cite{norsk2020germany} of regional results with $R=16$ states (1990--2009) and $R=538$ districts (1990--2005).
+We obtain two datasets~\cite{norsk2020germany} of regional results with $R=16$ states (1990--2009) and $R=538$ districts (1990--2005).
 After 2005 (for the districts) and 2009 (for the states), the data are regrettably not publicly available any longer.
 We keep $K = 5$ political parties, corresponding to the five major parties in Germany\footnote{CDU/CSU (christian democracy), SPD (social liberalism), FDP (conservative liberalism), the Green party (ecological), and the Left party (radical left).} for which we have data over the whole period.
 The datasets cover $V=6$ votes for state-level results and $V=5$ for district-level results.

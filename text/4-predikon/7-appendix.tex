@@ -86,7 +86,7 @@ The test set consists of referenda $301$ to $326$, and we use it to report the r
 We test values for $\lambda \in \{0.001, 0.01, 0.1\}$ and for $D \in \{10, 25, 100, 250\}$.
 The best model with Gaussian likelihood uses $\lambda=0.1$ and $D=25$ while the best model with Bernoulli likelihood uses $\lambda=0.01$ and $D=25$.
 We tune the hyperparameters over $10$ random reveal orders per referendum, and we evaluate the performance of our algorithm over $100$ random reveal orders.
-For the matrix factorization baseline, we use the best hyperparameters as reported by \citet{etter2016online}, \textit{i.e.}, $\lambda_U = 31.0$, $\lambda_V = 0.03$, and $D = 25$.
+For the matrix factorization baseline, we use the best hyperparameters as reported by~\citet{etter2016online}, \textit{i.e.}, $\lambda_U = 31.0$, $\lambda_V = 0.03$, and $D = 25$.
 
 \subsection{US Presidential Election}%
 \label{app:us}
@@ -118,7 +118,7 @@ We tune the hyperparameters over $100$ random reveal orders per election, and we
 \subsection{German Parliamentary Election}%
 \label{app:ge}
 
-We use the German parliamentary elections data published by the European Elections Database (EED) \cite{norsk2020germany}.
+We use the German parliamentary elections data published by the European Elections Database (EED)~\cite{norsk2020germany}.
 In Germany, parliamentary elections take place every 4 years.
 The EED reports results between 1990 and 2009 on state level and between 1990 and 2005 on district level.
 Similarly to the U.S.\ presidential elections, we normalize the results per region by keeping the main five parties in Germany (CDU/CSU, SPD, FDP, the Greens, and the Left).
