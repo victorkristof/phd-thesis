@@ -1,3 +1,4 @@
+%! TEX root = ../thesis.tex
 \section{Experimental Setting}
 \label{app:experimental_setting}
 
@@ -24,45 +25,45 @@ For the binary datasets, \textit{i.e.}, for the Swiss referenda and for the U.S.
 For the categorical datasets, \textit{i.e.}, for the German elections where we try to predict the fractions of votes that parties obtain, we measure the performance in terms of the $\ell_1$-norm to sum up the prediction errors across different parties.
 
 \begin{table}
-  \caption{
-    Ranges of hyperparameters for different datasets.
-  }
-  \label{tab:ranges}
-  \begin{tabular}{llrr}
-    \toprule
-    Country & Region & $\lambda$ & $D$ \\
-    \midrule
+	\caption{
+		Ranges of hyperparameters for different datasets.
+	}
+	\label{tab:ranges}
+	\begin{tabular}{llrr}
+		\toprule
+		Country     & Region   & $\lambda$               & $D$                    \\
+		\midrule
 
-    Switzerland & Munic.   & $\{0.001, 0.01, 0.1 \}$ & $\{10, 25, 100, 250\}$ \\
-    U.S.        & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 5, 7\}$ \\
-    Germany     & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$ \\
-    Germany     & District & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$ \\
+		Switzerland & Munic.   & $\{0.001, 0.01, 0.1 \}$ & $\{10, 25, 100, 250\}$ \\
+		U.S.        & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 5, 7\}$          \\
+		Germany     & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$         \\
+		Germany     & District & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$         \\
 
-    \bottomrule
-  \end{tabular}
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 \begin{table}
-  \caption{
-    Best hyperparameters for each model and dataset.
-  }
-  \label{tab:best}
-  \begin{tabular}{lllrr}
-    \toprule
-    Country & Region & Likelihood & $\lambda$ & $D$ \\
-    \midrule
+	\caption{
+		Best hyperparameters for each model and dataset.
+	}
+	\label{tab:best}
+	\begin{tabular}{lllrr}
+		\toprule
+		Country     & Region   & Likelihood & $\lambda$ & $D$  \\
+		\midrule
 
-    Switzerland & Munic.   & Gaussian  & $0.1$  & $25$ \\
-                &          & Bernoulli & $0.01$ & $25$ \\
-    U.S.        & State    & Gaussian  & $0.01$ & $5$ \\
-                &          & Bernoulli & $0.01$ & $7$ \\
-    Germany     & State    & Gaussian  & $0.01$ & $7$ \\
-                &          & Bernoulli & $0.01$ & $7$ \\
-    Germany     & District & Gaussian  & $0.01$ & $11$ \\
-                &          & Bernoulli & $0.01$ & $11$ \\
+		Switzerland & Munic.   & Gaussian   & $0.1$     & $25$ \\
+		            &          & Bernoulli  & $0.01$    & $25$ \\
+		U.S.        & State    & Gaussian   & $0.01$    & $5$  \\
+		            &          & Bernoulli  & $0.01$    & $7$  \\
+		Germany     & State    & Gaussian   & $0.01$    & $7$  \\
+		            &          & Bernoulli  & $0.01$    & $7$  \\
+		Germany     & District & Gaussian   & $0.01$    & $11$ \\
+		            &          & Bernoulli  & $0.01$    & $11$ \\
 
-    \bottomrule
-  \end{tabular}
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 \subsection{Swiss Referenda}%
