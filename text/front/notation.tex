@@ -8,37 +8,41 @@
 \renewcommand*{\arraystretch}{1.5}
 
 \begin{tabularx}{\linewidth}{lX}
-	Symbol & Description                                                                     \\
+	Symbol & Description                                                                                                                       \\
 	\midrule
 	$x$
-	       & Plain lowercase letters denote scalar values.                                   \\
+	       & Plain lowercase letters denote scalar values.                                                                                     \\
 	$\bm{x} = [x_i]$
-	       & Boldface lowercase letter denote column vectors.                                \\
+	       & Boldface lowercase letter denote column vectors.                                                                                  \\
 	$\bm{X} = [x_{ij}]$
-	       & Boldface uppercase letters denote matrices.                                     \\
+	       & Boldface uppercase letters denote matrices.                                                                                       \\
 	$\mathcal{X}$
-	       & Calligraphic uppercase letters denote sets.                                     \\
+	       & Calligraphic uppercase letters denote sets.                                                                                       \\
 	$\mathbf{R}, \mathbf{R}_{>0}, \mathbf{N}$
-	       & Number types: real, positive real and natural numbers, respectively.            \\
+	       & Number types: real, positive real and natural numbers, respectively.                                                              \\
 	$[N]$
-	       & Set of consecutive natural numbers $\{ 1, \ldots, N \}$.                        \\
+	       & Set of consecutive natural numbers $\{ 1, \ldots, N \}$.                                                                          \\
 	$i \succ j$
-	       & Pairwise comparison outcome ``$i$ is chosen over $j$''.                         \\
+	       & Pairwise comparison outcome ``$i$ is chosen over $j$''.                                                                           \\
 	% $i \succeq \mathcal{A}$
 	$i \succ \mathcal{A}$
-	       & Multiway comparison outcome ``$i$ is chosen among alternatives $\mathcal{A}$''. \\
+	       & Multiway comparison outcome ``$i$ is chosen among alternatives $\mathcal{A}$''.                                                   \\
 	$\Prob{\mathcal{A}}$
-	       & Probability of the event $\mathcal{A}$.                                         \\
+	       & Probability of the event $\mathcal{A}$.                                                                                           \\
 	$\Indic{\mathcal{A}}$
-	       & Indicator variable of the event $\mathcal{A}$.                                  \\
+	       & Indicator variable of the event $\mathcal{A}$.                                                                                    \\
 	$\Exp{x}$
-	       & Expectation of the random variable $x$.                                         \\
+	       & Expectation of the random variable $x$.                                                                                           \\
 	$\Var{x}$
-	       & Variance of the random variable $x$.                                            \\
+	       & Variance of the random variable $x$.                                                                                              \\
 	$\Cov{x}{y}$
-	       & Covariance of the random variables $x$ and $y$.                                 \\
+	       & Covariance of the random variables $x$ and $y$.                                                                                   \\
+	$\sigma(x)$
+	       & Sigmoid function $\sigma: \mathbf{R} \rightarrow [0, 1]$,  $\sigma(x) = 1 / (1 + \exp[-x])$.                                      \\
+	$\mathcal{S}(x)$
+	       & Softmax function $\mathcal{S}: \mathbf{R}^K \rightarrow [0, 1]^K$,  $\mathcal{S}(\bm{x})_i = \exp(x_i) / \sum_{k=1}^K \exp(x_k)$. \\
 	$\BigO{f(x)}$
-	       & $g(x) = \BigO{f(x)} \iff \limsup_{x \to \infty} \Abs{g(x)} / f(x) < \infty$.    \\
+	       & $g(x) = \BigO{f(x)} \iff \limsup_{x \to \infty} \Abs{g(x)} / f(x) < \infty$.                                                      \\
 	% $\LittleO{f(x)}$
 	%   & $g(x) = \LittleO{f(x)} \iff \lim_{x \to \infty} g(x) / f(x) = 0$. \\
 	% $\BigOmega{f(x)}$
@@ -48,31 +52,28 @@
 \end{tabularx}
 
 \begin{tabularx}{\linewidth}{llX}
-	Distribution & Domain & Density function $f(x)$ \\
+	Distribution & Domain                                                                                                               & Density function or probability mass function $f(x)$ \\
 	\midrule
 	$\DNorm{\bm{\mu}, \bm{\Sigma}}$
-    & $\mathbf{R}^D$
-	  & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
-	      \exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right] $ \\
+	             & $\mathbf{R}^D$
+	             & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
+	\exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right] $                                                                                             \\
 	\rule{0pt}{5ex}%
-	% $\DBeta{\alpha, \beta}$
-	%   & $[0, 1]$
-	%   & $\displaystyle \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1-x)^{\beta - 1}$ \\
-	% $\DExp{\lambda}$
-	%   & $\mathbf{R}_{>0}$
-	%   & $\displaystyle \lambda \exp(- \lambda x)$ \\
-	% \rule{0pt}{5ex}%
-	% $\DGamma{\alpha, \beta}$
-	%   & $\mathbf{R}_{>0}$
-	%   & $\displaystyle \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} \exp(- \beta x)$ \\
-	% \rule{0pt}{5ex}%
 	$\DGumbel{\mu, \beta}$
-	  & $\mathbf{R}$
-	  & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
+	             & $\mathbf{R}$
+	             & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                                                 \\
 	\rule{0pt}{5ex}%
 	$\DLogistic{\mu, \beta}$
-	  & $\mathbf{R}$
-    & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$ \\
+	             & $\mathbf{R}$
+	             & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                                        \\
+	\rule{0pt}{5ex}%
+	$\DBernoulli{p}$
+	             & $\{0, 1\}$
+	             & $\displaystyle p^x (1-p)^{1-x}$                                                                                                                                             \\
+	\rule{0pt}{5ex}%
+	$\DCategorical{\bm{p}, K}$
+	             & $\{0, \ldots, K\}$
+	             & $\displaystyle \prod_{i=1}^K \Indic{x=i} p_i$                                                                                                                               \\
 \end{tabularx}
 
 \endgroup

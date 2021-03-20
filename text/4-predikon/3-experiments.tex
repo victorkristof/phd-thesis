@@ -36,7 +36,7 @@ As data about population counts were not available in this case, we use a likeli
 
 \subsection{Evaluation}
 
-For each dataset, we find the best hyperparameters using the training set only, as explained in details in Appendix~\ref{app:experimental_setting}.
+For each dataset, we find the best hyperparameters using the training set only, as explained in details in Appendix~\ref{pdk:app:experimental_setting}.
 To evaluate the performance of our algorithm, we compute the mean absolute error (MAE) and the accuracy on the national results.
 
 We first describe the error metrics used for the binary outcome case then extend them for multiple outcomes, \textit{e.g.}, when different parties can be voted.
@@ -53,11 +53,10 @@ The predicted national outcome $y \in \mathbf{R}$ is defined as
 where the prediction $y_r$ in some observed region~$r \in \Obs$ equals the true outcome $y_r^*$.
 Then, the MAE and the accuracy of the national prediction are computed as
 \begin{align}
-	\mae(y, y^*)         & = \vert y - y^* \vert, \label{pdk:eq:mae}                         \\
-	\textrm{Acc}(y, y^*) & = \vone \{y \geq 0.5 \textrm{ and } y^* \geq 0.5\} \nonumber      \\
-	                     & + \vone \{ y < 0.5 \textrm{ and } y^* < 0.5\}, \label{pdk:eq:acc}
+	\mae(y, y^*)         & = \vert y - y^* \vert, \label{pdk:eq:mae}                                                                                  \\
+	\textrm{Acc}(y, y^*) & = \Indic{y \geq 0.5 \textrm{ and } y^* \geq 0.5} \nonumber + \Indic{ y < 0.5 \textrm{ and } y^* < 0.5}, \label{pdk:eq:acc}
 \end{align}
-where $\vone \{\cdot \}$ is the indicator function.
+where $\Indic{\cdot}$ is the indicator function.
 
 The MAE enables us to evaluate how far a predictor is from the exact percentage value, whereas the accuracy enables us to evaluate if the outcome is predicted correctly.
 For $K$ outcomes, the true and the predicted outcomes are vectors $\vy^* \in [0, 1]^K$ and $\vy \in [0, 1]^K$, respectively, and the MAE in~\eqref{pdk:eq:mae} is simply the $\ell_1$-norm of the difference between the two vectors.
@@ -140,7 +139,7 @@ The municipalities of the only Italian-speaking canton, Ticino, form their own c
 
 The U.S.\ presidential election takes place every four years.
 We obtain a dataset about the state-level ballots between 1976 and 2016~\citep{mit2017us}.
-In the spirit of Nate Silver's FiveThirtyEight~\citep{silver2008pollster}, we evaluate the performance of our algorithm at predicting the result of the U.S.\ presidential election in 2016.
+In the spirit of Nate Silver's \textit{FiveThirtyEight}~\citep{silver2008pollster}, we evaluate the performance of our algorithm at predicting the result of the U.S.\ presidential election in 2016.
 The U.S.\ presidential election relies on the electoral-college system, which adds one level of complexity to the prediction because (1) the state-level results are quantized to an integer number of delegates and (2) the candidate who wins the majority of votes in a state wins all the delegates of that state.
 This (non-linear) winner-take-all rule requires further modeling assumptions and is out of the scope of this paper.
 Instead, we focus on predicting the results of the popular vote.

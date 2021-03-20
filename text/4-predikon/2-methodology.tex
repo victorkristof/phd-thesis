@@ -18,7 +18,7 @@ Then, the likelihood of a GLM is
 
 Point-wise predictions are obtained from the mean parameter
 \begin{equation*}
-	\mu = \E[y] = A'(\theta) = g^{-1}(\theta),
+	\mu = \Exp{y} = A'(\theta) = g^{-1}(\theta),
 \end{equation*}
 where the invertible function~$g : \calD \rightarrow \mathbf{R}$ is called the link function.
 This function links the natural parameter and the mean parameter.
@@ -30,20 +30,21 @@ We will use these models in our algorithm to predict referenda and elections, as
 We refer the curious reader to~\citet[Chapter~9]{murphy2012machine} for a detailed introduction to GLMs.
 
 \begin{table}
+	\centering
 	\caption{
-		List of GLMs.
+		List of Generalized Linear Models.
 		The softmax function is denoted by~$\calS$.
 	}
 	\label{pdk:tab:glm}
 	\begin{tabular}{lllll}
 		\toprule
-		Distrib.                & Link $g$      & $\theta$                        & $\mu$                      & $\calD$        \\
+		Distrib.                 & Link $g$      & $\theta$                        & $\mu$                      & $\calD$        \\
 		\midrule
 
-		$\gauss(\mu, \sigma^2)$ & Identity      & $\theta = \mu$                  & $\mu = \vx\T \vw$          & $\mathbf{R}$   \\
-		$\gauss(\vmu, \vSigma)$ & Identity      & $\vtheta = \vmu$                & $\vmu = \vX \vw$           & $\mathbf{R}^K$ \\
-		$\ber(\mu)$             & Logit         & $\theta = \logit(\mu)$          & $\mu = \sigma(\vx\T \vw)$  & $[0, 1]$       \\
-		$\cat(\vmu, K)$         & Inv.\ softmax & $\vtheta = \Softmax^{-1}(\vmu)$ & $\vmu = \Softmax(\vX \vw)$ & $[0, 1]^K$     \\
+		$\DNorm{\mu, \sigma^2}$  & Identity      & $\theta = \mu$                  & $\mu = \vx\T \vw$          & $\mathbf{R}$   \\
+		$\DNorm{\vmu, \vSigma}$  & Identity      & $\vtheta = \vmu$                & $\vmu = \vX \vw$           & $\mathbf{R}^K$ \\
+		$\DBernoulli{\mu}$       & Logit         & $\theta = \logit(\mu)$          & $\mu = \sigma(\vx\T \vw)$  & $[0, 1]$       \\
+		$\DCategorical{\vmu, K}$ & Inv.\ softmax & $\vtheta = \Softmax^{-1}(\vmu)$ & $\vmu = \Softmax(\vX \vw)$ & $[0, 1]^K$     \\
 
 		\bottomrule
 	\end{tabular}
@@ -51,13 +52,13 @@ We refer the curious reader to~\citet[Chapter~9]{murphy2012machine} for a detail
 
 \subsection{Problem Setup}
 
-Let~$\vY \in \real^{R \times (V+1)}$ be the matrix of~$(V+1)$ regional vote results in~$R$ regions, where a result is typically a fraction of votes.
+Let~$\vY \in \mathbf{R}^{R \times (V+1)}$ be the matrix of~$(V+1)$ regional vote results in~$R$ regions, where a result is typically a fraction of votes.
 We assume the columns to be in chronological order.
 For a new, unobserved vote~$V+1$, we sequentially observe entries of the last column\footnote{This problem can be trivially generalized to multiple unobserved columns~$\{\vy_{V+1}, \vy_{V+2}, \cdots \}$.} in~$\vY$, which we denote by~$\vy_{V+1}$.
 Let~$\vY_V \in \mathbf{R}^{R \times V}$ be the \emph{sub-matrix} of all observed, historical results up to vote~$V$.
-Denoting the set of consecutive integers by $[R] \coloneq \{1, 2, \ldots, R \}$, we define the set of \textit{observed} indices for the new vote as
+Denoting the set of consecutive integers by $[R] \define \{1, 2, \ldots, R \}$, we define the set of \textit{observed} indices for the new vote as
 \begin{equation*}
-	\Obs = \{ r : r \in [R] \text{ and } y_{r,V+1} \in \real \},
+	\Obs = \{ r : r \in [R] \text{ and } y_{r,V+1} \in \mathbf{R} \},
 \end{equation*}
 and the set of \textit{unobserved} indices (corresponding to values to be predicted) as
 \begin{equation*}
@@ -81,7 +82,7 @@ To predict the missing entries of~$\vy^{(\Ubs)}_{V+1}$,~\citet{etter2016online} 
 	\label{pdk:eq:matrix_factorization}
 	\min_{\vA, \vB} \left\Vert \vY^{(\Obs)} - \rnd{\vA\vB^T}^{(\Obs)} \right\Vert_F,
 \end{equation}
-where~$\vA \in \real^{R \times D}$ and~$\vB \in \real^{V \times D}$ are two matrices of latent dimension~$D \in \mathbf{N}_{>0}$, and where superscript~$(\Obs)$ denotes that, in this case, only the observed entries are kept.
+where~$\vA \in \mathbf{R}^{R \times D}$ and~$\vB \in \mathbf{R}^{V \times D}$ are two matrices of latent dimension~$D \in \mathbf{N}_{>0}$, and where superscript~$(\Obs)$ denotes that, in this case, only the observed entries are kept.
 With ALS, each iteration is expensive, and there are neither convergence guarantees nor explicit convergence rates~\cite{bell2007scalable, koren2009matrix}.
 According to the Eckart-Young-Mirsky Theorem~\citep{eckart1936approximation}, the optimal solution to Equation~\eqref{pdk:eq:matrix_factorization} is the SVD, which is only computable if~$\vY^{(\Obs)}=\vY$.
 We devise a more effective algorithm motivated by the special structure of this collaborative filtering problem\cite{etter2016online}.
@@ -161,9 +162,9 @@ Finally, predicting unobserved values is only a (function of a) matrix-vector mu
 
 Elections are more complex than referenda because they have categorical outcomes.
 Let~$K$ be the number of possible outcomes (for example~$K$ political parties).
-The vote result matrix becomes a tensor~$\vY_V \in \real^{R \times V \times K}$.
+The vote result matrix becomes a tensor~$\vY_V \in \mathbf{R}^{R \times V \times K}$.
 To apply our algorithm, we concatenate the results of each party to collapse the last dimension.
-This yields a matrix~$\vY_V \in \real^{R \times VK}$ that can be decomposed using SVD to obtain representations of regions (steps 1 and 2).
+This yields a matrix~$\vY_V \in \mathbf{R}^{R \times VK}$ that can be decomposed using SVD to obtain representations of regions (steps 1 and 2).
 For an election, the regional results are stored in a matrix \mbox{$\vy_{V+1} \in \mathbf{R}^{R \times K}$}, and we use multivariate Gaussian or categorical likelihoods in the GLM to model the multiple outcomes (steps 3 and 4).
 
 % TODO: Add sentences about how to obtain final prediction by aggregating observed results and predicted results.
@@ -178,7 +179,7 @@ The outcome~$p \in [0, 1]$ of a referendum is the probability~$p$ that it is acc
 The suffrage~$\vp \in [0, 1]^K$ obtained by~$K$ political parties in an election describes the probability mass function~$p(k)$ that the~$k$-th party is elected.
 As a result, we provide a probabilistic interpretation of outcomes of referenda and elections.
 
-Let~$P_{rv}^{(i)} \sim \bernoulli(p_{rv})$ be a random variable representing the vote cast by voter~$i$ in region~$r$ on referendum~$v$.
+Let~$P_{rv}^{(i)} \sim \DBernoulli{p_{rv}}$ be a random variable representing the vote cast by voter~$i$ in region~$r$ on referendum~$v$.
 As voting is anonymous, we do not observe individual votes, rather the average vote in each region
 \begin{equation*}
 	\frac{1}{N_r} \sum_{i=1}^{N_r} P_{rv}^{(i)},
@@ -197,7 +198,7 @@ If we have access to data about the number of voters in each region (\textit{e.g
 where $N_r \in \mathbf{R}$ is a count related to the number of voters in region~$r$.
 We refer to the variation of the algorithm that uses this log-likelihood as \textit{weighted}.
 We refer to the variation of the algorithm that uses the log-likelihood in~\eqref{pdk:eq:log_likelihood} as \textit{unweighted}.
-A similar argument can be trivially made for elections by letting~$P_{rv}^{(i)} \sim \categorical(p_{rv}, K)$ be a random variable describing the vote cast by voter~$i$ in region~$r$ on vote~$v$ for $K$ political parties.
+A similar argument can be trivially made for elections by letting~$P_{rv}^{(i)} \sim \DCategorical{\bm{p}_{rv}, K}$ be a random variable describing the vote cast by voter~$i$ in region~$r$ on vote~$v$ for $K$ political parties.
 
 \subsection{Limitations}
 

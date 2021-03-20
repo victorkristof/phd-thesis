@@ -13,15 +13,11 @@
 \newcommand{\given}{\mbox{$|$}}
 
 % Distributions.
+\newcommand{\DNorm}[1]{\ensuremath{\mathrm{N}( #1 )}}
 \newcommand{\DGumbel}[1]{\ensuremath{\mathrm{Gumbel}( #1 )}}
 \newcommand{\DLogistic}[1]{\ensuremath{\mathrm{Logistic}( #1 )}}
-\newcommand{\DNorm}[1]{\ensuremath{\mathrm{N}( #1 )}}
-% TODO: Normalize with above.
-\newcommand{\bernoulli}{\mbox{Bernoulli}}
-\newcommand{\ber}{\mbox{Ber}}
-\newcommand{\categorical}{\mbox{Categorical}}
-\newcommand{\cat}{\mbox{Cat}}
-\newcommand{\gauss}{\mbox{${\mathcal N}$}}
+\newcommand{\DBernoulli}[1]{\ensuremath{\mathrm{Bernoulli}( #1 )}}
+\newcommand{\DCategorical}[1]{\ensuremath{\mathrm{Categorical}( #1 )}}
 
 % Asymptotics
 \newcommand{\BigO}[2][]{\ensuremath{%
@@ -49,7 +45,7 @@
 \DeclareMathOperator{\KL}{KL}
 \DeclareMathOperator*{\Argmin}{arg\,min}
 \DeclareMathOperator*{\Argmax}{arg\,max}
-\newcommand{\define}{\coloneq}
+\newcommand{\define}{\coloneqq}
 \newcommand{\Softmax}{\calS}
 \newcommand{\softmax}{\mbox{softmax}}
 
