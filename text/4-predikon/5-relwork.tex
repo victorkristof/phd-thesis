@@ -1,11 +1,11 @@
 %! TEX root = ../thesis.tex
 \section{Related Work}%
-\label{sec:relwork}
+\label{pdk:sec:relwork}
 
 We base the present paper on the work of~\citet{etter2014mining} and build on their approach proposed in~\cite{etter2016online}.
 They combine matrix factorization and Gaussian processes (GP) to understand what features of the votes and of the municipalities contribute the most to the predictive performance.
 They develop an expectation-maximization algorithm to learn both latent features and the GP parameters jointly.
-They show that the geographical location of municipalities is the most important feature for making predictions, an aspect that is in part captured by the feature matrix $\vX$ of Equation~\eqref{eq:projection} in our algorithm and illustrated in Figure~\ref{fig:ch_svd}:
+They show that the geographical location of municipalities is the most important feature for making predictions, an aspect that is in part captured by the feature matrix $\vX$ of Equation~\eqref{pdk:eq:projection} in our algorithm and illustrated in Figure~\ref{pdk:fig:ch_svd}:
 Municipalities that are geographically close tend to speak the same language.
 They also show that they are able to make accurate predictions of Swiss referenda.
 In comparison, our method is more efficient, as it learns the latent features of municipalities $\vX$ through singular value decomposition offline, and it learns the latent features of a vote through a GLM.
@@ -21,7 +21,7 @@ Their algorithm iteratively computes the SVD of an approximation to the full mat
 An extensive literature review of predictive methods for data imputation is available in~\citet{bertsimas2017predictive}.
 Incremental SVD revisions have been studied in the context of computer vision~\citep{brand2002incremental} and recommender systems~\citep{brand2003fast}.
 In this latter work, the author proposes algorithms to compute the SVD of a matrix when new columns arrive sequentially and are corrupted by some noise (\textit{e.g.}, some entries are missing).
-Their solution is equivalent to our \textsc{SubSVD-Gaussian} algorithm without regularization, \textit{i.e.}, $\lambda=0$, for which a closed form solution is provided in Equation~\eqref{eq:least_squares}.
+Their solution is equivalent to our \textsc{SubSVD-Gaussian} algorithm without regularization, \textit{i.e.}, $\lambda=0$, for which a closed form solution is provided in Equation~\eqref{pdk:eq:least_squares}.
 
 A whole body of work in the political science community exists on election forecasting~\citep{lewis2005election}, \textit{i.e.}, predicting the outcome of an election before it happens.
 The seminal work of~\citet{bean1948predict}, who first studied this problem in 1948, looked at using historical data to find U.S.\ states that were the most predictive of the national outcome.

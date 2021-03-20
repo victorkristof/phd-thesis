@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Deployed System}%
-\label{sec:depsys}
+\label{pdk:sec:depsys}
 
 We deploy a Web platform to provide real-time predictions for Swiss referenda\footnote{The platform is available on \href{http://www.predikon.ch}{www.predikon.ch}.}.
 Four Sundays a year, Swiss citizens are called on to vote on at least one item in a referendum.
@@ -14,9 +14,9 @@ Once they have finished counting, they report the result to their canton whose a
 
 In 2019, the Swiss Federal Statistical Office released a public API to access vote data, both historical and real-time, for all municipalities in a standardized format~\cite{confederation2020open}.
 This enabled us to obtain sequential results in all municipalities on the referendum vote days and made it possible to use our algorithm to predict the outcome of referenda starting at 12pm.
-We use the dataset described in Table~\ref{tab:datasets} for Switzerland, which contains~$R = 2196$ municipalities.
+We use the dataset described in Table~\ref{pdk:tab:datasets} for Switzerland, which contains~$R = 2196$ municipalities.
 We predict the outcome of two items on May 19, 2019, using~$V = 326$ votes and two items on February 9, 2020, using~$V = 328$ votes\footnote{The two referendum vote days between May 19, 2019, and February 9, 2020, were replaced by the Swiss legislative elections in Fall 2019. The referendum vote days after February 9, 2020, were cancelled due to the COVID-19 crisis in Spring 2020.}.
-We summarize these four items in Table~\ref{tab:real_votes}.
+We summarize these four items in Table~\ref{pdk:tab:real_votes}.
 The turnout was about 44\% on May 19 and about 42\% on February 9.
 For each referendum, about 2.2 million valid ballots were counted.
 
@@ -24,7 +24,7 @@ For each referendum, about 2.2 million valid ballots were counted.
 	\caption{
 		True outcome $y^*_{\textrm{nat}}$, earliest prediction $y_{\textrm{nat}}$, and absolute difference $\Delta = \vert y^*_{\textrm{nat}} - y_{\textrm{nat}} \vert $ for referenda with real data.
 	}
-	\label{tab:real_votes}
+	\label{pdk:tab:real_votes}
 	\begin{tabular}{llrrr}
 		\toprule
 		Date   & Item              & $y^*_{\textrm{nat}}$ [\%] & $y_{\textrm{nat}}$ [\%] & $\Delta$ \\
@@ -52,7 +52,7 @@ As the number of unobserved results~$\vert \Ubs \vert$ tends to 0 with time and 
 
 \subsection{Real-Time Predictions}
 
-In Figure~\ref{fig:predictions}, we show the evolution of our predictions (solid red line), together with the weighted averaging (solid black line), and the progress of the ballot counting (solid blue line) for the two referenda on February 9, 2020.
+In Figure~\ref{pdk:fig:predictions}, we show the evolution of our predictions (solid red line), together with the weighted averaging (solid black line), and the progress of the ballot counting (solid blue line) for the two referenda on February 9, 2020.
 The ballot counting starts at 12pm and ends at 4pm, after all municipalities reported their results
 Looking at the trajectory of the counting progress, the jumps occurring at several timestamps correspond to the publication of the results of the whole canton of Wallis and the city of Basel at 12:35pm, of Thun at 2:10pm, of Geneva at 2:40pm, and of Bern at 3pm, all of which are major cities in Switzerland.
 The large municipality of Zurich is split into nine districts that published their results independently, thus diluting its effect on the counting.
@@ -64,12 +64,12 @@ To provide a robust estimation of the final outcome, our algorithm takes advanta
 The performance of our approach for the two referenda of May 19, 2019, is similar; but we do not show them\footnote{The interested reader can access these predictions on our \href{http://www.predikon.ch}{Web platform}.}, as early counting data were not available due to a bug on the API side (they published the first results at 12:35pm).
 Furthermore, the results of the nine districts of Zurich, which cumulatively form the largest municipality in Switzerland, were incorrectly reported on that day.
 Consequently, we could not reliably use the results in our algorithm.
-We report only the earliest prediction, made at 12:40pm, in Table~\ref{tab:real_votes}.
+We report only the earliest prediction, made at 12:40pm, in Table~\ref{pdk:tab:real_votes}.
 
 \begin{figure}
 	\includegraphics{pdk-predictions.pdf}
 	\caption{
 		Evolution of predictions (red) and weighted averaging (black) on real, sequential data for the two referenda of February 9, 2020, together with the progress of the ballot counting (blue).
 	}
-	\label{fig:predictions}
+	\label{pdk:fig:predictions}
 \end{figure}

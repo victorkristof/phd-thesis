@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Introduction}%
-\label{sec:introduction}
+\label{pdk:sec:introduction}
 
 % General introduction.
 The past decade has seen the emergence of several open-government initiatives for the increase of administration transparency through the publication of governmental data.
@@ -27,10 +27,10 @@ We will show that our model is able to exploit the correlations between regions 
 Switzerland offers a fascinating laboratory for vote prediction due to its direct-democracy system.
 Swiss citizens are called to vote four times a year on referenda and popular initiatives \citep{confederation2019democracy, confederation2019popular}.
 As a result, the amount and frequency of voting data produced in Switzerland remains unmatched by any other country.
-We take Switzerland as an example to develop our methodology but, as shown in Section~\ref{sec:experiments}, our algorithm can be applied to other countries and in other settings.
+We take Switzerland as an example to develop our methodology but, as shown in Section~\ref{pdk:sec:experiments}, our algorithm can be applied to other countries and in other settings.
 
 % Overview of our model for vote outcome.
-In Section~\ref{sec:methodology}, we propose an algorithm to predict national vote outcomes from a sequence of regional vote results.
+In Section~\ref{pdk:sec:methodology}, we propose an algorithm to predict national vote outcomes from a sequence of regional vote results.
 Our model has two components:
 First, it learns the correlations between regions and between votes from historical data by using singular value decomposition (SVD).
 Second, after observing at least one regional result for a new vote, it uses the SVD as input features to a generalized linear model (GLM) to predict the unobserved regional results.
@@ -43,13 +43,13 @@ For Swiss votes, where people must answer "Yes" or "No" on each ballot, we show 
 We also explore what the SVD offers in terms of interpretation of voting patterns.
 Furthermore, we show that we can predict the outcome of the popular vote of a U.S.\ presidential election by casting this problem as a binary choice between two candidates.
 We predict the outcome of parliamentary elections in Germany, where people must choose between five political parties, using a categorical likelihood.
-We describe our experiments on state-level and district-level results in Section~\ref{sec:experiments}.
+We describe our experiments on state-level and district-level results in Section~\ref{pdk:sec:experiments}.
 
 % Mention Predikon.ch.
 We also deploy a Web platform available to the general public to provide vote prediction for Switzerland.
 Using an API developed by the Swiss government, we are able to make real-time predictions during the official counting with partial regional results.
 We also provide a data-visualization tool to explore voting patterns and to understand how our model makes predictions.
-We describe our platform in Section~\ref{sec:depsys}.
+We describe our platform in Section~\ref{pdk:sec:depsys}.
 
 % Our contributions.
 In summary, our contributions are as follows:

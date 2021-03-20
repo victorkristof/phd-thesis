@@ -3,7 +3,7 @@
 \label{app:experimental_setting}
 
 We describe in details the experimental setting and the choice of hyperparameters.
-As explained in Section~\ref{sec:experiments}, we evaluate the predictive performance of our models and of the baselines after observing a fraction of regional outcomes.
+As explained in Section~\ref{pdk:sec:experiments}, we evaluate the predictive performance of our models and of the baselines after observing a fraction of regional outcomes.
 For each dataset, we use the training set as validation set to find the best hyperparameters from a range of possible values.
 We preserve the temporal order of the data, and we use the first $V$ votes for training while testing on the next vote $V+1$.
 This simulates a real setting where we use all available data prior to an election or referendum of interest.
@@ -15,11 +15,11 @@ For the German parliamentary election by states, the number of regions is small 
 
 We evaluate the performance of our models and of the baselines with different combinations of the hyperparameters.
 The hyperparameters in our method are the $\ell_2$-regularization parameter $\lambda$ and the number of dimensions $D$ of the latent factors.
-We report in Table~\ref{tab:ranges} the ranges of hyperparameters for each dataset and in Table~\ref{tab:best} the best combinations in terms of MAE.
+We report in Table~\ref{pdk:tab:ranges} the ranges of hyperparameters for each dataset and in Table~\ref{pdk:tab:best} the best combinations in terms of MAE.
 In our experiments, we generally observed that the performance of an algorithm was robust to different combinations of hyperparameters.
 In light of Occam's razor, we chose the simplest model, \textit{i.e.}, the lowest number of latent dimensions $D$ and the lowest value of regularization parameter $\lambda$, when different combinations reached equal values of MAE.
 
-Finally, we measure the performance of an algorithm given some hyperparameters in terms of the MAE and the $\ell_1$-norm, as defined in Equation~\eqref{eq:mae} of Section~\ref{sec:experiments}.
+Finally, we measure the performance of an algorithm given some hyperparameters in terms of the MAE and the $\ell_1$-norm, as defined in Equation~\eqref{pdk:eq:mae} of Section~\ref{pdk:sec:experiments}.
 We use the MAE (and the $\ell_1$-norm) as it measures the error in percentage points and provides, therefore, some interpretability.
 For the binary datasets, \textit{i.e.}, for the Swiss referenda and for the U.S.\ presidential election, we measure the performance of a combination in terms of the MAE.
 For the categorical datasets, \textit{i.e.}, for the German elections where we try to predict the fractions of votes that parties obtain, we measure the performance in terms of the $\ell_1$-norm to sum up the prediction errors across different parties.
@@ -28,7 +28,7 @@ For the categorical datasets, \textit{i.e.}, for the German elections where we t
 	\caption{
 		Ranges of hyperparameters for different datasets.
 	}
-	\label{tab:ranges}
+	\label{pdk:tab:ranges}
 	\begin{tabular}{llrr}
 		\toprule
 		Country     & Region   & $\lambda$               & $D$                    \\
@@ -47,7 +47,7 @@ For the categorical datasets, \textit{i.e.}, for the German elections where we t
 	\caption{
 		Best hyperparameters for each model and dataset.
 	}
-	\label{tab:best}
+	\label{pdk:tab:best}
 	\begin{tabular}{lllrr}
 		\toprule
 		Country     & Region   & Likelihood & $\lambda$ & $D$  \\
@@ -82,7 +82,7 @@ Second, we merge the regions that change their name, and we average their result
 
 In total, there are $V=326$ referenda and $R=2186$ municipalities in the data set used for the evaluation.
 The validation set consists of referenda $275$ to $300$, and we use it to find the best hyperparameters.
-The test set consists of referenda $301$ to $326$, and we use it to report the results in Section~\ref{sec:experiments}.
+The test set consists of referenda $301$ to $326$, and we use it to report the results in Section~\ref{pdk:sec:experiments}.
 We test values for $\lambda \in \{0.001, 0.01, 0.1\}$ and for $D \in \{10, 25, 100, 250\}$.
 The best model with Gaussian likelihood uses $\lambda=0.1$ and $D=25$ while the best model with Bernoulli likelihood uses $\lambda=0.01$ and $D=25$.
 We tune the hyperparameters over $10$ random reveal orders per referendum, and we evaluate the performance of our algorithm over $100$ random reveal orders.
