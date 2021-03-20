@@ -1,0 +1,132 @@
+\section{Experimental Setting}
+\label{app:experimental_setting}
+
+We describe in details the experimental setting and the choice of hyperparameters.
+As explained in Section~\ref{sec:experiments}, we evaluate the predictive performance of our models and of the baselines after observing a fraction of regional outcomes.
+For each dataset, we use the training set as validation set to find the best hyperparameters from a range of possible values.
+We preserve the temporal order of the data, and we use the first $V$ votes for training while testing on the next vote $V+1$.
+This simulates a real setting where we use all available data prior to an election or referendum of interest.
+
+For each test vote, we simulate several random reveal orders of regional results.
+For the Swiss referenda, the U.S.\ presidential election, and the German parliamentary election by district, we simulate reveal orders on a logarithmic space.
+This emphasizes the importance of early results, \textit{i.e.}, when a small number of results are available, in the prediction performance.
+For the German parliamentary election by states, the number of regions is small enough ($R=16$) to simulate reveal orders on a linear space.
+
+We evaluate the performance of our models and of the baselines with different combinations of the hyperparameters.
+The hyperparameters in our method are the $\ell_2$-regularization parameter $\lambda$ and the number of dimensions $D$ of the latent factors.
+We report in Table~\ref{tab:ranges} the ranges of hyperparameters for each dataset and in Table~\ref{tab:best} the best combinations in terms of MAE.
+In our experiments, we generally observed that the performance of an algorithm was robust to different combinations of hyperparameters.
+In light of Occam's razor, we chose the simplest model, \textit{i.e.}, the lowest number of latent dimensions $D$ and the lowest value of regularization parameter $\lambda$, when different combinations reached equal values of MAE.
+
+Finally, we measure the performance of an algorithm given some hyperparameters in terms of the MAE and the $\ell_1$-norm, as defined in Equation~\eqref{eq:mae} of Section~\ref{sec:experiments}.
+We use the MAE (and the $\ell_1$-norm) as it measures the error in percentage points and provides, therefore, some interpretability.
+For the binary datasets, \textit{i.e.}, for the Swiss referenda and for the U.S.\ presidential election, we measure the performance of a combination in terms of the MAE.
+For the categorical datasets, \textit{i.e.}, for the German elections where we try to predict the fractions of votes that parties obtain, we measure the performance in terms of the $\ell_1$-norm to sum up the prediction errors across different parties.
+
+\begin{table}
+  \caption{
+    Ranges of hyperparameters for different datasets.
+  }
+  \label{tab:ranges}
+  \begin{tabular}{llrr}
+    \toprule
+    Country & Region & $\lambda$ & $D$ \\
+    \midrule
+
+    Switzerland & Munic.   & $\{0.001, 0.01, 0.1 \}$ & $\{10, 25, 100, 250\}$ \\
+    U.S.        & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 5, 7\}$ \\
+    Germany     & State    & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$ \\
+    Germany     & District & $\{0.001, 0.01, 0.1 \}$ & $\{3, 7, 11\}$ \\
+
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}
+  \caption{
+    Best hyperparameters for each model and dataset.
+  }
+  \label{tab:best}
+  \begin{tabular}{lllrr}
+    \toprule
+    Country & Region & Likelihood & $\lambda$ & $D$ \\
+    \midrule
+
+    Switzerland & Munic.   & Gaussian  & $0.1$  & $25$ \\
+                &          & Bernoulli & $0.01$ & $25$ \\
+    U.S.        & State    & Gaussian  & $0.01$ & $5$ \\
+                &          & Bernoulli & $0.01$ & $7$ \\
+    Germany     & State    & Gaussian  & $0.01$ & $7$ \\
+                &          & Bernoulli & $0.01$ & $7$ \\
+    Germany     & District & Gaussian  & $0.01$ & $11$ \\
+                &          & Bernoulli & $0.01$ & $11$ \\
+
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Swiss Referenda}%
+\label{app:ch}
+
+In Switzerland, referenda occur when \numprint{50000} people petition against a law that has been accepted by the Parliament (optional referendum) or when the Swiss Constitution is modified (mandatory referendum).
+Popular initiatives occur when \numprint{100000} people suggest a new law.
+For simplicity, we refer to optional referenda, mandatory referenda, and popular initiatives as \textit{referenda}.
+
+We collected the data about Swiss referenda between 1981 and 2020 from the Swiss Federal Statistical Office.
+The data are published through an API on the Swiss Open Data platform\footnote{\url{https://opendata.swiss/en/dataset/echtzeitdaten-am-abstimmungstag-zu-eidgenoessischen-abstimmungsvorlagen}}
+We pre-process the data as follows:
+First, we remove 12 regions (\textit{i.e.}, the municipalities) with missing values.
+This may happen because, each year, some municipalities are merged or split, and some results might not exist for some votes.
+Second, we merge the regions that change their name, and we average their results.
+
+In total, there are $V=326$ referenda and $R=2186$ municipalities in the data set used for the evaluation.
+The validation set consists of referenda $275$ to $300$, and we use it to find the best hyperparameters.
+The test set consists of referenda $301$ to $326$, and we use it to report the results in Section~\ref{sec:experiments}.
+We test values for $\lambda \in \{0.001, 0.01, 0.1\}$ and for $D \in \{10, 25, 100, 250\}$.
+The best model with Gaussian likelihood uses $\lambda=0.1$ and $D=25$ while the best model with Bernoulli likelihood uses $\lambda=0.01$ and $D=25$.
+We tune the hyperparameters over $10$ random reveal orders per referendum, and we evaluate the performance of our algorithm over $100$ random reveal orders.
+For the matrix factorization baseline, we use the best hyperparameters as reported by \citet{etter2016online}, \textit{i.e.}, $\lambda_U = 31.0$, $\lambda_V = 0.03$, and $D = 25$.
+
+\subsection{US Presidential Election}%
+\label{app:us}
+
+The U.S.\ presidential election relies on the Electoral College system.
+In this system, 538 delegates are assigned to each state proportionally to their population, and a candidate who obtains the majority of votes in a state wins all the delegates in that state\footnote{With the exception of Maine and Minnesota, which have a different rules.}.
+The candidate who wins the majority of the delegates among all the states, \textit{i.e.}, at least 270 delegates, is elected president.
+Because a candidate wins the same number of delegates whether it receives 99\% of the votes or 51\% of the votes, the collegial system leads to some unexpected behaviour: A candidate may win the popular vote but lose the collegial vote.
+This happened only in two elections in our dataset: in 2000 and in 2016.
+This special structure adds one level of complexity to the prediction task, and it requires further modeling assumptions.
+To keep our approach general and because a mismatch between the popular vote and the collegial vote is rare, we keep this specificity of the U.S.\ electoral system for future work.
+
+We use the U.S.\ presidential election data between 1976 and 2016.
+The data is publicly available on Harvard Dataverse~\cite{mit2017us}.
+The data reports state-level election outcomes with the number of votes received by each candidate.
+We transform the outcome of the election into a binary outcome of Democrat candidate and Republican candidate.
+Candidates from other parties are ignored, and we normalize the results of the candidates from the two major parties so that the sum of their votes is 1.
+In comparison to the Swiss referenda, aggregating by number of voters will, therefore, be inexact for the U.S.\ presidential elections.
+This is nonetheless a reasonable approximation, as the number of votes received by candidates from other parties are marginal compared to the candidates from the Republican party and from the Democrat party.
+
+In total, there are $V=11$ elections.
+The data include the results of the District of Columbia (\textit{i.e.}, Washington D.C.), which has a special status and is not considered a state; hence, we have $R=51$ regions, combining 50 states and the District of Columbia.
+We find the best hyperparameters using the vote prior to the 2012 election, and we evaluate the model on the 2016 election.
+We test values for $\lambda \in \{0.001, 0.01, 0.1 \}$ and for $D \in \{3, 5, 7\}$ as we only have 9 elections prior to 2012.
+For both the Gaussian and Bernoulli likelihoods, the best model uses $\lambda = 0.01$.
+The best model with Gaussian likelihood uses $D=5$ and the best model with Bernoulli likelihood uses $D=7$.
+We tune the hyperparameters over $100$ random reveal orders per election, and we evaluate the performance of our algorithm over $10000$ random reveal orders.
+
+\subsection{German Parliamentary Election}%
+\label{app:ge}
+
+We use the German parliamentary elections data published by the European Elections Database (EED) \cite{norsk2020germany}.
+In Germany, parliamentary elections take place every 4 years.
+The EED reports results between 1990 and 2009 on state level and between 1990 and 2005 on district level.
+Similarly to the U.S.\ presidential elections, we normalize the results per region by keeping the main five parties in Germany (CDU/CSU, SPD, FDP, the Greens, and the Left).
+
+In total, there are $V=6$ state-level elections and $V=5$ district-level elections.
+For state-level elections, we find the best hyperparameters using the votes prior to the 2005 elections and we evaluate the model on the 2009 elections.
+For district-level elections, we find the best hyperparameters using the votes prior to the 2002 elections and we evaluate the model on the 205 elections.
+We test values for $\lambda \in \{0.001, 0.01, 0.1 \}$ and for $D \in \{3, 7, 11\}$.
+For both datasets, both the Gaussian and the Bernoulli likelihoods provide the same results.
+For state-level elections, the best model uses $\lambda=0.01$ and $D=7$.
+For district-level elections, the best model uses $\lambda=0.01$ and $D=11$.
+In both cases, we tune the hyperparameters over $100$ random reveal orders per election, and we evaluate the performance of our algorithm over $1000$ random reveal orders.

@@ -1,0 +1,26 @@
+\section{Conclusion}%
+\label{sec:conclusion}
+
+We have proposed an algorithm to predict national vote results from regional results that are observed sequentially.
+Our approach learns a representation for each region by factorizing the sub-matrix of historical data and approximating the representation of a new vote as the optimal parameters of a generalized linear model.
+The predictions for unobserved results are obtained through the link function of the GLM, and national predictions are obtained by aggregating observed and unobserved regional results.
+We are able to predict both referenda with binary outcomes and elections with categorical outcomes.
+We have shown that our approach outperforms the (weighted) average of partial results on three datasets of Swiss referenda, U.S.\ presidential elections, and German legislative elections.
+We have explored the regional representations in their latent space and have shown that they capture ideological and cultural patterns.
+Finally, we have deployed a Web platform to provide real-time vote predictions for Swiss referenda.
+Our algorithm is able to predict the final outcome of four real votes with an absolute error of about 1\% after observing only 13\% of the ballots.
+
+\paragraph{Future Work}
+
+We plan to further develop our approach in three directions.
+First, Bayesian inference in our generalized linear model would enable uncertainty quantification of our predictions in a principled way.
+This could be beneficial for predictions, especially during the early counting phase.
+Bayesian inference for GLMs has been widely studied in the literature~\citep{murphy2012machine}.
+Second, our algorithm is capable of making predictions only with at least one observed regional result.
+In the spirit of~\citet{etter2016online}, we plan to augment our algorithm with features from the vote and the municipalities to make predictions prior to referenda in Switzerland.
+One limitation of their work lies in the lack of systematic availability of the features they include in their model.
+In particular, every Swiss citizen receives documentation about each referendum.
+These explanatory documents provide a valuable source of information about a vote, one that could be incorporated in a predictive model.
+The actual text of the proposed laws would provide another source of relevant information.
+Finally, by collecting the sequential order by which regional results arrive in Swiss referenda, we obtain data about the true reveal order.
+We plan to explore whether the true sequential order can be exploited to learn the schedule by which results arrive and, therefore, further improve the earliest predictions.

@@ -1,0 +1,30 @@
+\section{Related Work}%
+\label{sec:relwork}
+
+We base the present paper on the work of~\citet{etter2014mining} and build on their approach proposed in~\cite{etter2016online}.
+They combine matrix factorization and Gaussian processes (GP) to understand what features of the votes and of the municipalities contribute the most to the predictive performance.
+They develop an expectation-maximization algorithm to learn both latent features and the GP parameters jointly.
+They show that the geographical location of municipalities is the most important feature for making predictions, an aspect that is in part captured by the feature matrix $\vX$ of Equation~\eqref{eq:projection} in our algorithm and illustrated in Figure~\ref{fig:ch_svd}:
+Municipalities that are geographically close tend to speak the same language.
+They also show that they are able to make accurate predictions of Swiss referenda.
+In comparison, our method is more efficient, as it learns the latent features of municipalities $\vX$ through singular value decomposition offline, and it learns the latent features of a vote through a GLM.
+The GLM also provides more flexibility:
+Our algorithm could conceivably be used to make prediction for other types of observations, \textit{e.g.}, count data, and works for non-binary outcomes.
+We developed our algorithm with applicability in mind.
+Our main goal was to make real-time predictions for Swiss referenda, with all the constraints that come with this problem.
+
+The problem we address, \textit{i.e.}, predicting unobserved entries of a new column of a matrix from partial observations of that column, is most similar to the problem of missing-data imputation.
+The use of SVD for data imputation has been studied in the context of genomics~\citep{troyanskaya2001missing,hastie1999imputing}.
+In gene matrices, missing entries are common, and the authors propose an algorithm based on SVD to impute missing data.
+Their algorithm iteratively computes the SVD of an approximation to the full matrix and predicts the missing values with a regression by using the non-missing values to refine the approximation.
+An extensive literature review of predictive methods for data imputation is available in~\citet{bertsimas2017predictive}.
+Incremental SVD revisions have been studied in the context of computer vision~\citep{brand2002incremental} and recommender systems~\citep{brand2003fast}.
+In this latter work, the author proposes algorithms to compute the SVD of a matrix when new columns arrive sequentially and are corrupted by some noise (\textit{e.g.}, some entries are missing).
+Their solution is equivalent to our \textsc{SubSVD-Gaussian} algorithm without regularization, \textit{i.e.}, $\lambda=0$, for which a closed form solution is provided in Equation~\eqref{eq:least_squares}.
+
+A whole body of work in the political science community exists on election forecasting~\citep{lewis2005election}, \textit{i.e.}, predicting the outcome of an election before it happens.
+The seminal work of~\citet{bean1948predict}, who first studied this problem in 1948, looked at using historical data to find U.S.\ states that were the most predictive of the national outcome.
+Statistical models for election forecasting have since been developed in many contexts for Germany~\citep{tumasjan2011election}, France~\citep{belanger2004finding}, the U.K.~\citep{franch2013wisdom}, and the U.S.~\citep{rigdon2009bayesian,kennedy2017improving}.
+The prediction of U.S.\ elections has been popularized by the blogger and statistician Nate Silver in 2008 as he predicted Barack Obama's victory in the Democratic Party primaries using a statistical model of historical data~\citep{blumenthal2008poblano}, and as he predicted Barack Obama's victory in the presidential election from polling data~\citep{silver2008pollster}.
+In the computer science community, algorithms for election forecasting have also been developed using social media data in Denmark~\citep{kristensen2017parsimonious}, Finland~\citep{vepsalainen2017facebook}, the U.S.~\citep{choy2012us,ramteke2016election}, and the developing world~\citep{dwi2015twitter}.
+To the best of our knowledge, except for the work mentioned at the beginning of this section, we are the first to study real-time outcome predictions of elections and referenda, and to deploy a system for making predictions of Swiss referenda in real-time.

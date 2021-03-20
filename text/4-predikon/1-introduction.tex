@@ -1,0 +1,58 @@
+\section{Introduction}%
+\label{sec:introduction}
+
+% General introduction.
+The past decade has seen the emergence of several open-government initiatives for the increase of administration transparency through the publication of governmental data.
+These data are of great interest to parties, companies, sub- and supra-government entities, researchers, and citizens.
+In particular, the results of referenda and election ballots in municipalities, districts, states, and countries are valuable for understanding the structure and the dynamics of politics.
+
+% Describe the interest by media, parties, interest groups, and people of having an early prediction.
+In this paper, we address the problem of vote prediction when only partial results are available.
+The ability to predict the outcome of votes both before and during ballot counting is relevant to political parties, interest groups, polling agencies, news outlets, government authorities, and interested citizens.
+These predictions help uncover voting patterns, \textit{e.g.}, to identify swing regions, to understand voting behaviours, and to detect fraud.
+Political parties and interest groups can enhance their campaigning efforts.
+Polling agencies and news outlets can optimize their surveying efforts.
+Authorities can monitor the smooth functioning of the voting process.
+
+% Describe the main problem we are solving.
+We focus on national vote predictions during the ballot counting, \textit{i.e.}, after all eligible voters have cast their ballots, as government officials start count the valid votes in each region.
+We predict national results by using sequential regional results, and we seek to obtain accurate predictions as early as possible, \textit{i.e.}, with a minimum number of regional results.
+Typically, less populated regions release their official counts earlier than more populated ones.
+Regions where remote voting is allowed release their results earlier than regions where this is not allowed.
+In some countries, for example in the U.S., some regions vote earlier than others by design.
+We will show that our model is able to exploit the correlations between regions and between votes to obtain accurate early predictions.
+
+% Explain that we focus on Switzerland and why.
+Switzerland offers a fascinating laboratory for vote prediction due to its direct-democracy system.
+Swiss citizens are called to vote four times a year on referenda and popular initiatives \citep{confederation2019democracy, confederation2019popular}.
+As a result, the amount and frequency of voting data produced in Switzerland remains unmatched by any other country.
+We take Switzerland as an example to develop our methodology but, as shown in Section~\ref{sec:experiments}, our algorithm can be applied to other countries and in other settings.
+
+% Overview of our model for vote outcome.
+In Section~\ref{sec:methodology}, we propose an algorithm to predict national vote outcomes from a sequence of regional vote results.
+Our model has two components:
+First, it learns the correlations between regions and between votes from historical data by using singular value decomposition (SVD).
+Second, after observing at least one regional result for a new vote, it uses the SVD as input features to a generalized linear model (GLM) to predict the unobserved regional results.
+The national outcome is then easily obtained by weighted aggregation of the predicted and the observed regional results.
+The SVD, computed only once on the historical data, is inexpensive in terms of complexity and enables interpretation.
+By using different likelihoods in the GLM, we gain flexibility in predicting binary outcomes (for votes) or categorical outcomes (for elections).
+
+% Our model can be generalized to elections and mention US and Germany as an example.
+For Swiss votes, where people must answer "Yes" or "No" on each ballot, we show that a Gaussian and a Bernoulli likelihood provide the best performance.
+We also explore what the SVD offers in terms of interpretation of voting patterns.
+Furthermore, we show that we can predict the outcome of the popular vote of a U.S.\ presidential election by casting this problem as a binary choice between two candidates.
+We predict the outcome of parliamentary elections in Germany, where people must choose between five political parties, using a categorical likelihood.
+We describe our experiments on state-level and district-level results in Section~\ref{sec:experiments}.
+
+% Mention Predikon.ch.
+We also deploy a Web platform available to the general public to provide vote prediction for Switzerland.
+Using an API developed by the Swiss government, we are able to make real-time predictions during the official counting with partial regional results.
+We also provide a data-visualization tool to explore voting patterns and to understand how our model makes predictions.
+We describe our platform in Section~\ref{sec:depsys}.
+
+% Our contributions.
+In summary, our contributions are as follows:
+We propose an efficient, flexible, and accurate algorithm for predicting the national outcome of a referendum or an election from early regional results.
+We curate a new dataset of sequential vote results in Switzerland, covering \numprint{330} votes and \numprint{2196} regions between 1981 and 2020.
+We deploy an interactive Web platform to display real-time vote predictions in Switzerland, together with tools to explore and visualize our dataset.
+The data and the code are available on \href{https://www.github.com/indy-lab/submatrix-factorization}{github.com/indy-lab/submatrix-factorization} and the Web platform is available on \href{http://www.predikon.ch}{www.predikon.ch}.

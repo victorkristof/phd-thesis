@@ -4,11 +4,25 @@
 
 % Typography for War of Word model.
 \DeclareRobustCommand{\warofwords}[1]{%
-  \ifthenelse{\isempty{#1}}{\textsc{War of Words}}{\textsc{War of Words}(\emph{#1})}}
+	\ifthenelse{\isempty{#1}}{\textsc{War of Words}}{\textsc{War of Words}(\emph{#1})}}
 \DeclareRobustCommand{\wow}[1]{%
-  \ifthenelse{\isempty{#1}}{\textsc{WoW}}{\textsc{WoW}(\emph{#1})}}
+	\ifthenelse{\isempty{#1}}{\textsc{WoW}}{\textsc{WoW}(\emph{#1})}}
 
 % Legislatures.
 \renewcommand{\th}{\textsuperscript{th} }
 \newcommand{\rd}{\textsuperscript{rd} }
 \newcommand{\ep}[1]{EP#1}
+
+% Metric for Predikon.
+\newcommand{\mae}{\textrm{MAE}}
+\newcommand{\wavg}{\textrm{WAvg}}
+
+% Observed and unobserved sets for Predikon.
+\newcommand{\Obs}{\mathcal{O}}
+\newcommand{\Ubs}{\mathcal{U}}
+
+% Algorithms.
+\algnewcommand\algorithmicinput{\textbf{Input:}}
+\algnewcommand\Input{\item[\algorithmicinput]}
+\algnewcommand\algorithmicoutput{\textbf{Output:}}
+\algnewcommand\Output{\item[\algorithmicoutput]}

@@ -1,6 +1,7 @@
 % Linear Algebra.
 \renewcommand{\vec}[1]{\bm{#1}}
 \newcommand{\Tr}{^\intercal}
+\newcommand{\T}{^\intercal}
 
 % Probability.
 \newcommand{\Prob}[1]{\ensuremath{\mathbf{P}\left( #1 \right)}}
@@ -9,11 +10,18 @@
 \newcommand{\Cov}[2]{\ensuremath{\mathbf{Cov}\left[ #1, #2 \right]}}
 \newcommand{\Var}[1]{\ensuremath{\mathbf{Var}\left[ #1 \right]}}
 \newcommand{\Indic}[1]{\ensuremath{\bm{1}_{\left \{ #1 \right \} }}}
+\newcommand{\given}{\mbox{$|$}}
 
 % Distributions.
 \newcommand{\DGumbel}[1]{\ensuremath{\mathrm{Gumbel}( #1 )}}
 \newcommand{\DLogistic}[1]{\ensuremath{\mathrm{Logistic}( #1 )}}
 \newcommand{\DNorm}[1]{\ensuremath{\mathrm{N}( #1 )}}
+% TODO: Normalize with above.
+\newcommand{\bernoulli}{\mbox{Bernoulli}}
+\newcommand{\ber}{\mbox{Ber}}
+\newcommand{\categorical}{\mbox{Categorical}}
+\newcommand{\cat}{\mbox{Cat}}
+\newcommand{\gauss}{\mbox{${\mathcal N}$}}
 
 % Asymptotics
 \newcommand{\BigO}[2][]{\ensuremath{%
@@ -41,4 +49,117 @@
 \DeclareMathOperator{\KL}{KL}
 \DeclareMathOperator*{\Argmin}{arg\,min}
 \DeclareMathOperator*{\Argmax}{arg\,max}
+\newcommand{\define}{\coloneq}
+\newcommand{\Softmax}{\calS}
+\newcommand{\softmax}{\mbox{softmax}}
 
+% Arg{sort, min, max}.
+\DeclareMathOperator*{\argsort}{arg\,sort}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% TODO: Check for Predikon
+\newcommand{\rnd}[1]{\left(#1\right)}
+\newcommand{\sqr}[1]{\left[#1\right]}
+\newcommand{\crl}[1]{\left\{#1\right\}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\calD}{\mbox{${\mathcal D}$}}
+\newcommand{\calS}{\mbox{${\mathcal S}$}}
+\newcommand{\logit}{\mbox{$\mbox{logit}$}}
+
+% TODO: Normalize.
+\newcommand{\myvec}[1]{\mbox{$\boldsymbol{#1}$}}
+
+\newcommand{\vzero}{\mbox{$\myvec{0}$}}
+\newcommand{\vone}{\mbox{$\myvec{1}$}}
+
+\newcommand{\valpha}{\mbox{$\myvec{\alpha}$}}
+\newcommand{\vbeta}{\mbox{$\myvec{\beta}$}}
+\newcommand{\vchi}{\mbox{$\myvec{\chi}$}}
+\newcommand{\vdelta}{\mbox{$\myvec{\delta}$}}
+\newcommand{\vDelta}{\mbox{$\myvec{\Delta}$}}
+\newcommand{\vepsilon}{\mbox{$\myvec{\epsilon}$}}
+\newcommand{\veta}{\mbox{$\myvec{\eta}$}}
+\newcommand{\vgamma}{\mbox{$\myvec{\gamma}$}}
+\newcommand{\vmu}{\mbox{$\myvec{\mu}$}}
+\newcommand{\vlambda}{\mbox{$\myvec{\lambda}$}}
+\newcommand{\vLambda}{\mbox{$\myvec{\Lambda}$}}
+\newcommand{\vLambdaBar}{\mbox{$\overline{\vLambda}$}}
+\newcommand{\vrho}{\mbox{$\myvec{\rho}$}}
+\newcommand{\vphi}{\mbox{$\myvec{\phi}$}}
+\newcommand{\vPhi}{\mbox{$\myvec{\Phi}$}}
+\newcommand{\vpi}{\mbox{$\myvec{\pi}$}}
+\newcommand{\vpsi}{\myvec{\psi}}
+\newcommand{\vPsi}{\mbox{$\myvec{\Psi}$}}
+\newcommand{\vtheta}{\mbox{$\myvec{\theta}$}}
+\newcommand{\vTheta}{\mbox{$\myvec{\Theta}$}}
+\newcommand{\vsigma}{\mbox{$\myvec{\sigma}$}}
+\newcommand{\vSigma}{\mbox{$\myvec{\Sigma}$}}
+\newcommand{\vSigmaBar}{\mbox{$\overline{\vSigma}$}}
+\newcommand{\vSigmaPrime}{\mbox{$\vSigma'$}}
+\newcommand{\vOmega}{\mbox{$\myvec{\Omega}$}}
+\newcommand{\vtau}{\mbox{$\myvec{\tau}$}}
+\newcommand{\vxi}{\mbox{$\myvec{\xi}$}}
+
+\newcommand{\va}{\mbox{$\myvec{a}$}}
+\newcommand{\vb}{\mbox{$\myvec{b}$}}
+\newcommand{\vc}{\mbox{$\myvec{c}$}}
+\newcommand{\vd}{\mbox{$\myvec{d}$}}
+\newcommand{\ve}{\mbox{$\myvec{e}$}}
+\newcommand{\vo}{\mbox{$\myvec{o}$}}
+\newcommand{\vi}{\mbox{$\myvec{i}$}}
+\newcommand{\vf}{\mbox{$\myvec{f}$}}
+\newcommand{\vg}{\mbox{$\myvec{g}$}}
+\newcommand{\vh}{\mbox{$\myvec{h}$}}
+\newcommand{\vj}{\mbox{$\myvec{j}$}}
+\newcommand{\vk}{\mbox{$\myvec{k}$}}
+\newcommand{\vm}{\mbox{$\myvec{m}$}}
+\newcommand{\vn}{\mbox{$\myvec{n}$}}
+\newcommand{\vp}{\mbox{$\myvec{p}$}}
+\newcommand{\vq}{\mbox{$\myvec{q}$}}
+\newcommand{\vr}{\mbox{$\myvec{r}$}}
+\newcommand{\vs}{\mbox{$\myvec{s}$}}
+\newcommand{\vt}{\mbox{$\myvec{t}$}}
+\newcommand{\vu}{\mbox{$\myvec{u}$}}
+\newcommand{\vv}{\mbox{$\myvec{v}$}}
+\newcommand{\vw}{\mbox{$\myvec{w}$}}
+\newcommand{\vws}{\mbox{$\vw_s$}}
+\newcommand{\vwh}{\mbox{$\hat{\vw}$}}
+\newcommand{\vx}{\mbox{$\myvec{x}$}}
+\newcommand{\vxt}{\mbox{$\myvec{\tilde{x}}$}}
+\newcommand{\vy}{\mbox{$\myvec{y}$}}
+\newcommand{\vyt}{\mbox{$\myvec{\tilde{y}}$}}
+\newcommand{\vz}{\mbox{$\myvec{z}$}}
+\newcommand{\vA}{\mbox{$\myvec{A}$}}
+\newcommand{\vB}{\mbox{$\myvec{B}$}}
+\newcommand{\vC}{\mbox{$\myvec{C}$}}
+\newcommand{\vD}{\mbox{$\myvec{D}$}}
+\newcommand{\vE}{\mbox{$\myvec{E}$}}
+\newcommand{\vF}{\mbox{$\myvec{F}$}}
+\newcommand{\vG}{\mbox{$\myvec{G}$}}
+\newcommand{\vH}{\mbox{$\myvec{H}$}}
+\newcommand{\vI}{\mbox{$\myvec{I}$}}
+\newcommand{\vJ}{\mbox{$\myvec{J}$}}
+\newcommand{\vK}{\mbox{$\myvec{K}$}}
+\newcommand{\vL}{\mbox{$\myvec{L}$}}
+\newcommand{\vM}{\mbox{$\myvec{M}$}}
+\newcommand{\vN}{\mbox{$\myvec{N}$}}
+\newcommand{\vO}{\mbox{$\myvec{O}$}}
+\newcommand{\vP}{\mbox{$\myvec{P}$}}
+\newcommand{\vQ}{\mbox{$\myvec{Q}$}}
+\newcommand{\vR}{\mbox{$\myvec{R}$}}
+\newcommand{\vS}{\mbox{$\myvec{S}$}}
+\newcommand{\vT}{\mbox{$\myvec{T}$}}
+\newcommand{\vU}{\mbox{$\myvec{U}$}}
+\newcommand{\vUBar}{\mbox{$\overline{\vU}$}}
+\newcommand{\vUPrime}{\mbox{$\vU'$}}
+\newcommand{\vV}{\mbox{$\myvec{V}$}}
+\newcommand{\vVBar}{\mbox{$\overline{\vV}$}}
+\newcommand{\vVPrime}{\mbox{$\vV'$}}
+\newcommand{\vW}{\mbox{$\myvec{W}$}}
+\newcommand{\vX}{\mbox{$\myvec{X}$}}
+%\newcommand{\vXs}{\mbox{$\vX_{\vs}$}}
+\newcommand{\vXs}{\mbox{$\vX_{s}$}}
+\newcommand{\vXt}{\mbox{$\myvec{\tilde{X}}$}}
+\newcommand{\vY}{\mbox{$\myvec{Y}$}}
+\newcommand{\vZ}{\mbox{$\myvec{Z}$}}
