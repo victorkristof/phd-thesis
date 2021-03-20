@@ -2,8 +2,8 @@
 \section{Related Work}%
 \label{pdk:sec:relwork}
 
-We base the present paper on the work of~\citet{etter2014mining} and build on their approach proposed in~\cite{etter2016online}.
-They combine matrix factorization and Gaussian processes (GP) to understand what features of the votes and of the municipalities contribute the most to the predictive performance.
+We base the present paper on the work of~\citet{etter2014mining,etter2016online}.
+Their approach consists in combining matrix factorization and Gaussian processes (GP) to understand what features of the votes and of the municipalities contribute the most to the predictive performance.
 They develop an expectation-maximization algorithm to learn both latent features and the GP parameters jointly.
 They show that the geographical location of municipalities is the most important feature for making predictions, an aspect that is in part captured by the feature matrix $\vX$ of Equation~\eqref{pdk:eq:projection} in our algorithm and illustrated in Figure~\ref{pdk:fig:ch_svd}:
 Municipalities that are geographically close tend to speak the same language.
