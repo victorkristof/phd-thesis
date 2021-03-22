@@ -1,11 +1,16 @@
 %! TEX root = ../thesis.tex
-\section{Conclusion}
+\section{Summary}
 \label{clm:sec:conclusion}
 
-In this work, we proposed a statistical model for understanding people's global perception of their carbon footprint.
+In this chapter, we proposed a statistical model for understanding people's global perception of their carbon footprint.
 The Bayesian formulation of the model enables us to take an active-learning approach to selecting the pairs of actions that maximize the gain of information.
 We deployed an online platform to collect real data from users.
 The estimated perception of the users gives us insight into this population and reveals interesting directions for improving climate communication.
+In particular, we observed that the \COtwo\ emissions of actions with low carbon footprint tend to be \textit{overestimated}, and actions with high carbon footprint tend to be \textit{underestimated}.
 
-For future work, we will open and deploy our platform to a wider audience.
-We plan to collaborate with domain experts to further analyze people's estimated perception of their carbon footprint and to translate the conclusions of the results into concrete actions.
+\paragraph{Perspective}
+Our model learns the overall perception of the whole population.
+This estimation lead to coarse results that may bias interpretation.
+We plan to enrich our model by replacing the global perception parameters $\bm{w}$ with parameters that depend on features of the users and of the actions.
+For example, the political views, income level, and region of residence of users might affect their perception.
+We also plan to collaborate with domain experts to further analyze people's estimated perception of their carbon footprint and to translate the conclusions of the results into concrete actions.

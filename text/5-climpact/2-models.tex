@@ -18,7 +18,7 @@ Assuming a centered Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2_n)$, $
 \end{equation}
 where the comparison vector $\vec{x} \in \mathbf{R}^M$ is zero everywhere except in entry~$i$ where it is $+1$ and in entry~$j$ where it is $-1$.
 Vector $\vec{x}$ "selects" the pair of actions to compare.
-For a dataset $ \mathcal{D} = \{ (i_n, j_n, y_n) : n = 1, ..., N \}$ of $N$ independent triplets and since \mbox{$\log y \sim \mathcal{N}(\vec{x}\Tr \vec{w}, \sigma^2_n)$}, the likelihood of the model is
+For a dataset $ \mathcal{D} = \{ (i_n, j_n, y_n) : n = 1, \ldots, N \}$ of $N$ independent triplets and since \mbox{$\log y \sim \mathcal{N}(\vec{x}\Tr \vec{w}, \sigma^2_n)$}, the likelihood of the model is
 \begin{equation*}
 	p(\vec{y} \given \vec{X}, \vec{w}) = \prod_{i=1}^N p(y_i \given \vec{x}_i\Tr \vec{w}, \sigma_n^2) = \mathcal{N}(\vec{X} \vec{w}, \sigma_n^2\vec{I}),
 \end{equation*}
@@ -51,10 +51,10 @@ Let $\vec{x}$ be the new $(N+1)$-th comparison vector, and recall that the entro
 As proposed by~\citet{mackay1992information}, we want to select the pair of actions to compare that is maximally informative about the values that the model parameters $\vec{w}$ should take \citep{chu2005extensions, houlsby2012collaborative}.
 For our linear Gaussian model, this is obtained by maximizing the total information gain
 \begin{align}
-	\Delta S & = S_N - S_{N+1}  \nonumber                                                                                                                                         \\
-	         & = \frac{1}{2} \log \frac{\det \vec{\Sigma}_{N+1}^{-1}}{\det \vec{\Sigma}_N^{-1}} \nonumber                                                                         \\
-	         & = \frac{1}{2} \log \frac{\det [\vec{\Sigma}_N^{-1} + \sigma_n^{-2}\vec{x}\vec{x}\Tr] }{\det \vec{\Sigma}_N^{-1}} \label{clm:eq:covariance}                         \\
-	         & = \frac{1}{2} \log \frac{(\det \vec{\Sigma}_N^{-1})(1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x} ) }{ \det \vec{\Sigma}_N^{-1} } \label{clm:eq:determinant} \\
+	\Delta S & = S_N - S_{N+1}  \nonumber                                                                                                                                      \\
+	         & = \frac{1}{2} \log \frac{\det \vec{\Sigma}_{N+1}^{-1}}{\det \vec{\Sigma}_N^{-1}} \nonumber                                                                      \\
+	         & = \frac{1}{2} \log \frac{\det [\vec{\Sigma}_N^{-1} + \sigma_n^{-2}\vec{x}\vec{x}\Tr] }{\det \vec{\Sigma}_N^{-1}} \label{clm:eq:covariance}                      \\
+	         & = \frac{1}{2} \log \frac{(\det \vec{\Sigma}_N^{-1})(1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x} )}{\det \vec{\Sigma}_N^{-1}} \label{clm:eq:determinant} \\
 	         & = \frac{1}{2} \log (1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x}). \nonumber
 \end{align}
 We obtain~\eqref{clm:eq:covariance} by observing that $ \vec{\Sigma}_N^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\Tr = \sigma_n^{-2} \vec{X}\Tr \vec{X} + \vec{\Sigma}_p^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\Tr = \vec{\Sigma}_{N+1}^{-1}$.
