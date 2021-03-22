@@ -19,12 +19,8 @@ We report in Table~\ref{pdk:tab:ranges} the ranges of hyperparameters for each d
 In our experiments, we generally observed that the performance of an algorithm was robust to different combinations of hyperparameters.
 In light of Occam's razor, we chose the simplest model, \textit{i.e.}, the lowest number of latent dimensions $D$ and the lowest value of regularization parameter $\lambda$, when different combinations reached equal values of MAE.
 
-Finally, we measure the performance of an algorithm given some hyperparameters in terms of the MAE and the $\ell_1$-norm, as defined in Equation~\eqref{pdk:eq:mae} of Section~\ref{pdk:sec:experiments}.
-We use the MAE (and the $\ell_1$-norm) as it measures the error in percentage points and provides, therefore, some interpretability.
-For the binary datasets, \textit{i.e.}, for the Swiss referenda and for the U.S.\ presidential election, we measure the performance of a combination in terms of the MAE.
-For the categorical datasets, \textit{i.e.}, for the German elections where we try to predict the fractions of votes that parties obtain, we measure the performance in terms of the $\ell_1$-norm to sum up the prediction errors across different parties.
-
 \begin{table}
+	\centering
 	\caption{
 		Ranges of hyperparameters for different datasets.
 	}
@@ -44,6 +40,7 @@ For the categorical datasets, \textit{i.e.}, for the German elections where we t
 \end{table}
 
 \begin{table}
+	\centering
 	\caption{
 		Best hyperparameters for each model and dataset.
 	}
@@ -66,6 +63,12 @@ For the categorical datasets, \textit{i.e.}, for the German elections where we t
 	\end{tabular}
 \end{table}
 
+Finally, we measure the performance of an algorithm given some hyperparameters in terms of the MAE and the $\ell_1$-norm, as defined in Equation~\eqref{pdk:eq:mae} of Section~\ref{pdk:sec:experiments}.
+We use the MAE (and the $\ell_1$-norm) as it measures the error in percentage points and provides, therefore, some interpretability.
+For the binary datasets, \textit{i.e.}, for the Swiss referenda and for the U.S.\ presidential election, we measure the performance of a combination in terms of the MAE.
+For the categorical datasets, \textit{i.e.}, for the German elections where we try to predict the fractions of votes that parties obtain, we measure the performance in terms of the $\ell_1$-norm to sum up the prediction errors across different parties.
+
+
 \subsection{Swiss Referenda}%
 \label{app:ch}
 
@@ -74,7 +77,7 @@ Popular initiatives occur when \numprint{100000} people suggest a new law.
 For simplicity, we refer to optional referenda, mandatory referenda, and popular initiatives as \textit{referenda}.
 
 We collected the data about Swiss referenda between 1981 and 2020 from the Swiss Federal Statistical Office.
-The data are published through an API on the Swiss Open Data platform\footnote{\url{https://opendata.swiss/en/dataset/echtzeitdaten-am-abstimmungstag-zu-eidgenoessischen-abstimmungsvorlagen}}
+The data are published through an API on the Swiss Open Data platform~\citep{confederation2020open}.
 We pre-process the data as follows:
 First, we remove 12 regions (\textit{i.e.}, the municipalities) with missing values.
 This may happen because, each year, some municipalities are merged or split, and some results might not exist for some votes.

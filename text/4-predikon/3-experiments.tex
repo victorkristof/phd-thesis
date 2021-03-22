@@ -3,6 +3,7 @@
 \label{pdk:sec:experiments}
 
 \begin{table}
+	\centering
 	\caption{
 		Description of datasets used in our experiments.
 	}
@@ -96,7 +97,8 @@ In terms of accuracy (bottom), our algorithm predicts the final outcome with 95\
 The accuracy of our algorithm reaches 100\% after observing 200 municipal results, \textit{i.e.}, after observing 10\% of all municipalities.
 
 \begin{figure}
-	\includegraphics{pdk-ch-results.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-ch-results.pdf}
 	\caption{MAE (top) and accuracy (bottom) averaged over 26 Swiss referenda and 100 reveal orders each.}
 	\label{pdk:fig:ch_results}
 \end{figure}
@@ -115,7 +117,8 @@ The French-speaking municipalities in Wallis are closer to other French-speaking
 The municipalities of the only Italian-speaking canton, Ticino, form their own cluster.
 
 \begin{figure}
-	\includegraphics{pdk-ch-svd.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-ch-svd.pdf}
 	\caption{
 		Projection of Swiss municipalities on the first two singular vectors of referendum matrix $\vY$.
 		Municipalities are colored according to their language.
@@ -124,7 +127,8 @@ The municipalities of the only Italian-speaking canton, Ticino, form their own c
 \end{figure}
 
 \begin{figure}
-	\includegraphics{pdk-ch-tsne.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-ch-tsne.pdf}
 	\caption{
 		Projection of Swiss municipalities from referendum matrix $\vY$ with t-SNE.
 		(Left) Municipalities are colored according to their language.
@@ -159,7 +163,8 @@ All models have an accuracy of 41\% after observing the result of one region.
 This is because the Democratic candidate won in 21 of 51 regions (41\%) and won the popular vote.
 
 \begin{figure}
-	\includegraphics{pdk-us-results.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-us-results.pdf}
 	\caption{MAE (top) and accuracy (bottom) of the popular vote of the U.S.\ presidential election in 2016.}
 	\label{pdk:fig:us_results}
 \end{figure}
@@ -183,7 +188,8 @@ A similar observation can be made for the average displacement.
 This suggests that the finer the level of granularity of regions is, the better the predictive performance is, even if the observed results are obtained from the same number of voters.
 
 \begin{figure}
-	\includegraphics{pdk-de-results.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-de-results.pdf}
 	\caption{MAE (top) and average displacement (bottom) of German legislative elections at state level in 2009 (left) and district level in 2005 (right).}
 	\label{pdk:fig:de_results}
 \end{figure}
@@ -197,16 +203,9 @@ The districts on the right side of their cluster vote in majority for the CDU/CS
 For the lower cluster, those districts also belong to Southern Germany.
 The districts on the left side of this cluster (which vote in majority for the SPD) belong to North-Western Germany.
 
-The CDU/CSU and the SPD have the top two ranks in all districts.
-Therefore, it is interesting to color the points according to the party in third place.
-This clearly separates the two clusters.
-The cluster at the top corresponds to the Left party.\footnote{The three exceptions with CDU/CSU voted the Left party in second place.}
-The top cluster contains only districts that belong to historical East Germany (formerly the GDR, before the reunification in 1990), such as Potsdam, Leipzig, and Dresden.
-The cluster at the bottom corresponds to the Green party and the FDP and contains only districts that belong to historical West Germany (the former BDR), such as Frankfurt, Munich, and Hamburg.
-Interestingly, Berlin lies in the cluster that corresponds to historical East Germany, but seems slightly isolated.
-
 \begin{figure}
-	\includegraphics{pdk-de-svd.pdf}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{pdk-de-svd.pdf}
 	\caption{
 		Projection of German district on the first two singular vectors of election matrix $\vY$.
 		(Left) Districts are colored according to the first party elected in each of them.
@@ -215,3 +214,11 @@ Interestingly, Berlin lies in the cluster that corresponds to historical East Ge
 	}
 	\label{pdk:fig:de_svd}
 \end{figure}
+
+The CDU/CSU and the SPD have the top two ranks in all districts.
+Therefore, it is interesting to color the points according to the party in third place.
+This clearly separates the two clusters.
+The cluster at the top corresponds to the Left party.\footnote{The three exceptions with CDU/CSU voted the Left party in second place.}
+The top cluster contains only districts that belong to historical East Germany (formerly the GDR, before the reunification in 1990), such as Potsdam, Leipzig, and Dresden.
+The cluster at the bottom corresponds to the Green party and the FDP and contains only districts that belong to historical West Germany (the former BDR), such as Frankfurt, Munich, and Hamburg.
+Interestingly, Berlin lies in the cluster that corresponds to historical East Germany, but seems slightly isolated.
