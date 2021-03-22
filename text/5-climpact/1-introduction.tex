@@ -1,0 +1,23 @@
+%! TEX root = ../thesis.tex
+\section{Introduction}
+\label{sec:introduction}
+To put the focus on actions that have high potential for emission reduction, we must first understand whether people have an accurate perception of the carbon footprint of these actions.
+If they do not, their efforts might be wasted.
+As an example, recent work by \citet{wynes2017climate} shows that Canadian high-school textbooks encourage daily actions that yield negligible emission reduction.
+Actions with a higher potential of emission reduction are poorly documented.
+In this work, we model how people perceive the carbon footprint of their actions, which could guide educators and policy-makers.
+
+In their daily life, consumers repeatedly face multiple options with varying environmental effects.
+Except for a handful of experts, no one is able to estimate the absolute quantity of \COtwo\ emitted by their actions of say, flying from Paris to London.
+Most people, however, are aware that taking the train for the same trip would release less \COtwo.
+Hence, in the spirit of \citet{thurstone1927method} and \citet{salganik2015wiki} (among many others), we posit that the perception of a population can be probed by simple pairwise comparisons.
+By doing so, we shift the complexity from the probing system to the model: Instead of asking difficult questions about each action and simply averaging the answers, we ask simple questions in the form of comparisons and design a non-trivial model to estimate the perception.
+\textit{In fine}, human behaviour boils down to making choices: For example, we choose between eating local food and eating imported food; we do not choose between eating or not eating.
+Our awareness of relative emissions between actions (of the same purpose) is often sufficient to improve our carbon footprint.
+
+Our contributions are as follows.
+First, we cast the problem of inferring a population's global perception from pairwise comparisons as a linear regression.
+Second, we adapt a well-known active-learning method to maximize the information gained from each comparison.
+We describe the model and the active-learning algorithm in Section~\ref{sec:model}.
+We design an interactive platform to collect real data for an experiment on our university campus, and we show early results in Section~\ref{sec:results}.
+Our approach could help climate scientists, sociologists, journalists, governments, and individuals improve climate communication and enhance climate mitigation.

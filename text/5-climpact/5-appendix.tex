@@ -1,0 +1,133 @@
+%! TEX root = ../thesis.tex
+\section{Appendix}
+
+% \subsection{Scaling the Parameters}
+% \label{app:scaling}
+
+% The perceived carbon footprints $\exp \overline{\vec{w}}$ have no unit.
+% We scale them in order to compare with the true values.
+% Let $\vec{v} \in \mathbf{R}^M$ be the true values of the carbon footprint of actions, and $\widetilde{\vec{v}} = \log{\vec{v}}$.
+% We want to find the scaling constant $c \in \mathbf{R}$ that minimizes
+% \begin{equation*}
+%   l(c) = \sum_{i=1}^{M}(\widetilde{v}_i-\overline{w}_i - c)^2.
+% \end{equation*}
+% We take the derivative of $l(c)$ with respect to $c$ and set it to zero, to obtain
+% \begin{equation*}
+%   c = \frac{1}{M}\sum_{i=1}^{M} (\widetilde{v}_i - \overline{w}_i).
+% \end{equation*}
+% Hence, we obtain the scaled perceived carbon footprint of actions $\exp{(\overline{\vec{w}})}\exp{(c)}$.
+
+\subsection{Total Information Gain for Multivariate Gaussian Distributions}
+\label{app:active_learning}
+
+Recall that the entropy of a multivariate Gaussian distribution $ \mathcal{N}(\vec{\mu}, \vec{\Sigma}) $, $\vec{\mu} \in \mathbf{R}^M$, $\vec{\Sigma} \in \mathbf{R}^{M \times M}$, is given by
+\begin{equation}
+	S = \frac{M}{2}(1 + \log 2 \pi) + \frac{1}{2} \log \det \vec{\Sigma}.
+\end{equation}
+Let $\vec{\Sigma}_N$ and  $\vec{\Sigma}_{N+1}$ be the covariance matrices of the posterior distribution in Equation~\eqref{eq:posterior} when $N$ and $N+1$ data points have been collected, respectively.
+Let $\vec{x}$ be the new $(N+1)$-th data point.
+The total information gain is
+\begin{eqnarray}
+	\Delta S &=& S_N - S_{N+1}  \nonumber \\
+	&=& \frac{1}{2} \log \frac{\det \vec{\Sigma}_{N+1}^{-1}}{\det \vec{\Sigma}_N^{-1}} \nonumber \\
+	&=& \frac{1}{2} \log \frac{\det [\vec{\Sigma}_N^{-1} + \sigma_n^{-2}\vec{x}\vec{x}\tr] }{\det \vec{\Sigma}_N^{-1}} \label{eq:covariance} \\
+	&=& \frac{1}{2} \log \frac{(\det \vec{\Sigma}_N^{-1})(1 + \sigma_n^{-2} \vec{x}\tr \vec{\Sigma}_N \vec{x} ) }{ \det \vec{\Sigma}_N^{-1} } \label{eq:determinant} \\
+	&=& \frac{1}{2} \log (1 + \sigma_n^{-2} \vec{x}\tr \vec{\Sigma}_N \vec{x}). \nonumber
+\end{eqnarray}
+We obtain Equation~\eqref{eq:covariance} by observing that $ \vec{\Sigma}_N^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\tr = \sigma_n^{-2} \vec{X}\tr \vec{X} + \vec{\Sigma}_p^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\tr = \vec{\Sigma}_{N+1}^{-1}$.
+We obtain Equation~\eqref{eq:determinant} by the matrix determinant lemma.
+
+\subsection{List of Actions}
+\label{app:actions}
+
+We provide here the full list of actions, together with the true carbon footprint associated with each of them.
+Because different countries use different sources of energy, we calculate the carbon footprint \textit{relative} to the country where our university is located.
+The actions are ordered according to their true carbon footprint.
+\begin{enumerateb}
+	\item \actiontitle{Take the train in economy class on a 1000-km round-trip.} \\
+	The train is a high-speed train with 360 seats.
+	The seat-occupancy rate is 55\% (average rate for these types of trains).
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{17} % \cite{sncf2019calcul}
+	\item \actiontitle{Dry your clothes with a dryer for one year.} \\
+	A dryer emits \COtwo\ because it consumes electricity.
+	We consider a dryer of average quality.
+	The electricity is consumed from a grid with average \COtwo\ rate. \\
+	\actionvalue{40} % \cite{wynes2017climate}
+	\item \actiontitle{Light your house with LED bulbs.} \\
+	LED bulbs emit CO2 because they consume electricity to generate light.
+	The electricity is consumed from a grid with average \COtwo\ rate. \\
+	\actionvalue{40} % [Appendix \ref{app:bulbs}]
+	\item \actiontitle{Take the bus on a 1000-km round-trip.} \\
+	The bus is a standard-size bus with 60 seats.
+	The seat-occupancy rate is 50\% (average rate for buses).
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{45} % \cite{mobitool,myclimate}
+	\item \actiontitle{Drive an electric car alone on a 1000-km round-trip.} \\
+	The car is a compact electric car that consumes 15 kWh/100km.
+	The electricity is consumed from a grid with average \COtwo\ rate.
+	There are no other passengers in the car.
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{45} % \cite{ofdl,myclimate,swissc02}
+	\item \actiontitle{Car-share with three other persons on a 1000-km round-trip.} \\
+	The car is a mid-sized gasoline car that consumes 7 l/100km.
+	There are four persons in the car.
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{75} % \cite{ofdl,myclimate}
+	\item \actiontitle{Eat local and seasonal fruits and vegetables for one year.} \\
+	Growing food emits \COtwo\ because it requires fertilizing and driving agricultural machines.
+	The goods are then transported to grocery shops and to your home. \\
+	\actionvalue{89} % \cite{swissveg,foodmile}
+	\item \actiontitle{Eat eggs and dairy products for one year.} \\
+	The production of eggs and dairy products (milk, cheese, etc.) emits \COtwo\ because of water and land consumption, animal methane, and fossil fuel consumption for transportation and heating.
+	We consider an average citizen consuming 50 kg of eggs and dairy products per year. \\
+	\actionvalue{100} % \cite{wynes2017climate,viandesuisse}
+	\item \actiontitle{Throw all waste in the same trash for one year.} \\
+	Throwing all waste (PET, glass, cardboard, etc.) in the same trash, i.e., without recycling, emits \COtwo\ because more energy is needed to extract, transport, and process raw materials.
+	Incinerators also burn more waste, and organic waste decomposition generates methane. \\
+	\actionvalue{200} % \cite{wynes2017climate}
+	\item \actiontitle{Light your house with incandescent bulbs.} \\
+	Incandescent bulbs emit \COtwo\ because they consume electricity to generate light.
+	The electricity is consumed from a grid with average \COtwo\ rate. \\
+	\actionvalue{239} % [Appendix \ref{app:bulbs}]
+	\item \actiontitle{Fly in economy class for a 800-km round-trip.} \\
+	The plane is a standard aircraft for short-distance flights with 180 seats.
+	The seat-occupancy rate is 80\%.
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{270} % \cite{bofinger2013calculating,myclimate}
+	\item \actiontitle{Drive alone for a 1000-km round-trip.} \\
+	The car is a mid-sized gasoline car that consumes 7 l/100km.
+	There are no other passengers in the car.
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{300} % \cite{mobitool,myclimate}
+	\item \actiontitle{Heat your house with a heat pump for one year.} \\
+	A heat pump emits \COtwo\ because it consumes electricity to generate heat.
+	The house is of average size.
+	The electricity is consumed from a grid with average \COtwo\ rate. \\
+	\actionvalue{400} % \cite{energyenvironnement,swissenergyscope,swissc02}
+	\item \actiontitle{Eat imported and out-of-season fruits and vegetables for one year.} \\
+	Growing food emits \COtwo\  because it requires fertilizing and driving agricultural machines.
+	Importing food emits \COtwo\ because of fossil fuel consumption for transportation.
+	Out-of-season food emits \COtwo\ because it grows in greenhouse that needs to be heated.
+	The goods are then transported to grocery shops and to your home. \\
+	\actionvalue{449} % \cite{foodmile,swissveg}
+	\item \actiontitle{Eat meat for one year.} \\
+	Meat production emits \COtwo\ because of water and land consumption, animal methane, and fossil fuel consumption for transportation and heating.
+	We consider an average citizen consuming 50 kg of meat per year. \\
+	\actionvalue{800} % \cite{wynes2017climate,viandesuisse}
+	\item \actiontitle{Fly in economy class for a 12000-km round-trip.} \\
+	The plane is a standard aircraft for long-distance flights with 390 seats.
+	The seat-occupancy rate is close to 100\%.
+	We count the \COtwo\ emissions per passenger. \\
+	\actionvalue{2300} % \cite{bofinger2013calculating,myclimate}
+	\item \actiontitle{Heat your house with an oil furnace for one year.} \\
+	An oil furnace emits \COtwo\ because it burns fuel to generate heat.
+	The house is of average size. \\
+	\actionvalue{3300} % \cite{energyenvironnement,swissenergyscope}
+	\item \actiontitle{Fly in first class for a 12000-km round-trip.} \\
+	The plane is a standard aircraft for long-distance flights with 390 seats.
+	The seat-occupancy rate is close to 100\%.
+	We count the \COtwo\ emissions per passenger.
+	Passengers flying in first class use more space than passengers in economy. \\
+	\actionvalue{9000} % \cite{bofinger2013calculating,myclimate}
+\end{enumerateb}

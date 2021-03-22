@@ -1,0 +1,64 @@
+%! TEX root = ../thesis.tex
+\section{Model}%
+\label{sec:model}
+
+Let $ \mathcal{A} $ be a set of $M$ actions.
+For instance, "flying from London to New York" or "eating meat for a year" are both actions in $ \mathcal{A}$.
+Let $ (i, j, y) $ be a triplet encoding that action $i \in \mathcal{A}$ has an \textit{impact ratio} of $y \in \mathbf{R}_{>0}$ over action $j \in \mathcal{A}$.
+Said otherwise, if $y > 1$, action $i$ has a carbon footprint $y$ times \textit{greater} than action $j$, and if $y < 1$, action $i$ has a carbon footprint $1/y$ times \textit{smaller} than action $j$.
+
+Given some parameters $w_i, w_j \in \mathbf{R}$ representing the perceived (log-)carbon footprint in \COtwo-equivalent of action $i$ and action $j$, we posit
+\begin{equation*}
+	y = \frac{\exp w_i}{\exp w_j}.
+\end{equation*}
+We gather the parameters in a vector $\vec{w} \in \mathbf{R}^M$.
+Assuming a centered Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2_n)$, $\sigma_n^2 \in \mathbf{R}$, we model the (log-)impact~ratio
+\begin{equation}
+	\log y = w_i - w_j + \epsilon = \vec{x}\Tr\vec{w} + \epsilon,
+\end{equation}
+where the comparison vector $\vec{x} \in \mathbf{R}^M$ is zero everywhere except in entry~$i$ where it is $+1$ and in entry~$j$ where it is $-1$.
+Vector $\vec{x}$ "selects" the pair of actions to compare.
+For a dataset $ \mathcal{D} = \{ (i_n, j_n, y_n) : n = 1, ..., N \}$ of $N$ independent triplets and since \mbox{$\log y \sim \mathcal{N}(\vec{x}\Tr \vec{w}, \sigma^2_n)$}, the likelihood of the model is
+\begin{equation*}
+	p(\vec{y} \given \vec{X}, \vec{w}) = \prod_{i=1}^N p(y_i \given \vec{x}_i\Tr \vec{w}, \sigma_n^2) = \mathcal{N}(\vec{X} \vec{w}, \sigma_n^2\vec{I}),
+\end{equation*}
+where $\vec{y} \in \mathbf{R}^N$ is the vector of observed (log-)impact ratios, and $\vec{X} \in \mathbf{R}^{N \times M}$ is a matrix of $N$ comparison vectors.
+
+We assume a Gaussian prior for the weight parameters $\vec{w} \sim \mathcal{N}(\vec{\mu}, \vec{\Sigma}_p)$, where $\vec{\mu} \in \mathbf{R}^M $ is the prior mean and $\vec{\Sigma}_p \in \mathbf{R}^{M \times M}$ is the prior covariance matrix.
+To obtain the global perceived carbon footprint of each action in $\mathcal{A}$ and to enable active learning, we compute the posterior distribution of the weight parameters given the data,
+\begin{eqnarray}
+	\label{eq:posterior}
+	p(\vec{w} \given \vec{X}, \vec{y})
+	&=& \frac{p(\vec{y} \given \vec{X}, \vec{w})p(\vec{w})}{p(\vec{y} \given \vec{X})} \nonumber \\
+	&=& \mathcal{N}\left(\overline{\vec{w}} = \vec{\Sigma} \left( \sigma_n^{-2} \vec{X}\Tr \vec{y} + \vec{\Sigma}_p^{-1} \vec{\mu}\right), \vec{\Sigma} = \left( \sigma_n^{-2} \vec{X}\Tr \vec{X} + \vec{\Sigma}_p^{-1} \right)^{-1}\right).
+\end{eqnarray}
+The noise variance $\sigma_n^2$, the prior mean $\vec{\mu}$, and the prior covariance matrix $\vec{\Sigma}_p$ are hyperparameters to be tuned.
+The global perceived carbon footprint is given by the posterior mean as $\exp \overline{\vec{w}}$.
+We use the posterior covariance matrix $\vec{\Sigma}$ to select the next pair of actions, as described in the following section.
+
+
+\paragraph{Active Learning}
+We collect the triplets in $\mathcal{D}$ from multiple users who take a quiz.
+% (As we allow the users to repeat the quiz, we consider in practice multiple "sessions".)
+During one session of the quiz, a user sequentially answers comparison questions and decides when to stop to see their overall results.
+Active learning enables us to maximize the information extracted from a session.
+
+Let $\vec{\Sigma}_N$ and  $\vec{\Sigma}_{N+1}$ be the covariance matrices of the posterior distribution in Equation~\eqref{eq:posterior} when $N$ and $N+1$ comparisons have been respectively collected.
+Let $\vec{x}$ be the new $(N+1)$-th comparison vector.
+As proposed by~\citet{mackay1992information}, we want to select the pair of actions to compare that is maximally informative about the values that the model parameters $\vec{w}$ should take \citep{chu2005extensions, houlsby2012collaborative}.
+For our linear Gaussian model, this is obtained by maximizing the total information gain
+\begin{equation}
+	\Delta S = S_N - S_{N+1} = \frac{1}{2} \log (1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x}),
+\end{equation}
+where $S_N = \frac{M}{2}(1 + \log 2 \pi) + \frac{1}{2} \log \det \vec{\Sigma}_N$ is the entropy of a multivariate Gaussian distribution with covariance matrix $\vec{\Sigma}_N$.
+The full derivation of the total information gain can be found in Appendix~\ref{app:active_learning}.
+To maximize $\Delta S$, we maximize $ \vec{x}\Tr \vec{\Sigma}_N \vec{x} $ for all possible $ \vec{x} $ in our dataset.
+Recall that comparison vectors $ \vec{x} $ are zero everywhere except in entry~$i$~(+1) and in entry~$j$~(-1).
+By denoting $\vec{\Sigma}_N = [\sigma_{ij}^2]_{i, j = 1}^M$, we seek, therefore, to find the pair of actions
+\begin{equation*}
+	(i^\star, j^\star) = \argmax_{i, j} \left\{ \sigma_{ii}^2 + \sigma_{jj}^2 - 2 \sigma_{ij}^2 \right\}.
+\end{equation*}
+
+The prior covariance matrix $\vec{\Sigma}_p$ could capture the prior knowledge about the typical user perception of relative carbon footprint.
+In future work, we intend to further reduce the number of questions asked during one session by a judicious choice of $\vec{\Sigma}_p$.
+In our experiments so far, we simply initialize it to a spherical covariance, as explained in the next section.
