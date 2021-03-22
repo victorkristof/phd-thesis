@@ -29,3 +29,12 @@
 
 % Shortcut to CO\textsubscript{2}.
 \newcommand\COtwo{CO\textsubscript{2}}
+
+% Enumerate with bold numbers.
+\newenvironment{enumerateb}
+{\begin{enumerate}\renewcommand\labelenumi{\textbf\theenumi .}}
+		{\end{enumerate}}
+
+% An action item for the list of action for Climpact.
+\newcommand{\actiontitle}[1]{\textbf{#1}}
+\newcommand{\actionvalue}[1]{\textbf{Carbon footprint:} #1 kg\COtwo-equivalent.}

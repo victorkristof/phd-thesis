@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
-\section{Model}%
-\label{sec:model}
+\section{Models}%
+\label{clm:sec:models}
 
 Let $ \mathcal{A} $ be a set of $M$ actions.
 For instance, "flying from London to New York" or "eating meat for a year" are both actions in $ \mathcal{A}$.
@@ -26,12 +26,12 @@ where $\vec{y} \in \mathbf{R}^N$ is the vector of observed (log-)impact ratios, 
 
 We assume a Gaussian prior for the weight parameters $\vec{w} \sim \mathcal{N}(\vec{\mu}, \vec{\Sigma}_p)$, where $\vec{\mu} \in \mathbf{R}^M $ is the prior mean and $\vec{\Sigma}_p \in \mathbf{R}^{M \times M}$ is the prior covariance matrix.
 To obtain the global perceived carbon footprint of each action in $\mathcal{A}$ and to enable active learning, we compute the posterior distribution of the weight parameters given the data,
-\begin{eqnarray}
-	\label{eq:posterior}
+\begin{align}
+	\label{clm:eq:posterior}
 	p(\vec{w} \given \vec{X}, \vec{y})
-	&=& \frac{p(\vec{y} \given \vec{X}, \vec{w})p(\vec{w})}{p(\vec{y} \given \vec{X})} \nonumber \\
-	&=& \mathcal{N}\left(\overline{\vec{w}} = \vec{\Sigma} \left( \sigma_n^{-2} \vec{X}\Tr \vec{y} + \vec{\Sigma}_p^{-1} \vec{\mu}\right), \vec{\Sigma} = \left( \sigma_n^{-2} \vec{X}\Tr \vec{X} + \vec{\Sigma}_p^{-1} \right)^{-1}\right).
-\end{eqnarray}
+	 & = \frac{p(\vec{y} \given \vec{X}, \vec{w})p(\vec{w})}{p(\vec{y} \given \vec{X})} \nonumber                                                                                                                                             \\
+	 & = \mathcal{N}\left(\overline{\vec{w}} = \vec{\Sigma} \left( \sigma_n^{-2} \vec{X}\Tr \vec{y} + \vec{\Sigma}_p^{-1} \vec{\mu}\right), \vec{\Sigma} = \left( \sigma_n^{-2} \vec{X}\Tr \vec{X} + \vec{\Sigma}_p^{-1} \right)^{-1}\right).
+\end{align}
 The noise variance $\sigma_n^2$, the prior mean $\vec{\mu}$, and the prior covariance matrix $\vec{\Sigma}_p$ are hyperparameters to be tuned.
 The global perceived carbon footprint is given by the posterior mean as $\exp \overline{\vec{w}}$.
 We use the posterior covariance matrix $\vec{\Sigma}$ to select the next pair of actions, as described in the following section.
@@ -43,16 +43,24 @@ We collect the triplets in $\mathcal{D}$ from multiple users who take a quiz.
 During one session of the quiz, a user sequentially answers comparison questions and decides when to stop to see their overall results.
 Active learning enables us to maximize the information extracted from a session.
 
-Let $\vec{\Sigma}_N$ and  $\vec{\Sigma}_{N+1}$ be the covariance matrices of the posterior distribution in Equation~\eqref{eq:posterior} when $N$ and $N+1$ comparisons have been respectively collected.
-Let $\vec{x}$ be the new $(N+1)$-th comparison vector.
+Let $\vec{\Sigma}_N$ and  $\vec{\Sigma}_{N+1}$ be the covariance matrices of the posterior distribution in Equation~\eqref{clm:eq:posterior} when $N$ and $N+1$ comparisons have been respectively collected.
+Let $\vec{x}$ be the new $(N+1)$-th comparison vector, and recall that the entropy of a multivariate Gaussian distribution is given by
+\begin{equation}
+	S = \frac{M}{2}(1 + \log 2 \pi) + \frac{1}{2} \log \det \vec{\Sigma}.
+\end{equation}
 As proposed by~\citet{mackay1992information}, we want to select the pair of actions to compare that is maximally informative about the values that the model parameters $\vec{w}$ should take \citep{chu2005extensions, houlsby2012collaborative}.
 For our linear Gaussian model, this is obtained by maximizing the total information gain
-\begin{equation}
-	\Delta S = S_N - S_{N+1} = \frac{1}{2} \log (1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x}),
-\end{equation}
-where $S_N = \frac{M}{2}(1 + \log 2 \pi) + \frac{1}{2} \log \det \vec{\Sigma}_N$ is the entropy of a multivariate Gaussian distribution with covariance matrix $\vec{\Sigma}_N$.
-The full derivation of the total information gain can be found in Appendix~\ref{app:active_learning}.
-To maximize $\Delta S$, we maximize $ \vec{x}\Tr \vec{\Sigma}_N \vec{x} $ for all possible $ \vec{x} $ in our dataset.
+\begin{align}
+	\Delta S & = S_N - S_{N+1}  \nonumber                                                                                                                                         \\
+	         & = \frac{1}{2} \log \frac{\det \vec{\Sigma}_{N+1}^{-1}}{\det \vec{\Sigma}_N^{-1}} \nonumber                                                                         \\
+	         & = \frac{1}{2} \log \frac{\det [\vec{\Sigma}_N^{-1} + \sigma_n^{-2}\vec{x}\vec{x}\Tr] }{\det \vec{\Sigma}_N^{-1}} \label{clm:eq:covariance}                         \\
+	         & = \frac{1}{2} \log \frac{(\det \vec{\Sigma}_N^{-1})(1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x} ) }{ \det \vec{\Sigma}_N^{-1} } \label{clm:eq:determinant} \\
+	         & = \frac{1}{2} \log (1 + \sigma_n^{-2} \vec{x}\Tr \vec{\Sigma}_N \vec{x}). \nonumber
+\end{align}
+We obtain~\eqref{clm:eq:covariance} by observing that $ \vec{\Sigma}_N^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\Tr = \sigma_n^{-2} \vec{X}\Tr \vec{X} + \vec{\Sigma}_p^{-1} + \sigma_n^{-2} \vec{x} \vec{x}\Tr = \vec{\Sigma}_{N+1}^{-1}$.
+We obtain~\eqref{clm:eq:determinant} by the matrix determinant lemma.
+
+Hence, to maximize $\Delta S$, we maximize $ \vec{x}\Tr \vec{\Sigma}_N \vec{x} $ for all possible $ \vec{x} $ in our dataset.
 Recall that comparison vectors $ \vec{x} $ are zero everywhere except in entry~$i$~(+1) and in entry~$j$~(-1).
 By denoting $\vec{\Sigma}_N = [\sigma_{ij}^2]_{i, j = 1}^M$, we seek, therefore, to find the pair of actions
 \begin{equation*}
@@ -62,3 +70,17 @@ By denoting $\vec{\Sigma}_N = [\sigma_{ij}^2]_{i, j = 1}^M$, we seek, therefore,
 The prior covariance matrix $\vec{\Sigma}_p$ could capture the prior knowledge about the typical user perception of relative carbon footprint.
 In future work, we intend to further reduce the number of questions asked during one session by a judicious choice of $\vec{\Sigma}_p$.
 In our experiments so far, we simply initialize it to a spherical covariance, as explained in the next section.
+
+\paragraph{Scaling the Parameters}
+The perceived carbon footprints $\exp \overline{\vec{w}}$ have no unit.
+We scale them in order to compare with the true values.
+Let $\vec{v} \in \mathbf{R}^M$ be the true values of the carbon footprint of actions, and $\widetilde{\vec{v}} = \log{\vec{v}}$.
+We want to find the scaling constant $c \in \mathbf{R}$ that minimizes
+\begin{equation*}
+	l(c) = \sum_{i=1}^{M}(\widetilde{v}_i-\overline{w}_i - c)^2.
+\end{equation*}
+We take the derivative of $l(c)$ with respect to $c$ and set it to zero, and we obtain
+\begin{equation*}
+	c = \frac{1}{M}\sum_{i=1}^{M} (\widetilde{v}_i - \overline{w}_i).
+\end{equation*}
+Hence, the scaled perceived carbon footprint of actions are $\exp{(\overline{\vec{w}} + c)}$.
