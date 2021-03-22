@@ -1,8 +1,8 @@
 %! TEX root = ../thesis.tex
-\section{Conclusion}%
+\section{Summary}%
 \label{pdk:sec:conclusion}
 
-We have proposed an algorithm to predict national vote results from regional results that are observed sequentially.
+In this chapter, we have proposed an algorithm to predict national vote results from regional results that are observed sequentially.
 Our approach learns a representation for each region by factorizing the sub-matrix of historical data and approximating the representation of a new vote as the optimal parameters of a generalized linear model.
 The predictions for unobserved results are obtained through the link function of the GLM, and national predictions are obtained by aggregating observed and unobserved regional results.
 We are able to predict both referenda with binary outcomes and elections with categorical outcomes.
@@ -11,7 +11,7 @@ We have explored the regional representations in their latent space and have sho
 Finally, we have deployed a Web platform to provide real-time vote predictions for Swiss referenda.
 Our algorithm is able to predict the final outcome of four real votes with an absolute error of about 1\% after observing only 13\% of the ballots.
 
-\paragraph{Future Work}
+\paragraph{Perspective}
 
 We plan to further develop our approach in three directions.
 First, Bayesian inference in our generalized linear model would enable uncertainty quantification of our predictions in a principled way.
