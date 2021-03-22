@@ -4,7 +4,7 @@ Comparable to peer-production systems, a body of law is an example of a dynamic 
 In this chapter\footnote{This chapter is based on \citet{kristof2020war, kristof2021war}.}, we develop predictive models for this process, thereby shedding light on the competitive dynamics of parliamentarians who make laws.
 For this purpose, we curated a rich dataset of \numprint{450000} law edits introduced by European parliamentarians over ten years.
 An \textit{edit} modifies the status quo of a law, and could be in competition with another edit if it modifies the same part of that law.
-We adapt the \interank{} model from Chapter~\ref{ch:pps} for predicting the success of such edits, in the face of both the \textit{inertia} of the status quo and the \textit{competition} between overlapping edits.
+We adapt the \interank{} model from Chapter~\ref{ch:peerproduction} for predicting the success of such edits, in the face of both the \textit{inertia} of the status quo and the \textit{competition} between overlapping edits.
 This model combines three different categories of features:
 (a) \emph{Explicit} features extracted from data related to the edits, the parliamentarians, and the laws, (b) \emph{latent} features that capture bi-linear interactions between parliamentarians and laws, and (c) \emph{text} features of the edits.
 We show experimentally that this combination enables us to accurately predict the success of the edits.
