@@ -1,18 +1,24 @@
 # Chapter Checklist
 
+A checklist for all the steps to do in order to transform a paper into a thesis chapter.
+
 - [ ] Include files from paper folder
 
 ```bash=sh
-cp path-to-paper-folder/*.{tex,bib} path-to-chaper/
-cp path-to-paper-folder/fig/*.pdf figures/
+cp path-to-paper-folder/*.{tex,bib} text/path-to-chaper/
+cp path-to-paper-folder/fig/*.pdf text/figures/
 ```
+
+- [ ] Create main.tex file in chapter folder and link to sections
 
 - [ ] Update names and paths to figures in the Latex files
 
 ```
-vidir figures
-vim /includegraphics/ *.tex
+vidir text/figures
+vim /includegraphics/ **/x-chapter/*.tex
 ```
+
+- [ ] Compile thesis with `make` and correct compilation errors
 
 - [ ] Add path to root thesis.tex
 
@@ -34,6 +40,10 @@ bufdo 1put! ='%! TEX root = ../thesis.tex'
 ```vim
 vim /{tab:/ *.tex
 cdo s/{tab:/{lmp:tab:/c
+```
+
+```vim
+call ReplaceReference(item, chapter_code)
 ```
 
 - [ ] Add ~ before \ref
