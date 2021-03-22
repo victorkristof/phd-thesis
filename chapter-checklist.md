@@ -23,10 +23,11 @@ vim /includegraphics/ **/x-chapter/*.tex
 - [ ] Add path to root thesis.tex
 
 ```vim
+argadd *.tex
 bufdo 1put! ='%! TEX root = ../thesis.tex'
 ```
 
-- [ ] Lint Latex files with ALE
+- [ ] Lint Latex files
 
 ```bash=sh
 ./lint.sh chapter-folder/*.tex
