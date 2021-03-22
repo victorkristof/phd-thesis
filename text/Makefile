@@ -8,6 +8,7 @@ all: $(PROJECT).tex $(PROJECT).bib
 	bibtex $(PROJECT)
 	pdflatex $(PROJECT)
 	pdflatex $(PROJECT)
+	pdflatex $(PROJECT)
 
 compress: $(PROJECT).pdf
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=tmp.pdf $<
