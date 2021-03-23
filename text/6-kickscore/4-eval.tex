@@ -85,10 +85,10 @@ In Table~\ref{kks:tab:predperf}, we report results for the following models:
 	\item \emph{Constant}. The model of Section~\ref{kks:sec:model} with a constant covariance function.
 	      This model assumes that the scores do not vary over time.
 
-	\item \emph{Elo}. The system used by the World Chess Federation \citep{elo1978rating}.
+	\item \emph{Elo}. The system used by the World Chess Federation~\citep{elo1978rating}.
 	      Time dynamics are a by-product of the update rule (c.f. Section~\ref{kks:sec:relwork}).
 
-	\item \emph{TrueSkill}. The Bayesian model of \citet{herbrich2006trueskill}.
+	\item \emph{TrueSkill}. The Bayesian model of~\citet{herbrich2006trueskill}.
 	      Time dynamics are assumed to follow Brownian motion (akin to our Wiener kernel) and inference is done in a single pass over the data.
 
 	\item \emph{Ours}. The model of Section~\ref{kks:sec:model}.
@@ -149,7 +149,7 @@ can bring substantial gains.
 
 \subsubsection{Observation Models}
 Basketball and football match outcomes actually consist of \emph{points} (respectively, goals) scored by each team during the match.
-We can make use of this additional information to improve predictions \citep{maher1982modelling}.
+We can make use of this additional information to improve predictions~\citep{maher1982modelling}.
 For each of the basketball and football datasets, we compare the best model obtained in Section~\ref{kks:sec:evaldyn} to alternative models.
 These alternative models keep the same time dynamics but use either
 \begin{enumerate}
@@ -158,7 +158,7 @@ These alternative models keep the same time dynamics but use either
 	\item a Poisson-exp likelihood on the points scored by each team.
 \end{enumerate}
 The results are presented in Table~\ref{kks:tab:lklperf}.
-The logit likelihood performs similarly to the probit one \citep{stern1992all}, but likelihoods that take points into account can indeed lead to better predictions.
+The logit likelihood performs similarly to the probit one~\citep{stern1992all}, but likelihoods that take points into account can indeed lead to better predictions.
 
 \begin{table}[ht]
 	\caption{
@@ -210,7 +210,7 @@ Score-based models such as ours are sometimes believed to be unable to capture m
 This is incorrect: if an opponent's score can be modeled by using match-dependent features, we can simply add an \emph{interaction} feature for every pair of opponents.
 In the next experiment, we model the score difference between two opponents $i, j$ as $d \doteq s_i - s_j + s_{ij}$.
 Informally, the model learns to explain the transitive effects through the usual player scores $s_i$ and $s_j$ and the remaining intransitive effects are captured by the interaction score $s_{ij}$.
-We compare this model to the Blade-Chest model of \citet{chen2016modeling} on the two StarCraft datasets, known to contain strong intransitivities.
+We compare this model to the Blade-Chest model of~\citet{chen2016modeling} on the two StarCraft datasets, known to contain strong intransitivities.
 The Blade-Chest model is specifically designed to handle intransitivities in comparison data.
 We also include two baselines, a simple Bradley--Terry model without the interaction features (\emph{logit}) and a non-parametric estimator (\emph{naive}) that estimates probabilities based on match outcomes between each pair---without attempting to capture transitive effects.
 As shown in Figure~\ref{kks:fig:starcraft}, our model outperforms all other approaches, including the Blade-Chest model.
@@ -246,7 +246,7 @@ We compare the predictive performance resulting from two inference variants,
 		This is possible for this particular choice of likelihood thanks to the self-conjugacy of the Gaussian distribution, but at a computational cost $O(N^3)$.}.
 \end{enuminline}
 Both approaches lead to an average log loss of \num{0.634} and an average accuracy of \num{0.664}.
-Strikingly, both values are equal up to four decimal places, suggesting that the mean-field assumption is benign in practice \citep{birlutiu2007expectation}.
+Strikingly, both values are equal up to four decimal places, suggesting that the mean-field assumption is benign in practice~\citep{birlutiu2007expectation}.
 
 
 \subsubsection{Variational Objective}

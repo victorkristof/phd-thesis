@@ -27,7 +27,7 @@ As the scores are coupled through the observations, the posterior no longer fact
 Furthermore, computing the posterior is intractable if the likelihood is non-Gaussian.
 
 % Approximate inference.
-To overcome these challenges, we consider a mean-field variational approximation \citep{wainwright2008graphical}.
+To overcome these challenges, we consider a mean-field variational approximation~\citep{wainwright2008graphical}.
 In particular, we assume that the posterior can be well-approximated by a multivariate Gaussian distribution that factorizes over the features:
 \begin{align}
 \label{kks:eq:approxpost}
@@ -58,8 +58,8 @@ For any feature $m$, given the pseudo-observations' parameters $\tilde{\bm{\mu}}
 An outline of our iterative inference procedure is given in Algorithm~\ref{alg:inference}.
 Every iteration consists of two steps:
 \begin{enumerate}
-\item updating the pseudo-observations' parameters given the true observations and the current approximate posterior (lines \ref{li:begin-param}--\ref{li:end-param}), and
-\item recomputing the approximate posterior given the current pseudo-observation (lines \ref{li:begin-post} and \ref{li:end-post}).
+\item updating the pseudo-observations' parameters given the true observations and the current approximate posterior (lines~\ref{li:begin-param}--\ref{li:end-param}), and
+\item recomputing the approximate posterior given the current pseudo-observation (lines~\ref{li:begin-post} and \ref{li:end-post}).
 \end{enumerate}
 Convergence is declared when the difference between two successive iterates of $\{ \tilde{\mu}_{mn} \}$ and $\{ \tilde{\sigma}_{mn}^2 \}$ falls below a threshold.
 Note that, as a by-product of the computations performed by the algorithm, we can also estimate the log-marginal likelihood of the data, $\log p(\mathcal{D})$.
@@ -90,7 +90,7 @@ Note that, as a by-product of the computations performed by the algorithm, we ca
 In Appendix~\ref{kks:app:inference}, we show that \textsc{Derivatives} and \textsc{UpdateParams} run in constant time.
 In Section~\ref{kks:sec:inf-posterior}, we show that \textsc{UpdatePosterior} runs in time $O(N_m)$.
 Therefore, if we assume that the vectors $\{ \bm{x}_n \}$ are sparse, the total running time per iteration of Algorithm~\ref{alg:inference} is $O(N)$.
-Furthermore, each of the two outer \emph{for} loops (lines \ref{li:begin-param} and \ref{li:begin-post}) can be parallelized easily, leading in most cases to a linear acceleration with the number of available processors.
+Furthermore, each of the two outer \emph{for} loops (lines~\ref{li:begin-param} and \ref{li:begin-post}) can be parallelized easily, leading in most cases to a linear acceleration with the number of available processors.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,7 +99,7 @@ Furthermore, each of the two outer \emph{for} loops (lines \ref{li:begin-param} 
 
 % Intro to the subsection.
 The exact computations performed during the first step of the inference algorithm---updating the pseudo-observations---depend on the specific variational method used.
-We consider two: expectation propagation \citep{minka2001family}, and reverse-KL variational inference~\citep{blei2017variational}.
+We consider two: expectation propagation~\citep{minka2001family}, and reverse-KL variational inference~\citep{blei2017variational}.
 The ability of Algorithm~\ref{alg:inference} to seamlessly adapt to either of the two methods is valuable, as it enables practitioners to use the most advantageous method for a given likelihood function.
 Detailed formulae for \textsc{Derivatives} and \textsc{UpdateParams} can be found in Appendix~\ref{kks:app:inference}.
 
@@ -127,7 +127,7 @@ To this end, the function \textsc{Derivatives} (on line~\ref{li:derivatives} of 
 \end{align}
 with respect to ${\mu}_{-n} \doteq \mathbf{E}_{q_{-n}}[\bm{x}_n\Tr \bm{s}(t_n)]$.
 These computations can be done in closed form for the widely-used probit likelihood, and they involve one-dimensional numerical integration for most other likelihoods.
-EP has been reported to result in more accurate posterior approximations on certain classification tasks \citep{nickisch2008approximations}.
+EP has been reported to result in more accurate posterior approximations on certain classification tasks~\citep{nickisch2008approximations}.
 
 \subsubsection{Reverse KL Divergence}
 
@@ -135,7 +135,7 @@ EP has been reported to result in more accurate posterior approximations on cert
 This method (often referred to simply as \emph{variational inference} in the literature) seeks to minimize $\KL(q \Vert p)$, i.e., the KL divergence from the approximate posterior $q$ to the true posterior $p$.
 
 % Update rule.
-To optimize this objective, we adopt the approach of \citet{khan2017conjugate}.
+To optimize this objective, we adopt the approach of~\citet{khan2017conjugate}.
 In this case, the function \textsc{Derivatives} computes the first and second derivatives of the expected log-likelihood
 \begin{align}
 \label{kks:eq:exp-ll}
@@ -147,7 +147,7 @@ These computations involve numerically solving two one-dimensional integrals.
 % Comparison to EP.
 In comparison to EP, this method has two advantages.
 The first is theoretical:
-If the likelihood $p(y \mid d)$ is log-concave in $d$, then the variational objective has a unique global minimum, and we can guarantee that Algorithm~\ref{alg:inference} converges to this minimum \citep{khan2017conjugate}.
+If the likelihood $p(y \mid d)$ is log-concave in $d$, then the variational objective has a unique global minimum, and we can guarantee that Algorithm~\ref{alg:inference} converges to this minimum~\citep{khan2017conjugate}.
 The second is numerical:
 Excepted for the probit likelihood, computing~\eqref{kks:eq:exp-ll} is numerically more stable than computing~\eqref{kks:eq:logpart}.
 
@@ -175,7 +175,7 @@ Collecting the parameters of the pseudo-observations into a vector $\tilde{\bm{\
 Unfortunately, this computation runs in time $O(N_m^3)$, a cost that becomes prohibitive if some features appear in many observations.
 
 % State space formulation.
-Instead, we use an alternative approach that exploits a link between temporal Gaussian processes and state-space models \citep{hartikainen2010kalman, reece2010introduction}.
+Instead, we use an alternative approach that exploits a link between temporal Gaussian processes and state-space models~\citep{hartikainen2010kalman, reece2010introduction}.
 Without loss of generality, we now assume that the $N$ observations are ordered chronologically, and, for conciseness, we drop the feature's index and consider a single process $s(t)$.
 The key idea is to augment $s(t)$ into a $K$-dimensional vector-valued Gauss-Markov process $\bar{\bm{s}}(t)$, such that
 \begin{align*}
@@ -192,7 +192,7 @@ where $\bm{h} \in \mathbf{R}^K$ is called the \emph{measurement vector}.
 % Corresponding graphical model and inference.
 Figure~\ref{kks:fig:ssm} illustrates our model from a state-space viewpoint.
 It is important to note that the mutual time dependencies of Figure~\ref{kks:fig:model} have been replaced by Markovian dependencies.
-In this state-space formulation, posterior inference can be done in time $O(K^3 N)$ by using the Rauch--Tung--Striebel smoother \citep{sarkka2013bayesian}.
+In this state-space formulation, posterior inference can be done in time $O(K^3 N)$ by using the Rauch--Tung--Striebel smoother~\citep{sarkka2013bayesian}.
 
 \begin{figure}[t]
   \centering
@@ -203,10 +203,10 @@ In this state-space formulation, posterior inference can be done in time $O(K^3 
 \end{figure}
 
 \paragraph{From Covariance Functions to State-Space Models}
-A method for converting a process $s(t) \sim \GP[\bm{0}, k(t, t')]$ into an equivalent Gauss-Markov process $\bar{\bm{s}}(t)$ by explicit construction of $\bm{h}$, $\{\bm{A}_n\}$ and $\{\bm{Q}_n\}$ is given in \citet{solin2016stochastic}.
+A method for converting a process $s(t) \sim \GP[\bm{0}, k(t, t')]$ into an equivalent Gauss-Markov process $\bar{\bm{s}}(t)$ by explicit construction of $\bm{h}$, $\{\bm{A}_n\}$ and $\{\bm{Q}_n\}$ is given in~\citet{solin2016stochastic}.
 All the covariance functions described in Section~\ref{kks:sec:covariances} lead to exact state-space reformulations of order $K \leq 3$.
 The composition of covariance functions through addition or multiplication can also be treated exactly and automatically.
-Some other covariance functions, such as the squared-exponential function or periodic functions \citep{rasmussen2006gaussian}, cannot be transformed exactly but can be approximated effectively and to arbitrary accuracy \citep{hartikainen2010kalman, solin2014explicit}.
+Some other covariance functions, such as the squared-exponential function or periodic functions~\citep{rasmussen2006gaussian}, cannot be transformed exactly but can be approximated effectively and to arbitrary accuracy~\citep{hartikainen2010kalman, solin2014explicit}.
 
 % Covariance function viewpoint is more intuitive.
 Finally, we stress that the state-space viewpoint is useful because it leads to a faster inference procedure; but defining the time dynamics of the score processes in terms of covariance functions is much more intuitive.
@@ -220,4 +220,4 @@ Given the approximate posterior $q(\bm{s}_1, \ldots, \bm{s}_M)$, the probability
 p(y \mid \bm{x}, t^*) = \int_\mathbf{R} p(y \mid z) p(z) dz,
 \end{align*}
 where $z = \bm{x}\Tr \bm{s}(t^*)$ and the distribution of $s_m(t^*)$ is derived from the posterior $q(\bm{s}_m)$.
-By using the state-space formulation of the model, the prediction can be done in constant time \citep{saatci2012scalable}.
+By using the state-space formulation of the model, the prediction can be done in constant time~\citep{saatci2012scalable}.

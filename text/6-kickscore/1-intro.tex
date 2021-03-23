@@ -10,7 +10,7 @@ However, it is easy to observe this skill \emph{implicitly} through the outcomes
 
 % Static models of pairwise comparisons.
 In this setting, probabilistic models of pairwise-comparison outcomes provide an elegant and practical approach to quantifying skill and to predicting future match outcomes given past data.
-These models, pioneered by \citet{zermelo1928berechnung} in the context of chess (and by \citet{thurstone1927law} in the context of psychophysics), have been studied for almost a century.
+These models, pioneered by~\citet{zermelo1928berechnung} in the context of chess (and by~\citet{thurstone1927law} in the context of psychophysics), have been studied for almost a century.
 They posit that each competitor $i$ (i.e., a team or player) is characterized by a latent score $s_i \in \mathbf{R}$ and that the outcome probabilities of a match between $i$ and $j$ are a function of the difference $s_i - s_j$ between their scores.
 By estimating the scores $\{ s_i \}$ from data, we obtain an interpretable proxy for skill that is predictive of future match outcomes.
 If a competitor's skill is expected to remain stable over time, these models are very effective.
@@ -18,15 +18,15 @@ But what if it varies over time?
 
 % Dynamic models.
 A number of methods have been proposed to adapt comparison models to the case where scores change over time.
-Perhaps the best known such method is the Elo rating system \citep{elo1978rating}, used by the World Chess Federation for their official rankings.
+Perhaps the best known such method is the Elo rating system~\citep{elo1978rating}, used by the World Chess Federation for their official rankings.
 In this case, the time dynamics are captured essentially as a by-product of the learning rule (c.f. Section~\ref{kks:sec:relwork}).
-Other approaches attempt to model these dynamics explicitly \citep[e.g.,][]{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
+Other approaches attempt to model these dynamics explicitly~\citep[e.g.,][]{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
 These methods greatly improve upon the static case when considering historical data, but they all assume the simplest model of time dynamics (that is, Brownian motion).
 Hence, they fail to capture more nuanced patterns such as variations at different timescales, linear trends, regression to the mean, discontinuities, and more.
 
 % KickScore: value proposition.
 In this work, we propose a new model of pairwise-comparison outcomes with expressive time-dynamics: it generalizes and extends previous approaches.
-We achieve this by treating the score of an opponent $i$ as a time-varying Gaussian process $s_i(t)$ that can be endowed with flexible priors \citep{rasmussen2006gaussian}.
+We achieve this by treating the score of an opponent $i$ as a time-varying Gaussian process $s_i(t)$ that can be endowed with flexible priors~\citep{rasmussen2006gaussian}.
 We also present an algorithm that, in spite of this increased flexibility, performs approximate Bayesian inference over the score processes in linear time in the number of observations so that our approach scales seamlessly to datasets with millions of observations.
 This inference algorithm addresses several shortcomings of previous methods: it can be parallelized effortlessly and accommodates different variational objectives.
 The highlights of our method are as follows.
@@ -76,5 +76,5 @@ All in all, we believe that our method will be useful to data-mining practitione
 
 \paragraph{A Note on Extensions}
 In this paper, we focus on \emph{pairwise} comparisons for conciseness.
-However, the model and inference algorithm could be extended to multiway comparisons or partial rankings over small sets of opponents without any major conceptual change, similarly to \citet{herbrich2006trueskill}.
-Furthermore, and even though we develop our model in the context of sports, it is relevant to all applications of ranking from comparisons, e.g., to those where comparison outcomes reflect human preferences or opinions \citep{thurstone1927law, mcfadden1973conditional, salganik2015wiki}.
+However, the model and inference algorithm could be extended to multiway comparisons or partial rankings over small sets of opponents without any major conceptual change, similarly to~\citet{herbrich2006trueskill}.
+Furthermore, and even though we develop our model in the context of sports, it is relevant to all applications of ranking from comparisons, e.g., to those where comparison outcomes reflect human preferences or opinions~\citep{thurstone1927law, mcfadden1973conditional, salganik2015wiki}.

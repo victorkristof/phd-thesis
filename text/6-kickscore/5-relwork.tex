@@ -5,11 +5,11 @@
 % Probabilistic models of pairwise comparisons.
 Probabilistic models for pairwise comparisons have been studied for almost a century.
 \citet{thurstone1927law} proposed his seminal \emph{law of comparative judgment} in the context of psychology.
-Almost concurrently, \citet{zermelo1928berechnung} developed a method to rank chess players from match outcomes.
+Almost concurrently,~\citet{zermelo1928berechnung} developed a method to rank chess players from match outcomes.
 Both rely on the same idea: objects are characterized by a latent score (e.g., the intrinsic quality of a perceptual variable, or a chess player's skill) and the outcomes of comparisons between objects depend on the difference between the corresponding latent scores.
-Zermelo's model was later rediscovered by \citet{bradley1952rank} and is currently usually referred to as the Bradley--Terry model.
+Zermelo's model was later rediscovered by~\citet{bradley1952rank} and is currently usually referred to as the Bradley--Terry model.
 \citet{stern1992all} provides a unifying framework and shows that, in practice, Thurstone's and Zermelo's models result in similar fits to the data.
-In the context of sports, some authors suggest going beyond ordinal outcomes and investigate pairwise-comparison models with Gaussian \citep{guo2012score}, Poisson \citep{maher1982modelling, guo2012score}, or Skellam \citep{karlis2009bayesian} likelihoods.
+In the context of sports, some authors suggest going beyond ordinal outcomes and investigate pairwise-comparison models with Gaussian~\citep{guo2012score}, Poisson~\citep{maher1982modelling, guo2012score}, or Skellam~\citep{karlis2009bayesian} likelihoods.
 
 
 % Dynamic models of pairwise comparisons.
@@ -20,7 +20,7 @@ The World Chess Federation, which uses a variant of the Bradley--Terry model to 
 s_i \gets s_i + \lambda \frac{\partial}{\partial s_i} \log p(y \mid s_i - s_j),
 \end{align*}
 where $\lambda \in \mathbf{R}$ is a learning rate.
-It is interesting that this simple online update scheme (known as the Elo rating system \citep{elo1978rating}) enables a basic form of ``tracking'': the sequence of scores gives an indication of a player's evolution over time.
+It is interesting that this simple online update scheme (known as the Elo rating system~\citep{elo1978rating}) enables a basic form of ``tracking'': the sequence of scores gives an indication of a player's evolution over time.
 Whereas, in this case, score dynamics occur as a by-product of the learning rule, several attempts have been made to model time dynamics explicitly.
 Usually, these models assume a variant of Brownian motion:
 \begin{align}
@@ -28,17 +28,17 @@ Usually, these models assume a variant of Brownian motion:
 s(t_{n+1}) = s(t_n) + \varepsilon_{n},
     \qquad \varepsilon_{n} \sim \mathcal{N}(0, \sigma^2 \Abs{t_{n+1} - t_n}).
 \end{align}
-\citet{glickman1993paired} and \citet{fahrmeir1994dynamic} are, to the best of our knowledge, the first to consider such a model.
+\citet{glickman1993paired} and~\citet{fahrmeir1994dynamic} are, to the best of our knowledge, the first to consider such a model.
 \citet{glickman1999parameter} derives a computationally-efficient Bayesian inference method by using closed-form approximations of intractable integrals.
-\citet{herbrich2006trueskill} and \citet{dangauthier2007trueskill} propose a similar method based on Gaussian filtering and expectation propagation, respectively.
+\citet{herbrich2006trueskill} and~\citet{dangauthier2007trueskill} propose a similar method based on Gaussian filtering and expectation propagation, respectively.
 \citet{coulom2008whole} proposes a method based on the Laplace approximation.
 Our model strictly subsumes these approaches; Brownian motion is simply a special case of our model obtained by using the Wiener kernel.
 One of the key contributions of our work is to show that it is not necessary to restrict the dynamics to Brownian motion in order to get linear-time inference.
 
 % Link between GPs and SSMs.
 Finally, we briefly review literature on the link between Gaussian processes (GPs) with scalar inputs and state-space models (SSMs), as this forms a crucial component of our fast inference procedure.
-Excellent introductions to this link can be found in the theses of \citet{saatci2012scalable} and \citet{solin2016stochastic}.
-The connection is known since the seminal paper of \citet{ohagan1978curve}, which introduced Gaussian processes as a method to tackle general regression problems.
-It was recently revisited by \citet{hartikainen2010kalman}, who provide formulae for going back-and-forth between GP covariance and state-space forms.
-Extensions of this link to non-Gaussian likelihood models are discussed in \citet{saatci2012scalable} and \citet{nickisch2018state}.
+Excellent introductions to this link can be found in the theses of~\citet{saatci2012scalable} and~\citet{solin2016stochastic}.
+The connection is known since the seminal paper of~\citet{ohagan1978curve}, which introduced Gaussian processes as a method to tackle general regression problems.
+It was recently revisited by~\citet{hartikainen2010kalman}, who provide formulae for going back-and-forth between GP covariance and state-space forms.
+Extensions of this link to non-Gaussian likelihood models are discussed in~\citet{saatci2012scalable} and~\citet{nickisch2018state}.
 To the best of our knowledge, we are the first to describe how the link between GPs and SSMs can be used in the context of observation models that combine \emph{multiple} processes, by using a mean-field variational approximation.

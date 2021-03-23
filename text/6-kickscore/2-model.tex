@@ -31,9 +31,9 @@ That is, the score of an opponent $i$ at time $t^*$ is given by
 	s_i = \bm{x}_i\Tr \bm{s}(t^*).
 \end{align}
 In the case of a one-to-one mapping between competitors and features, $\bm{x}_i$ is simply the one-hot encoding of opponent $i$.
-More complex setups are possible: For example, in the case of team sports and if the player lineup is available for each match, it could also be used to encode the players taking part in the match \citep{maystre2016player}.
+More complex setups are possible: For example, in the case of team sports and if the player lineup is available for each match, it could also be used to encode the players taking part in the match~\citep{maystre2016player}.
 Note that $\bm{x}_i$ can also depend contextually on the match.
-For instance, it can be used to encode the fact that a team plays at home \citep{agresti2012categorical}.
+For instance, it can be used to encode the fact that a team plays at home~\citep{agresti2012categorical}.
 
 % Observations are parametrized by score difference.
 Each observation consists of a tuple $(\bm{x}_i, \bm{x}_j, t^*, y)$, where $\bm{x}_i, \bm{x}_j$ are the opponents' feature vectors, $t^* \in \mathbf{R}$ is the time, and $y \in \mathcal{Y}$ is the match outcome.
@@ -42,12 +42,12 @@ We posit that this outcome is a random variable that depends on the opponents th
 	y \mid \bm{x}_i, \bm{x}_j, t^* \sim p( y \mid s_i - s_j ),
 \end{align*}
 where $p$ is a known probability density (or mass) function and $s_i, s_j$ are given by~\eqref{kks:eq:compscore}.
-The idea of modeling outcome probabilities through score differences dates back to \citet{thurstone1927law} and \citet{zermelo1928berechnung}.
+The idea of modeling outcome probabilities through score differences dates back to~\citet{thurstone1927law} and~\citet{zermelo1928berechnung}.
 The likelihood $p$ is chosen such that positive values of $s_i - s_j$ lead to successful outcomes for opponent $i$ and vice-versa.
 
 % Graphical representation.
 A graphical representation of the model is provided in Figure~\ref{kks:fig:pgms}.
-For perspective, we also include the representation of a static model, such as that of \citet{thurstone1927law}.
+For perspective, we also include the representation of a static model, such as that of~\citet{thurstone1927law}.
 Our model can be interpreted as ``conditionally parametric'': conditioned on a particular time, it falls back to a (static) pairwise-comparison model parametrized by real-valued scores.
 
 \begin{figure}[t]
@@ -109,7 +109,7 @@ A non-exhaustive list of likelihoods is given in Table~\ref{kks:tab:likelihoods}
 % Quick recap on Gaussian processes.
 A Gaussian process $s(t) \sim \GP[0, k(t, t')]$ can be thought of as an infinite collection of random variables indexed by time, such that the joint distribution of any finite vector of $N$ samples $\bm{s} = [s(t_1) \cdots s(t_N)]$ is given by $\bm{s} \sim \mathcal{N}(\bm{0}, \bm{K})$, where $\bm{K} = [k(t_i, t_j)]$.
 That is, $\bm{s}$ is jointly Gaussian with mean $\bm{0}$ and covariance matrix $\bm{K}$.
-We refer the reader to \citet{rasmussen2006gaussian} for an excellent introduction to Gaussian processes.
+We refer the reader to~\citet{rasmussen2006gaussian} for an excellent introduction to Gaussian processes.
 
 % Dynamics through covariance functions.
 Hence, by specifying the covariance function appropriately, we can express prior expectations about the time dynamics of a feature's score, such as smooth or non-smooth variations at different timescales, regression to the mean, discontinuities, linear trends and more.
