@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+
+% Nodes.
+\node[latent] (s)  {$s_m$};
+\node[obs, below=of s] (y) {$y_n$};
+\node[const, left=0.3cm of y, yshift=0.4cm] (x) {$\bm{x}_n$};
+
+% Edges.
+\edge {s} {y};
+\edge[-] {x} {y};
+
+% Plates.
+\plate {scores} {(s)} {$M$}
+\plate {observations} {(y)(x)} {$N$}
+\end{tikzpicture}

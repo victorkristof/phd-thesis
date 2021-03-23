@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+
+% Nodes.
+\node[latent] (s1)  {$\bar{s}_{m1}^k$};
+\node[latent, right=1cm of s1] (s2)  {$\bar{s}_{m2}^k$};
+\node[latent, right=1.5cm of s2] (sn)  {$\bar{s}_{mN}^k$};
+\node[const, above=0.5cm of s1] (t1) {$t_1$};
+\node[const, above=0.5cm of s2] (t2) {$t_2$};
+\node[const, above=0.5cm of sn] (tn) {$t_N$};
+\node[obs, below=1.5cm of s1] (y1) {$y_1$};
+\node[obs, below=1.5cm of s2] (y2) {$y_2$};
+\node[obs, below=1.5cm of sn] (yn) {$y_N$};
+\node[const, left=0.2cm of y1, yshift=0.4cm] (x1) {$\bm{x}_1$};
+\node[const, left=0.3cm of y2, yshift=0.4cm] (x2) {$\bm{x}_2$};
+\node[const, left=0.3cm of yn, yshift=0.4cm] (xn) {$\bm{x}_N$};
+
+% Edges.
+\edge[-] {t1} {s1};
+\edge[-] {t2} {s2};
+\edge[-] {tn} {sn};
+\edge[-] {x1} {y1};
+\edge[-] {x2} {y2};
+\edge[-] {xn} {yn};
+\edge {s1} {y1};
+\edge {s2} {y2};
+\edge {sn} {yn};
+\edge {s1} {s2};
+
+\path (t2) -- node[auto=false]{\ldots} (tn);
+\path (y2) -- node[auto=false]{\ldots} (yn);
+\path (s2) edge[->, >={triangle 45}] node[fill=white] {\ldots} (sn);
+
+% Plates.
+\plate {derivs1} {(s1)} {$K$}
+\plate {derivs2} {(s2)} {$K$}
+\plate {derivsn} {(sn)} {$K$}
+\plate {scores} {(derivs1)(derivs2)(derivsn)} {$M$}
+\end{tikzpicture}

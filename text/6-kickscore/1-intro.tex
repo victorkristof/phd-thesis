@@ -1,0 +1,80 @@
+%! TEX root = ../thesis.tex
+\section{Introduction}
+\label{sec:intro}
+
+% General context & problem setting
+In many competitive sports and games (such as tennis, basketball, chess and electronic sports), the most useful definition of a competitor's skill is the propensity of that competitor to win against an opponent.
+It is often difficult to measure this skill \emph{explicitly}:
+take basketball for example, a team's skill depends on the abilities of its players in terms of shooting accuracy, physical fitness, mental preparation, but also on the team's cohesion and coordination, on its strategy, on the enthusiasm of its fans, and a number of other intangible factors.
+However, it is easy to observe this skill \emph{implicitly} through the outcomes of matches.
+
+% Static models of pairwise comparisons.
+In this setting, probabilistic models of pairwise-comparison outcomes provide an elegant and practical approach to quantifying skill and to predicting future match outcomes given past data.
+These models, pioneered by \citet{zermelo1928berechnung} in the context of chess (and by \citet{thurstone1927law} in the context of psychophysics), have been studied for almost a century.
+They posit that each competitor $i$ (i.e., a team or player) is characterized by a latent score $s_i \in \mathbf{R}$ and that the outcome probabilities of a match between $i$ and $j$ are a function of the difference $s_i - s_j$ between their scores.
+By estimating the scores $\{ s_i \}$ from data, we obtain an interpretable proxy for skill that is predictive of future match outcomes.
+If a competitor's skill is expected to remain stable over time, these models are very effective.
+But what if it varies over time?
+
+% Dynamic models.
+A number of methods have been proposed to adapt comparison models to the case where scores change over time.
+Perhaps the best known such method is the Elo rating system \citep{elo1978rating}, used by the World Chess Federation for their official rankings.
+In this case, the time dynamics are captured essentially as a by-product of the learning rule (c.f. Section~\ref{sec:relwork}).
+Other approaches attempt to model these dynamics explicitly \citep[e.g.,][]{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
+These methods greatly improve upon the static case when considering historical data, but they all assume the simplest model of time dynamics (that is, Brownian motion).
+Hence, they fail to capture more nuanced patterns such as variations at different timescales, linear trends, regression to the mean, discontinuities, and more.
+
+% KickScore: value proposition.
+In this work, we propose a new model of pairwise-comparison outcomes with expressive time-dynamics: it generalizes and extends previous approaches.
+We achieve this by treating the score of an opponent $i$ as a time-varying Gaussian process $s_i(t)$ that can be endowed with flexible priors \citep{rasmussen2006gaussian}.
+We also present an algorithm that, in spite of this increased flexibility, performs approximate Bayesian inference over the score processes in linear time in the number of observations so that our approach scales seamlessly to datasets with millions of observations.
+This inference algorithm addresses several shortcomings of previous methods: it can be parallelized effortlessly and accommodates different variational objectives.
+The highlights of our method are as follows.
+
+\begin{description}
+\item[Flexible Dynamics]
+As scores are modeled by continuous-time Gaussian processes, complex (yet interpretable) dynamics can be expressed by composing covariance functions.
+
+\item[Generality]
+The score of an opponent for a given match is expressed as a (sparse) linear combination of features.
+This enables, e.g., the representation of a home advantage or any other contextual effect.
+Furthermore, the model encompasses a variety of observation likelihoods beyond win / lose, based, e.g., on the number of points a competitor scores.
+
+\item[Bayesian Inference]
+Our inference algorithm returns a posterior \emph{distribution} over score processes.
+This leads to better predictive performance and enables a principled way to learn the dynamics (and any other model hyperparameters) by optimizing the log-marginal likelihood of the data.
+
+\item[Ease of Intepretation]
+By plotting the score processes $\{ s_i(t) \}$ over time, it is easy to visualize the probability of any comparison outcome under the model.
+As the time dynamics are described through the composition of simple covariance functions, their interpretation is straightforward as well.
+\end{description}
+
+% Contributions & organization.
+Concretely, our contributions are threefold.
+First, we develop a probabilistic model of pairwise-comparison outcomes with flexible time-dynamics (Section~\ref{sec:model}).
+The model covers a wide range of use cases, as it enables
+\begin{enuminline}
+\item opponents to be represented by a sparse linear combination of features, and
+\item observations to follow various likelihood functions.
+\end{enuminline}
+In fact, it unifies and extends a large body of prior work.
+Second, we derive an efficient algorithm for approximate Bayesian inference (Section~\ref{sec:inference}).
+This algorithm adapts to two different variational objectives;
+in conjunction with the ``reverse-KL'' objective, it provably converges to the optimal posterior approximation.
+It can be parallelized easily, and the most computationally intensive step can be offloaded to optimized off-the-shelf numerical software.
+Third, we apply our method on several sports datasets and show that it achieves state-of-the-art predictive performance (Section~\ref{sec:eval}).
+Our results highlight that different sports are best modeled with different time-dynamics.
+We also demonstrate how domain-specific and contextual information can improve performance even further;
+in particular, we show that our model outperforms competing ones even when there are strong intransitivities in the data.
+
+% Visualization & impact.
+In addition to prediction tasks, our model can also be used to generate compelling visualizations of the temporal evolution of skills.
+All in all, we believe that our method will be useful to data-mining practitioners interested in understanding comparison time-series and in building predictive systems for games and sports.
+%Objects represent players or teams.
+%Each datum represents a match with two opponents, in which we observe a winner (e.g., in tennis) or possibly a tie (e.g., in chess) or points (e.g., goals in football).
+%The objective is to estimate the score of players or teams over time, in such a way that score differences predict match outcomes accurately.
+
+\paragraph{A Note on Extensions}
+In this paper, we focus on \emph{pairwise} comparisons for conciseness.
+However, the model and inference algorithm could be extended to multiway comparisons or partial rankings over small sets of opponents without any major conceptual change, similarly to \citet{herbrich2006trueskill}.
+Furthermore, and even though we develop our model in the context of sports, it is relevant to all applications of ranking from comparisons, e.g., to those where comparison outcomes reflect human preferences or opinions \citep{thurstone1927law, mcfadden1973conditional, salganik2015wiki}.

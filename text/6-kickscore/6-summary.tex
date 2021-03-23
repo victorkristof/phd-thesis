@@ -1,0 +1,13 @@
+%! TEX root = ../thesis.tex
+\section{Conclusions}
+\label{sec:conclusions}
+
+We have presented a probabilistic model of pairwise comparison outcomes that can capture a wide range of temporal dynamics.
+This model reaches state-of-the-art predictive performance on several sports datasets, and it enables generating visualizations that help in understanding comparison time-series.
+To fit our model, we have derived a computationally efficient approximate Bayesian inference algorithm.
+To the best of our knowledge, our algorithm is the first linear-time Bayesian inference algorithm for dynamic pairwise comparison models that minimizes the reverse-KL divergence.
+
+% Future work.
+One of the strengths of our approach is that it enables to discover the structure of the time dynamics by comparing the log-marginal likelihood of the data under various choices of covariance functions.
+In the future, we would like to fully automatize this discovery process, in the spirit of the \emph{automatic statistician} \citep{duvenaud2014automatic}.
+Ideally, given only the comparison data, we should be able to systematically discover the time dynamics that best explain the data, and generate an interpretable description of the corresponding covariance functions.

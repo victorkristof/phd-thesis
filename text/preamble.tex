@@ -197,12 +197,14 @@
 \newlist{enuminline}{enumerate*}{1}
 \setlist[enuminline,1]{label=(\itshape\alph*\upshape)}
 
+\usetikzlibrary{bayesnet}
+
 % Removes double spacing after end of sentence.
 % See: http://practicaltypography.com/one-space-between-sentences.html.
 \frenchspacing
 
 % Player kernel is not by itself on a page.
-\renewcommand{\floatpagefraction}{.8}
+% \renewcommand{\floatpagefraction}{.8}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
