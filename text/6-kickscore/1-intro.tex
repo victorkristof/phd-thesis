@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Introduction}
-\label{sec:intro}
+\label{kks:sec:intro}
 
 % General context & problem setting
 In many competitive sports and games (such as tennis, basketball, chess and electronic sports), the most useful definition of a competitor's skill is the propensity of that competitor to win against an opponent.
@@ -19,7 +19,7 @@ But what if it varies over time?
 % Dynamic models.
 A number of methods have been proposed to adapt comparison models to the case where scores change over time.
 Perhaps the best known such method is the Elo rating system \citep{elo1978rating}, used by the World Chess Federation for their official rankings.
-In this case, the time dynamics are captured essentially as a by-product of the learning rule (c.f. Section~\ref{sec:relwork}).
+In this case, the time dynamics are captured essentially as a by-product of the learning rule (c.f. Section~\ref{kks:sec:relwork}).
 Other approaches attempt to model these dynamics explicitly \citep[e.g.,][]{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
 These methods greatly improve upon the static case when considering historical data, but they all assume the simplest model of time dynamics (that is, Brownian motion).
 Hence, they fail to capture more nuanced patterns such as variations at different timescales, linear trends, regression to the mean, discontinuities, and more.
@@ -51,18 +51,18 @@ As the time dynamics are described through the composition of simple covariance 
 
 % Contributions & organization.
 Concretely, our contributions are threefold.
-First, we develop a probabilistic model of pairwise-comparison outcomes with flexible time-dynamics (Section~\ref{sec:model}).
+First, we develop a probabilistic model of pairwise-comparison outcomes with flexible time-dynamics (Section~\ref{kks:sec:model}).
 The model covers a wide range of use cases, as it enables
 \begin{enuminline}
 \item opponents to be represented by a sparse linear combination of features, and
 \item observations to follow various likelihood functions.
 \end{enuminline}
 In fact, it unifies and extends a large body of prior work.
-Second, we derive an efficient algorithm for approximate Bayesian inference (Section~\ref{sec:inference}).
+Second, we derive an efficient algorithm for approximate Bayesian inference (Section~\ref{kks:sec:inference}).
 This algorithm adapts to two different variational objectives;
 in conjunction with the ``reverse-KL'' objective, it provably converges to the optimal posterior approximation.
 It can be parallelized easily, and the most computationally intensive step can be offloaded to optimized off-the-shelf numerical software.
-Third, we apply our method on several sports datasets and show that it achieves state-of-the-art predictive performance (Section~\ref{sec:eval}).
+Third, we apply our method on several sports datasets and show that it achieves state-of-the-art predictive performance (Section~\ref{kks:sec:eval}).
 Our results highlight that different sports are best modeled with different time-dynamics.
 We also demonstrate how domain-specific and contextual information can improve performance even further;
 in particular, we show that our model outperforms competing ones even when there are strong intransitivities in the data.

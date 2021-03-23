@@ -1,6 +1,6 @@
 %! TEX root = ../thesis.tex
 \section{Inference Algorithm}
-\label{sec:inference}
+\label{kks:sec:inference}
 
 % Introduction to section.
 In this section, we derive an efficient inference algorithm for our model.
@@ -20,7 +20,7 @@ The joint prior distribution of these samples is $p(\bm{s}_m) = \mathcal{N}(\bm{
 % Bayesian inference.
 We take a Bayesian approach and seek to compute the posterior distribution
 \begin{align}
-\label{eq:truepost}
+\label{kks:eq:truepost}
 p(\bm{s}_1, \ldots, \bm{s}_M \mid \mathcal{D}) \propto \prod_{m = 1}^M p(\bm{s}_m) \prod_{n = 1}^N p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)].
 \end{align}
 As the scores are coupled through the observations, the posterior no longer factorizes over $\{ \bm{s}_m \}$.
@@ -30,7 +30,7 @@ Furthermore, computing the posterior is intractable if the likelihood is non-Gau
 To overcome these challenges, we consider a mean-field variational approximation \citep{wainwright2008graphical}.
 In particular, we assume that the posterior can be well-approximated by a multivariate Gaussian distribution that factorizes over the features:
 \begin{align}
-\label{eq:approxpost}
+\label{kks:eq:approxpost}
 p(\bm{s}_1, \ldots, \bm{s}_M \mid \mathcal{D})
     \approx q(\bm{s}_1, \ldots, \bm{s}_M)
     \doteq \prod_{m = 1}^M \mathcal{N}(\bm{s}_m \mid \bm{\mu}_m, \bm{\Sigma}_m).
@@ -38,11 +38,11 @@ p(\bm{s}_1, \ldots, \bm{s}_M \mid \mathcal{D})
 Computing this approximate posterior amounts to finding the variational parameters $\{\bm{\mu}_m, \bm{\Sigma}_m \}$ that best approximate the true posterior.
 More formally, the inference problem reduces to the optimization problem
 \begin{align}
-\label{eq:varopt}
+\label{kks:eq:varopt}
 \min_{\{\bm{\mu}_m, \bm{\Sigma}_m \}} \mathrm{div} \left[ p(\bm{s}_1, \ldots, \bm{s}_M \mid \mathcal{D}) \;\Vert\; q(\bm{s}_1, \ldots, \bm{s}_M) \right],
 \end{align}
 for some divergence measure $\mathrm{div}(p \Vert q) \ge 0$.
-We will consider two different such measures in Section~\ref{sec:inf-pseudo-obs}.
+We will consider two different such measures in Section~\ref{kks:sec:inf-pseudo-obs}.
 
 % Gaussian pseudo-observation viewpoint.
 A different viewpoint on the approximate posterior is as follows.
@@ -51,8 +51,8 @@ For both of the variational objectives that we consider, it is possible to rewri
 q(\bm{s}_m) \propto p(\bm{s}_m) \prod_{n \in \mathcal{D}_m} \mathcal{N}[s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}].
 \end{align*}
 Letting $\mathcal{X}_n \subseteq [M]$ be the subset of features such that $x_{nm} \ne 0$, we can now reinterpret the variational approximation as transforming every observation $(\bm{x}_n, t_n, y_n)$ into several independent \emph{pseudo-observations} with Gaussian likelihood, one for each feature $m \in \mathcal{X}_n$.
-Instead of optimizing directly $\{ \bm{\mu}_m, \bm{\Sigma}_m \}$ in~\eqref{eq:varopt}, we can alternatively choose to optimize the parameters $\{ \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn} \}$.
-For any feature $m$, given the pseudo-observations' parameters $\tilde{\bm{\mu}}_m$ and $\tilde{\bm{\sigma}}_m^2$, computing $q(\bm{s}_m)$ becomes tractable (c.f. Section~\ref{sec:inf-posterior}).
+Instead of optimizing directly $\{ \bm{\mu}_m, \bm{\Sigma}_m \}$ in~\eqref{kks:eq:varopt}, we can alternatively choose to optimize the parameters $\{ \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn} \}$.
+For any feature $m$, given the pseudo-observations' parameters $\tilde{\bm{\mu}}_m$ and $\tilde{\bm{\sigma}}_m^2$, computing $q(\bm{s}_m)$ becomes tractable (c.f. Section~\ref{kks:sec:inf-posterior}).
 
 % Algorithm
 An outline of our iterative inference procedure is given in Algorithm~\ref{alg:inference}.
@@ -87,21 +87,21 @@ Note that, as a by-product of the computations performed by the algorithm, we ca
 \end{algorithm}
 
 \paragraph{Running Time}
-In Appendix~\ref{app:inference}, we show that \textsc{Derivatives} and \textsc{UpdateParams} run in constant time.
-In Section~\ref{sec:inf-posterior}, we show that \textsc{UpdatePosterior} runs in time $O(N_m)$.
+In Appendix~\ref{kks:app:inference}, we show that \textsc{Derivatives} and \textsc{UpdateParams} run in constant time.
+In Section~\ref{kks:sec:inf-posterior}, we show that \textsc{UpdatePosterior} runs in time $O(N_m)$.
 Therefore, if we assume that the vectors $\{ \bm{x}_n \}$ are sparse, the total running time per iteration of Algorithm~\ref{alg:inference} is $O(N)$.
 Furthermore, each of the two outer \emph{for} loops (lines \ref{li:begin-param} and \ref{li:begin-post}) can be parallelized easily, leading in most cases to a linear acceleration with the number of available processors.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Updating the Pseudo-Observations}
-\label{sec:inf-pseudo-obs}
+\label{kks:sec:inf-pseudo-obs}
 
 % Intro to the subsection.
 The exact computations performed during the first step of the inference algorithm---updating the pseudo-observations---depend on the specific variational method used.
 We consider two: expectation propagation \citep{minka2001family}, and reverse-KL variational inference~\citep{blei2017variational}.
 The ability of Algorithm~\ref{alg:inference} to seamlessly adapt to either of the two methods is valuable, as it enables practitioners to use the most advantageous method for a given likelihood function.
-Detailed formulae for \textsc{Derivatives} and \textsc{UpdateParams} can be found in Appendix~\ref{app:inference}.
+Detailed formulae for \textsc{Derivatives} and \textsc{UpdateParams} can be found in Appendix~\ref{kks:app:inference}.
 
 \subsubsection{Expectation Propagation}
 
@@ -122,7 +122,7 @@ Informally, the hybrid distribution $\hat{q}_n$ is ``closer'' to the true distri
 Expectation propagation (EP) works as follows. At each iteration and for each $n$, we update the parameters $\{ \tilde{\mu}_{mn}, \tilde{\sigma}_{mn} : m \in \mathcal{X}_n \}$ such that $\KL( \hat{q}_n \Vert q )$ is minimized.
 To this end, the function \textsc{Derivatives} (on line~\ref{li:derivatives} of Algorithm~\ref{alg:inference}) computes the first and second derivatives of the log-partition function
 \begin{align}
-\label{eq:logpart}
+\label{kks:eq:logpart}
 \log \mathbf{E}_{q_{-n}} \left\{ p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)] \right\}
 \end{align}
 with respect to ${\mu}_{-n} \doteq \mathbf{E}_{q_{-n}}[\bm{x}_n\Tr \bm{s}(t_n)]$.
@@ -138,7 +138,7 @@ This method (often referred to simply as \emph{variational inference} in the lit
 To optimize this objective, we adopt the approach of \citet{khan2017conjugate}.
 In this case, the function \textsc{Derivatives} computes the first and second derivatives of the expected log-likelihood
 \begin{align}
-\label{eq:exp-ll}
+\label{kks:eq:exp-ll}
 \mathbf{E}_q \left\{ \log p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)] \right\}
 \end{align}
 with respect to $\mu \doteq \mathbf{E}_q[\bm{x}_n\Tr \bm{s}(t_n)]$.
@@ -149,12 +149,12 @@ In comparison to EP, this method has two advantages.
 The first is theoretical:
 If the likelihood $p(y \mid d)$ is log-concave in $d$, then the variational objective has a unique global minimum, and we can guarantee that Algorithm~\ref{alg:inference} converges to this minimum \citep{khan2017conjugate}.
 The second is numerical:
-Excepted for the probit likelihood, computing~\eqref{eq:exp-ll} is numerically more stable than computing~\eqref{eq:logpart}.
+Excepted for the probit likelihood, computing~\eqref{kks:eq:exp-ll} is numerically more stable than computing~\eqref{kks:eq:logpart}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Updating the Approximate Posterior}
-\label{sec:inf-posterior}
+\label{kks:sec:inf-posterior}
 
 % Problem formulation.
 The second step of Algorithm~\ref{alg:inference} (lines~\ref{li:begin-post} and~\ref{li:end-post}) solves the following problem, for every feature $m$.
@@ -168,7 +168,7 @@ This computation can be done independently and in parallel for each feature $m \
 A naive approach is to use the self-conjugacy properties of the Gaussian distribution directly.
 Collecting the parameters of the pseudo-observations into a vector $\tilde{\bm{\mu}}_m$ and a diagonal matrix $\tilde{\bm{\Sigma}}_m$, the parameters of the posterior $q(\bm{s}_m)$ are given by
 \begin{align}
-\label{eq:batch}
+\label{kks:eq:batch}
 \bm{\Sigma}_m = (\bm{K}_m^{-1} + \tilde{\bm{\Sigma}}_m^{-1})^{-1}, \qquad
 \bm{\mu}_m    = \bm{\Sigma}_m \tilde{\bm{\Sigma}}_m^{-1} \tilde{\bm{\mu}}_m.
 \end{align}
@@ -190,21 +190,21 @@ s(t) = \bm{h}\Tr \bar{\bm{s}}(t),
 where $\bm{h} \in \mathbf{R}^K$ is called the \emph{measurement vector}.
 
 % Corresponding graphical model and inference.
-Figure~\ref{fig:ssm} illustrates our model from a state-space viewpoint.
-It is important to note that the mutual time dependencies of Figure~\ref{fig:model} have been replaced by Markovian dependencies.
+Figure~\ref{kks:fig:ssm} illustrates our model from a state-space viewpoint.
+It is important to note that the mutual time dependencies of Figure~\ref{kks:fig:model} have been replaced by Markovian dependencies.
 In this state-space formulation, posterior inference can be done in time $O(K^3 N)$ by using the Rauch--Tung--Striebel smoother \citep{sarkka2013bayesian}.
 
 \begin{figure}[t]
   \centering
   \input{figures/pgm-ssm}
   \caption{State-space reformulation of our model.
-  With respect to the representation in Figure~\ref{fig:model}, the number of latent variables has increased, but they now form a Markov chain.}
-  \label{fig:ssm}
+  With respect to the representation in Figure~\ref{kks:fig:model}, the number of latent variables has increased, but they now form a Markov chain.}
+  \label{kks:fig:ssm}
 \end{figure}
 
 \paragraph{From Covariance Functions to State-Space Models}
 A method for converting a process $s(t) \sim \GP[\bm{0}, k(t, t')]$ into an equivalent Gauss-Markov process $\bar{\bm{s}}(t)$ by explicit construction of $\bm{h}$, $\{\bm{A}_n\}$ and $\{\bm{Q}_n\}$ is given in \citet{solin2016stochastic}.
-All the covariance functions described in Section~\ref{sec:covariances} lead to exact state-space reformulations of order $K \leq 3$.
+All the covariance functions described in Section~\ref{kks:sec:covariances} lead to exact state-space reformulations of order $K \leq 3$.
 The composition of covariance functions through addition or multiplication can also be treated exactly and automatically.
 Some other covariance functions, such as the squared-exponential function or periodic functions \citep{rasmussen2006gaussian}, cannot be transformed exactly but can be approximated effectively and to arbitrary accuracy \citep{hartikainen2010kalman, solin2014explicit}.
 

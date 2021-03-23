@@ -1,21 +1,21 @@
 %! TEX root = ../thesis.tex
 \section{Experimental Evaluation}
-\label{sec:eval}
+\label{kks:sec:eval}
 
 \begin{figure*}[t]
 	\includegraphics{kks-scores}
 	\caption{
 		Temporal evolution of the score processes ($\mu \pm \sigma$) corresponding to selected basketball teams (top) and tennis players (bottom).
 		The basketball teams are the Los Angeles Lakers (LAL), the Chicago Bulls (CHI) and the Boston Celtics (BOS).}
-	\label{fig:scores}
+	\label{kks:fig:scores}
 \end{figure*}
 
 % Introduction to the section.
 In this section, we evaluate our model and inference algorithm on real data.
 Our experiments cover three aspects.
-First, in Section~\ref{sec:evaldyn}, we compare the predictive performance of our model against competing approaches, focusing on the impact of flexible time-dynamics.
-Second, in Section~\ref{sec:evalgen}, we show that by carefully choosing features and observation likelihoods, predictive performance can be improved significantly.
-Finally, in Section~\ref{sec:evalinf}, we study various facets of our inference algorithm.
+First, in Section~\ref{kks:sec:evaldyn}, we compare the predictive performance of our model against competing approaches, focusing on the impact of flexible time-dynamics.
+Second, in Section~\ref{kks:sec:evalgen}, we show that by carefully choosing features and observation likelihoods, predictive performance can be improved significantly.
+Finally, in Section~\ref{kks:sec:evalinf}, we study various facets of our inference algorithm.
 We measure the impact of the mean-field assumption and of the choice of variational objective, and we demonstrate the scalability of the algorithm.
 
 \paragraph{Datasets}
@@ -24,7 +24,7 @@ Four of them contain timestamped outcomes; they relate to tennis, basketball, as
 Due to the large size of the chess dataset\footnote{%
 	This dataset consists of all the match outcomes contained in \emph{ChessBase Big Database 2018}, available at \url{https://shop.chessbase.com/en/products/big_database_2018}.}, we also consider a subset of the data spanning 30 years.
 The two remaining datasets contain match outcomes of the StarCraft computer game and do not have timestamps.
-Table~\ref{tab:datasets} provides summary statistics for all the datasets.
+Table~\ref{kks:tab:datasets} provides summary statistics for all the datasets.
 Except for chess, all data are publicly available online\footnote{%
 	Tennis: \url{https://github.com/JeffSackmann/tennis_atp},
 	basketball: \url{https://projects.fivethirtyeight.com/nba-model/nba_elo.csv},
@@ -35,7 +35,7 @@ Except for chess, all data are publicly available online\footnote{%
 \begin{table}[t]
 	\caption{
 		Summary statistics of the sports datasets.}
-	\label{tab:datasets}
+	\label{kks:tab:datasets}
 	\centering
   \sisetup{table-text-alignment=right}
   \begin{tabular}{l lS[table-format=6.0]S[table-format=7.0]l}
@@ -73,25 +73,25 @@ Typically, the algorithm converges in less than a hundred iterations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Flexible Time-Dynamics}
-\label{sec:evaldyn}
+\label{kks:sec:evaldyn}
 
 % Description of the experiment
 In this experiment, we compare the predictive performance of our model against competing approaches on four timestamped datasets.
 In order to better isolate and understand the impact of accurately modeling \emph{time dynamics} on predictive performance, we keep the remaining modeling choices simple: we treat all outcomes as ordinal-valued (i.e., \emph{win}, \emph{loss} and possibly \emph{tie}) with a probit likelihood and use a one-to-one mapping between competitors and features.
-In Table~\ref{tab:predperf}, we report results for the following models:
+In Table~\ref{kks:tab:predperf}, we report results for the following models:
 \begin{itemize}
 	\item \emph{Random}. This baseline assigns equal probability to every outcome.
 
-	\item \emph{Constant}. The model of Section~\ref{sec:model} with a constant covariance function.
+	\item \emph{Constant}. The model of Section~\ref{kks:sec:model} with a constant covariance function.
 	      This model assumes that the scores do not vary over time.
 
 	\item \emph{Elo}. The system used by the World Chess Federation \citep{elo1978rating}.
-	      Time dynamics are a by-product of the update rule (c.f. Section~\ref{sec:relwork}).
+	      Time dynamics are a by-product of the update rule (c.f. Section~\ref{kks:sec:relwork}).
 
 	\item \emph{TrueSkill}. The Bayesian model of \citet{herbrich2006trueskill}.
 	      Time dynamics are assumed to follow Brownian motion (akin to our Wiener kernel) and inference is done in a single pass over the data.
 
-	\item \emph{Ours}. The model of Section~\ref{sec:model}.
+	\item \emph{Ours}. The model of Section~\ref{kks:sec:model}.
 	      We try multiple covariance functions and report the one that maximizes the log-marginal likelihood.
 \end{itemize}
 
@@ -99,7 +99,7 @@ In Table~\ref{tab:predperf}, we report results for the following models:
 	\caption{
 		Predictive performance of our model and of competing approaches on four datasets, in terms of average log loss and average accuracy.
 		The best result is indicated in bold.}
-	\label{tab:predperf}
+	\label{kks:tab:predperf}
 	\centering
 \sisetup{table-format=1.3, detect-all}
 \begin{tabular}{l SS SS SS SS SSl}
@@ -128,17 +128,17 @@ Our model matches or outperforms other approaches in almost all cases, both in t
 Interestingly, different datasets are best modeled by using different covariance functions, perhaps capturing underlying skill dynamics specific to each sport.
 
 \paragraph{Visualizing and Interpreting Scores}
-Figure~\ref{fig:scores} displays the temporal evolution of the score of selected basketball teams and tennis players.
+Figure~\ref{kks:fig:scores} displays the temporal evolution of the score of selected basketball teams and tennis players.
 In the basketball case, we can recognize the dominance of the Boston Celtics in the early 1960's and the Chicago Bulls' strong 1995-96 season.
 In the tennis case, we can see the progression of a new generation of tennis champions at the turn of the 21\textsuperscript{st} century.
 Plotting scores over time provides an effective way to compactly represent the history of a given sport.
-Analyzing the optimal hyperparameters (c.f. Table~\ref{tab:hpvals} in Appendix~\ref{app:eval}) is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
+Analyzing the optimal hyperparameters (c.f. Table~\ref{kks:tab:hpvals} in Appendix~\ref{app:eval}) is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
 The score of basketball teams appears to be much more volatile.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Generality of the Model}
-\label{sec:evalgen}
+\label{kks:sec:evalgen}
 
 In this section, we demonstrate how we can take advantage of additional modeling options to further improve predictive performance.
 In particular, we show that
@@ -150,21 +150,21 @@ can bring substantial gains.
 \subsubsection{Observation Models}
 Basketball and football match outcomes actually consist of \emph{points} (respectively, goals) scored by each team during the match.
 We can make use of this additional information to improve predictions \citep{maher1982modelling}.
-For each of the basketball and football datasets, we compare the best model obtained in Section~\ref{sec:evaldyn} to alternative models.
+For each of the basketball and football datasets, we compare the best model obtained in Section~\ref{kks:sec:evaldyn} to alternative models.
 These alternative models keep the same time dynamics but use either
 \begin{enumerate}
 	\item a logit likelihood on the ordinal outcome,
 	\item a Gaussian likelihood on the points difference, or
 	\item a Poisson-exp likelihood on the points scored by each team.
 \end{enumerate}
-The results are presented in Table~\ref{tab:lklperf}.
+The results are presented in Table~\ref{kks:tab:lklperf}.
 The logit likelihood performs similarly to the probit one \citep{stern1992all}, but likelihoods that take points into account can indeed lead to better predictions.
 
 \begin{table}[ht]
 	\caption{
 		Average predictive log loss of models with different observation likelihoods.
 		The best result is indicated in bold.}
-	\label{tab:lklperf}
+	\label{kks:tab:lklperf}
 	\centering
 \sisetup{table-format=1.3, detect-all}
 \begin{tabular}{l SSSS}
@@ -183,13 +183,13 @@ For a given match, we can represent opponents by using (non-trivial) linear comb
 This enables, e.g., to represent context-specific information that might influence the outcome probabilities.
 In the case of football, for example, it is well-known that a team playing at home has an advantage.
 Similarly, in the case of chess, playing White results in a slight advantage.
-Table~\ref{tab:homeadv} displays the predictive performance achieved by our model when the score of the home team (respectively, that of the opponent playing White) is modeled by a linear combination of two features: the identity of the team or player and an \emph{advantage} feature.
+Table~\ref{kks:tab:homeadv} displays the predictive performance achieved by our model when the score of the home team (respectively, that of the opponent playing White) is modeled by a linear combination of two features: the identity of the team or player and an \emph{advantage} feature.
 Including this additional feature improves performance significantly, and we conclude that representing opponents in terms of match-dependent combinations of features can be very useful in practice.
 
 \begin{table}[ht]
 	\caption{
 		Predictive performance of models with a home or first-mover advantage in comparison to models without.}
-	\label{tab:homeadv}
+	\label{kks:tab:homeadv}
 	\centering
 \sisetup{table-format=1.3, detect-all}
 \begin{tabular}{l SS SS}
@@ -205,7 +205,7 @@ Including this additional feature improves performance significantly, and we con
 \end{table}
 
 
-\subsubsection{Capturing Intransitivity} \label{sec:eval-intrans}
+\subsubsection{Capturing Intransitivity} \label{kks:sec:eval-intrans}
 Score-based models such as ours are sometimes believed to be unable to capture meaningful intransitivities, such as those that arise in the ``rock-paper-scissors'' game~\citep{chen2016modeling}.
 This is incorrect: if an opponent's score can be modeled by using match-dependent features, we can simply add an \emph{interaction} feature for every pair of opponents.
 In the next experiment, we model the score difference between two opponents $i, j$ as $d \doteq s_i - s_j + s_{ij}$.
@@ -213,7 +213,7 @@ Informally, the model learns to explain the transitive effects through the usual
 We compare this model to the Blade-Chest model of \citet{chen2016modeling} on the two StarCraft datasets, known to contain strong intransitivities.
 The Blade-Chest model is specifically designed to handle intransitivities in comparison data.
 We also include two baselines, a simple Bradley--Terry model without the interaction features (\emph{logit}) and a non-parametric estimator (\emph{naive}) that estimates probabilities based on match outcomes between each pair---without attempting to capture transitive effects.
-As shown in Figure~\ref{fig:starcraft}, our model outperforms all other approaches, including the Blade-Chest model.
+As shown in Figure~\ref{kks:fig:starcraft}, our model outperforms all other approaches, including the Blade-Chest model.
 More details on this experiment can be found in Appendix~\ref{app:intrans}.
 %For these two datasets, it is important to capture both \emph{transitive} and \emph{intransitive}.
 
@@ -221,20 +221,20 @@ More details on this experiment can be found in Appendix~\ref{app:intrans}.
 	\includegraphics{kks-starcraft}
 	\caption{
 		Average log loss of four models (Bradley--Terry, naive, blade-chest and ours) on the StarCraft datasets.}
-	\label{fig:starcraft}
+	\label{kks:fig:starcraft}
 \end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Inference Algorithm}
-\label{sec:evalinf}
+\label{kks:sec:evalinf}
 We turn our attention to the inference algorithm and study the impact of several implementation choices.
-We start by quantifying the impact of the mean-field assumption~\eqref{eq:approxpost} and of the choice of variational objective on predictive performance.
+We start by quantifying the impact of the mean-field assumption~\eqref{kks:eq:approxpost} and of the choice of variational objective on predictive performance.
 Then, we demonstrate the scalability of the algorithm on the ChessBase dataset and measure the acceleration obtained by parallelizing the algorithm.
 
 
 \subsubsection{Mean-Field Approximation}
-In order to gain understanding on the impact of the factorization assumption in~\eqref{eq:approxpost}, we devise the following experiment.
+In order to gain understanding on the impact of the factorization assumption in~\eqref{kks:eq:approxpost}, we devise the following experiment.
 We consider a small subset of the basketball data containing all matches between 2000 and 2005 ($N = 6382$, $M = 32$).
 We evaluate the predictive performance on each week of the last season by using all the matches prior to the test week as training data.
 Our model uses a one-to-one mapping between teams and features, a constant + Matérn 1/2 covariance function, and a Gaussian likelihood on the points difference.
@@ -251,10 +251,10 @@ Strikingly, both values are equal up to four decimal places, suggesting that the
 
 \subsubsection{Variational Objective}
 Next, we study the influence of the variational method.
-We re-run the experiments of Section~\ref{sec:evaldyn}, this time by using the reverse-KL objective instead of EP.
-The predictive performance in terms of average log loss and average accuracy is equal to the EP case (Table~\ref{tab:predperf}, last three columns) up to three decimal places, for all four datasets.
+We re-run the experiments of Section~\ref{kks:sec:evaldyn}, this time by using the reverse-KL objective instead of EP.
+The predictive performance in terms of average log loss and average accuracy is equal to the EP case (Table~\ref{kks:tab:predperf}, last three columns) up to three decimal places, for all four datasets.
 Hence, the variational objective seems to have little practical impact on predictive performance.
-As such, we recommend using the reverse-KL objective for likelihoods whose log-partition function~\eqref{eq:logpart} cannot be computed in closed form, as the numerical integration of the expected log-likelihood~\eqref{eq:exp-ll} is generally more stable.
+As such, we recommend using the reverse-KL objective for likelihoods whose log-partition function~\eqref{kks:eq:logpart} cannot be computed in closed form, as the numerical integration of the expected log-likelihood~\eqref{kks:eq:exp-ll} is generally more stable.
 
 
 \subsubsection{Scalability}
@@ -262,7 +262,7 @@ Finally, we demonstrate the scalability of our inference algorithm by training a
 We implement a multithreaded version of Algorithm~\ref{alg:inference} in the Go programming language\footnote{%
 	The code is available at \url{https://github.com/lucasmaystre/gokick}.}
 and run the inference computation on a machine containing two 12-core Intel Xeon E5-2680 v3 (Haswell generation) processors clocked at 2.5 GHz.
-Figure~\ref{fig:scalability} displays the running time per iteration as function of the number of worker threads.
+Figure~\ref{kks:fig:scalability} displays the running time per iteration as function of the number of worker threads.
 By using \num{16} threads, we need only slightly over \num{5} seconds per iteration.
 
 
@@ -270,5 +270,5 @@ By using \num{16} threads, we need only slightly over \num{5} seconds per iterat
 	\includegraphics{kks-scalability}
 	\caption{
 		Running time per iteration of a multithreaded implementation of Algorithm~\ref{alg:inference} on the ChessBase full dataset, containing over \num{7} million observations.}
-	\label{fig:scalability}
+	\label{kks:fig:scalability}
 \end{figure}
