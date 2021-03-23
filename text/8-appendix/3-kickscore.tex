@@ -85,16 +85,13 @@ Additionally, the scripts and computational notebooks used to produce the experi
 Generally speaking, we choose hyperparameters based on a search over \num{1000} configurations sampled randomly in a range of sensible values (we always make sure that the best hyperparameters are not too close to the ranges' boundaries).
 In the case of our models, we choose the configuration that maximizes the log-marginal likelihood of the training data.
 In the case of TrueSkill and Elo, we choose the configuration that minimizes the leave-one-out log loss on the training data.
+A list of all the hyperparameters is provided in Table~\ref{kks:tab:hpdefs}, and a formal definition of the covariance functions we use is given in Table~\ref{kks:tab:covfuncs}.
 
-A list of all the hyperparameters is provided in Table~\ref{kks:tab:hpdefs}.
-A formal definition of the covariance functions we use is given in Table~\ref{kks:tab:covfuncs}.
-Finally, Table~\ref{kks:tab:hpvals} lists the hyperparameter values used in most of the experiments described in Section~\ref{kks:sec:eval}.
-
-\begin{table}[ht]
+\begin{table}
+	\centering
 	\caption{
 		Hyperparameters and their description.}
 	\label{kks:tab:hpdefs}
-	\centering
 	\renewcommand{\arraystretch}{1.2}
 	\begin{tabular}{c l}
 		\toprule
@@ -113,11 +110,11 @@ Finally, Table~\ref{kks:tab:hpvals} lists the hyperparameter values used in most
 	\end{tabular}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}
+	\centering
 	\caption{
 		Covariance functions.}
 	\label{kks:tab:covfuncs}
-	\centering
 	\renewcommand{\arraystretch}{1.2}
 	\begin{tabular}{l l}
 		\toprule
@@ -132,50 +129,50 @@ Finally, Table~\ref{kks:tab:hpvals} lists the hyperparameter values used in most
 	\end{tabular}
 \end{table}
 
-\begin{table*}[t]
-	\caption{
-		Hyperparameter values used for the models of Section~\ref{kks:sec:eval}.}
-	\label{kks:tab:hpvals}
-	\centering
-	\sisetup{table-format=1.3}
-	\begin{tabular}{lll SSS[table-format=3.3]SSScS[table-format=2.3]S[table-format=3.3]}
-		\toprule
-		Dataset         & Model                     & Likelihood                & {$\lambda$}             & {$\alpha$} & {$\sigma^2_n$}
-		                & {$\sigma_{\text{cst}}^2$} & {$\sigma_{\text{lin}}^2$} & {$\sigma_{\text{W}}^2$}
-		                & {$\nu$}                   & {$\sigma_{\text{dyn}}^2$} & {$\ell$}                                                                                                \\
-		\midrule        % Model                   % likelihood  %   lr  % alpha %   s_n   % s_cst % s_lin %  s_W  %  nu  %  s_dyn %   ell
-		ATP tennis      & Constant                  & Probit                    & 1.000                   & \Emd       & \Emd           & 0.817 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & Elo                       & Logit                     & 0.262                   & \Emd       & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & TrueSkill                 & Probit                    & \Emd                    & \Emd       & \Emd           & 0.137 & \Emd  & 0.007 & \Emd & \Emd   & \Emd    \\
-		                & Ours                      & Probit                    & 1.000                   & \Emd       & \Emd           & 0.366 & 0.001 & 0.147 & \Emd & \Emd   & \Emd    \\
-		                & Figure~\ref{fig:scores}   & Probit                    & 1.000                   & \Emd       & \Emd           & 0.034 & \Emd  & \Emd  & 3/2  & 0.912  & 7.469   \\
-		\midrule
-		NBA Basketball  & Constant                  & Probit                    & 1.000                   & \Emd       & \Emd           & 0.060 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & Elo                       & Logit                     & 0.095                   & \Emd       & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & TrueSkill                 & Probit                    & \Emd                    & \Emd       & \Emd           & 0.128 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
-		                & Ours                      & Probit                    & 1.000                   & \Emd       & \Emd           & 0.003 & \Emd  & \Emd  & 1/2  & 0.152  & 3.324   \\
-		                & Figure~\ref{fig:scores}   & Probit                    & 1.000                   & \Emd       & \Emd           & 0.003 & \Emd  & \Emd  & 3/2  & 0.138  & 1.753   \\
-		                & Table~\ref{tab:lklperf}   & Logit                     & 1.000                   & \Emd       & \Emd           & 0.001 & \Emd  & \Emd  & 1/2  & 0.417  & 3.429   \\
-		                & Table~\ref{tab:lklperf}   & Gaussian                  & 1.000                   & \Emd       & 143.451        & 0.059 & \Emd  & \Emd  & 1/2  & 17.667 & 3.310   \\
-		                & Table~\ref{tab:lklperf}   & Poisson-exp               & 0.800                   & \Emd       & \Emd           & 5.470 & \Emd  & \Emd  & 1/2  & 0.003  & 2.378   \\
-		\midrule
-		World Football  & Constant                  & Probit                    & 1.000                   & 0.372      & \Emd           & 0.933 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & Elo                       & Logit                     & 0.196                   & 0.578      & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & TrueSkill                 & Probit                    & \Emd                    & 0.381      & \Emd           & 1.420 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
-		                & Ours                      & Probit                    & 1.000                   & 0.386      & \Emd           & 0.750 & \Emd  & \Emd  & 1/2  & 0.248  & 69.985  \\
-		                & Table~\ref{tab:lklperf}   & Logit                     & 1.000                   & 0.646      & \Emd           & 2.001 & \Emd  & \Emd  & 1/2  & 0.761  & 71.693  \\
-		                & Table~\ref{tab:lklperf}   & Gaussian                  & 1.000                   & \Emd       & 3.003          & 4.062 & \Emd  & \Emd  & 1/2  & 2.922  & 175.025 \\
-		                & Table~\ref{tab:lklperf}   & Poisson-exp               & 0.800                   & \Emd       & \Emd           & 0.300 & \Emd  & \Emd  & 1/2  & 0.210  & 83.610  \\
-		                & Table~\ref{tab:homeadv}   & Probit                    & 1.000                   & 0.407      & \Emd           & 0.895 & \Emd  & \Emd  & 1/2  & 0.220  & 44.472  \\
-		\midrule
-		ChessBase small & Constant                  & Probit                    & 1.000                   & 0.554      & \Emd           & 0.364 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & Elo                       & Logit                     & 0.157                   & 0.856      & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
-		                & TrueSkill                 & Probit                    & \Emd                    & 0.555      & \Emd           & 0.240 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
-		                & Ours                      & Probit                    & 1.000                   & 0.558      & \Emd           & 0.307 & \Emd  & 0.010 & \Emd & \Emd   & \Emd    \\
-		                & Table~\ref{tab:homeadv}   & Probit                    & 1.000                   & 0.568      & \Emd           & 0.188 & \Emd  & \Emd  & 1/2  & 0.188  & 35.132  \\
-		\bottomrule
-	\end{tabular}
-\end{table*}
+% \begin{table}
+% 	\centering
+% 	\caption{
+% 		Hyperparameter values used for the models of Section~\ref{kks:sec:eval}.}
+% 	\label{kks:tab:hpvals}
+% 	\sisetup{table-format=1.3}
+% 	\begin{tabular}{lll SSS[table-format=3.3]SSScS[table-format=2.3]S[table-format=3.3]}
+% 		\toprule
+% 		Dataset         & Model                     & Likelihood                & {$\lambda$}             & {$\alpha$} & {$\sigma^2_n$}
+% 		                & {$\sigma_{\text{cst}}^2$} & {$\sigma_{\text{lin}}^2$} & {$\sigma_{\text{W}}^2$}
+% 		                & {$\nu$}                   & {$\sigma_{\text{dyn}}^2$} & {$\ell$}                                                                                                \\
+% 		\midrule        % Model                   % likelihood  %   lr  % alpha %   s_n   % s_cst % s_lin %  s_W  %  nu  %  s_dyn %   ell
+% 		ATP tennis      & Constant                  & Probit                    & 1.000                   & \Emd       & \Emd           & 0.817 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & Elo                       & Logit                     & 0.262                   & \Emd       & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & TrueSkill                 & Probit                    & \Emd                    & \Emd       & \Emd           & 0.137 & \Emd  & 0.007 & \Emd & \Emd   & \Emd    \\
+% 		                & Ours                      & Probit                    & 1.000                   & \Emd       & \Emd           & 0.366 & 0.001 & 0.147 & \Emd & \Emd   & \Emd    \\
+% 		                & Figure~\ref{fig:scores}   & Probit                    & 1.000                   & \Emd       & \Emd           & 0.034 & \Emd  & \Emd  & 3/2  & 0.912  & 7.469   \\
+% 		\midrule
+% 		NBA Basketball  & Constant                  & Probit                    & 1.000                   & \Emd       & \Emd           & 0.060 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & Elo                       & Logit                     & 0.095                   & \Emd       & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & TrueSkill                 & Probit                    & \Emd                    & \Emd       & \Emd           & 0.128 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
+% 		                & Ours                      & Probit                    & 1.000                   & \Emd       & \Emd           & 0.003 & \Emd  & \Emd  & 1/2  & 0.152  & 3.324   \\
+% 		                & Figure~\ref{fig:scores}   & Probit                    & 1.000                   & \Emd       & \Emd           & 0.003 & \Emd  & \Emd  & 3/2  & 0.138  & 1.753   \\
+% 		                & Table~\ref{tab:lklperf}   & Logit                     & 1.000                   & \Emd       & \Emd           & 0.001 & \Emd  & \Emd  & 1/2  & 0.417  & 3.429   \\
+% 		                & Table~\ref{tab:lklperf}   & Gaussian                  & 1.000                   & \Emd       & 143.451        & 0.059 & \Emd  & \Emd  & 1/2  & 17.667 & 3.310   \\
+% 		                & Table~\ref{tab:lklperf}   & Poisson-exp               & 0.800                   & \Emd       & \Emd           & 5.470 & \Emd  & \Emd  & 1/2  & 0.003  & 2.378   \\
+% 		\midrule
+% 		World Football  & Constant                  & Probit                    & 1.000                   & 0.372      & \Emd           & 0.933 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & Elo                       & Logit                     & 0.196                   & 0.578      & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & TrueSkill                 & Probit                    & \Emd                    & 0.381      & \Emd           & 1.420 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
+% 		                & Ours                      & Probit                    & 1.000                   & 0.386      & \Emd           & 0.750 & \Emd  & \Emd  & 1/2  & 0.248  & 69.985  \\
+% 		                & Table~\ref{tab:lklperf}   & Logit                     & 1.000                   & 0.646      & \Emd           & 2.001 & \Emd  & \Emd  & 1/2  & 0.761  & 71.693  \\
+% 		                & Table~\ref{tab:lklperf}   & Gaussian                  & 1.000                   & \Emd       & 3.003          & 4.062 & \Emd  & \Emd  & 1/2  & 2.922  & 175.025 \\
+% 		                & Table~\ref{tab:lklperf}   & Poisson-exp               & 0.800                   & \Emd       & \Emd           & 0.300 & \Emd  & \Emd  & 1/2  & 0.210  & 83.610  \\
+% 		                & Table~\ref{tab:homeadv}   & Probit                    & 1.000                   & 0.407      & \Emd           & 0.895 & \Emd  & \Emd  & 1/2  & 0.220  & 44.472  \\
+% 		\midrule
+% 		ChessBase small & Constant                  & Probit                    & 1.000                   & 0.554      & \Emd           & 0.364 & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & Elo                       & Logit                     & 0.157                   & 0.856      & \Emd           & \Emd  & \Emd  & \Emd  & \Emd & \Emd   & \Emd    \\
+% 		                & TrueSkill                 & Probit                    & \Emd                    & 0.555      & \Emd           & 0.240 & \Emd  & 0.001 & \Emd & \Emd   & \Emd    \\
+% 		                & Ours                      & Probit                    & 1.000                   & 0.558      & \Emd           & 0.307 & \Emd  & 0.010 & \Emd & \Emd   & \Emd    \\
+% 		                & Table~\ref{tab:homeadv}   & Probit                    & 1.000                   & 0.568      & \Emd           & 0.188 & \Emd  & \Emd  & 1/2  & 0.188  & 35.132  \\
+% 		\bottomrule
+% 	\end{tabular}
+% \end{table}
 
 \subsubsection{Capturing Intransitivity}
 \label{kks:app:intrans}
@@ -187,18 +184,18 @@ We train the model on the training set, choose hyperparameters based on the log 
 For the Blade-Chest model, we were not able to reproduce the exact results presented in \citet{chen2016modeling} using the open-source implementation available at \url{https://github.com/csinpi/blade_chest}.
 Instead, we just report the best values in Figures 3 and 4 of the paper (\emph{blade-chest inner} model, with $d = 50$).
 
-For the Bradley--Terry model, we use the Python library \emph{choix} and its function \texttt{opt\_pairwise}.
+For the Bradley--Terry model, we use the Python library \emph{choix} and its \texttt{opt\_pairwise} function.
 The only hyperparameter to set is the regularization strength $\alpha$.
 
 For our model, since there are no timestamps in the StarCraft datasets, we simply use constant covariance functions.
 The two hyperparameters are $\sigma^2_{\text{cst}}$ and $\sigma^2_{\times}$, the variance of the player features and of the interaction features, respectively.
 The hyperparameter values that we used are given in Table~\ref{kks:tab:hpintrans}.
 
-\begin{table}[ht]
+\begin{table}
+	\centering
 	\caption{
 		Hyperparameter values for the experiment of Section~\ref{kks:sec:eval-intrans}.}
 	\label{kks:tab:hpintrans}
-	\centering
 	\sisetup{table-format=1.3}
 	\begin{tabular}{l S SS}
 		\toprule
@@ -211,5 +208,3 @@ The hyperparameter values that we used are given in Table~\ref{kks:tab:hpintrans
 		\bottomrule
 	\end{tabular}
 \end{table}
-
-\balance
