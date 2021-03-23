@@ -20,7 +20,7 @@ But what if it varies over time?
 A number of methods have been proposed to adapt comparison models to the case where scores change over time.
 Perhaps the best known such method is the Elo rating system~\citep{elo1978rating}, used by the World Chess Federation for their official rankings.
 In this case, the time dynamics are captured essentially as a by-product of the learning rule (c.f. Section~\ref{kks:sec:relwork}).
-Other approaches attempt to model these dynamics explicitly~\citep[e.g.,][]{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
+Other approaches attempt to model these dynamics explicitly~\citep{fahrmeir1994dynamic, glickman1999parameter, dangauthier2007trueskill, coulom2008whole}.
 These methods greatly improve upon the static case when considering historical data, but they all assume the simplest model of time dynamics (that is, Brownian motion).
 Hence, they fail to capture more nuanced patterns such as variations at different timescales, linear trends, regression to the mean, discontinuities, and more.
 

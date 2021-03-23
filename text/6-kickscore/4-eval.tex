@@ -2,13 +2,14 @@
 \section{Experimental Evaluation}
 \label{kks:sec:eval}
 
-\begin{figure*}[t]
-	\includegraphics{kks-scores}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{kks-scores}
 	\caption{
 		Temporal evolution of the score processes ($\mu \pm \sigma$) corresponding to selected basketball teams (top) and tennis players (bottom).
 		The basketball teams are the Los Angeles Lakers (LAL), the Chicago Bulls (CHI) and the Boston Celtics (BOS).}
 	\label{kks:fig:scores}
-\end{figure*}
+\end{figure}
 
 % Introduction to the section.
 In this section, we evaluate our model and inference algorithm on real data.
@@ -132,7 +133,7 @@ Figure~\ref{kks:fig:scores} displays the temporal evolution of the score of sele
 In the basketball case, we can recognize the dominance of the Boston Celtics in the early 1960's and the Chicago Bulls' strong 1995-96 season.
 In the tennis case, we can see the progression of a new generation of tennis champions at the turn of the 21\textsuperscript{st} century.
 Plotting scores over time provides an effective way to compactly represent the history of a given sport.
-Analyzing the optimal hyperparameters (c.f. Table~\ref{kks:tab:hpvals} in Appendix~\ref{app:eval}) is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
+Analyzing the optimal hyperparameters (see Appendix~\ref{app:eval}) is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
 The score of basketball teams appears to be much more volatile.
 
 
@@ -217,8 +218,9 @@ As shown in Figure~\ref{kks:fig:starcraft}, our model outperforms all other appr
 More details on this experiment can be found in Appendix~\ref{app:intrans}.
 %For these two datasets, it is important to capture both \emph{transitive} and \emph{intransitive}.
 
-\begin{figure}[t]
-	\includegraphics{kks-starcraft}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{kks-starcraft}
 	\caption{
 		Average log loss of four models (Bradley--Terry, naive, blade-chest and ours) on the StarCraft datasets.}
 	\label{kks:fig:starcraft}
@@ -266,8 +268,9 @@ Figure~\ref{kks:fig:scalability} displays the running time per iteration as func
 By using \num{16} threads, we need only slightly over \num{5} seconds per iteration.
 
 
-\begin{figure}[t]
-	\includegraphics{kks-scalability}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth*3/4]{kks-scalability}
 	\caption{
 		Running time per iteration of a multithreaded implementation of Algorithm~\ref{alg:inference} on the ChessBase full dataset, containing over \num{7} million observations.}
 	\label{kks:fig:scalability}

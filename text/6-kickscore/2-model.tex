@@ -50,13 +50,14 @@ A graphical representation of the model is provided in Figure~\ref{kks:fig:pgms}
 For perspective, we also include the representation of a static model, such as that of~\citet{thurstone1927law}.
 Our model can be interpreted as ``conditionally parametric'': conditioned on a particular time, it falls back to a (static) pairwise-comparison model parametrized by real-valued scores.
 
-\begin{figure}[t]
+\begin{figure}
+	\centering
 	\subcaptionbox{
 		Static model
-	}[2cm]{
+	}[3cm]{
 		\input{figures/pgm-static}
 	}
-	\hfill
+	% \hfill
 	\subcaptionbox{
 		Our dynamic model \label{kks:fig:model}
 	}{
@@ -117,11 +118,12 @@ Hence, by specifying the covariance function appropriately, we can express prior
 Here, we describe a few functions that we find useful in the context of modeling temporal variations.
 Figure~\ref{kks:fig:covariances} illustrates these functions through random realizations of the corresponding Gaussian processes.
 
-\begin{figure*}[t]
-	\includegraphics{kks-covariances}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{kks-covariances}
 	\caption{Random realizations of a zero-mean Gaussian process with six different covariance functions.}
 	\label{kks:fig:covariances}
-\end{figure*}
+\end{figure}
 
 \begin{description}
 	\item[Constant] This covariance captures processes that remain constant over time.
