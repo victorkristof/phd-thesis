@@ -12,6 +12,9 @@
 - [ ] Ch. 3: Update results and interpretation with train/test split without leakage
 - [ ] Ch. 3: Update table with top-5/bottom-5 dossiers
 - [ ] Appendix: Add screenshots of different platforms
+- [ ] Appendix: Include inference algorithm into content of Chapter 6
+- [ ] Appendix: Delete experimental settings
+- [ ] Appendix: Include hyperparameters into content of Chapter 6
 - [ ] Conclusion: Write conclusion and future work
 - [ ] Bibliography: Find missing citations with latexmk
 - [ ] General: Find missing references with latexmk
