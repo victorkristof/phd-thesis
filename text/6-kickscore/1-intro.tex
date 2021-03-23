@@ -32,21 +32,21 @@ This inference algorithm addresses several shortcomings of previous methods: it 
 The highlights of our method are as follows.
 
 \begin{description}
-\item[Flexible Dynamics]
-As scores are modeled by continuous-time Gaussian processes, complex (yet interpretable) dynamics can be expressed by composing covariance functions.
+	\item[Flexible Dynamics]
+	      As scores are modeled by continuous-time Gaussian processes, complex (yet interpretable) dynamics can be expressed by composing covariance functions.
 
-\item[Generality]
-The score of an opponent for a given match is expressed as a (sparse) linear combination of features.
-This enables, e.g., the representation of a home advantage or any other contextual effect.
-Furthermore, the model encompasses a variety of observation likelihoods beyond win / lose, based, e.g., on the number of points a competitor scores.
+	\item[Generality]
+	      The score of an opponent for a given match is expressed as a (sparse) linear combination of features.
+	      This enables, e.g., the representation of a home advantage or any other contextual effect.
+	      Furthermore, the model encompasses a variety of observation likelihoods beyond win / lose, based, e.g., on the number of points a competitor scores.
 
-\item[Bayesian Inference]
-Our inference algorithm returns a posterior \emph{distribution} over score processes.
-This leads to better predictive performance and enables a principled way to learn the dynamics (and any other model hyperparameters) by optimizing the log-marginal likelihood of the data.
+	\item[Bayesian Inference]
+	      Our inference algorithm returns a posterior \emph{distribution} over score processes.
+	      This leads to better predictive performance and enables a principled way to learn the dynamics (and any other model hyperparameters) by optimizing the log-marginal likelihood of the data.
 
-\item[Ease of Intepretation]
-By plotting the score processes $\{ s_i(t) \}$ over time, it is easy to visualize the probability of any comparison outcome under the model.
-As the time dynamics are described through the composition of simple covariance functions, their interpretation is straightforward as well.
+	\item[Ease of Intepretation]
+	      By plotting the score processes $\{ s_i(t) \}$ over time, it is easy to visualize the probability of any comparison outcome under the model.
+	      As the time dynamics are described through the composition of simple covariance functions, their interpretation is straightforward as well.
 \end{description}
 
 % Contributions & organization.
@@ -54,8 +54,8 @@ Concretely, our contributions are threefold.
 First, we develop a probabilistic model of pairwise-comparison outcomes with flexible time-dynamics (Section~\ref{kks:sec:model}).
 The model covers a wide range of use cases, as it enables
 \begin{enuminline}
-\item opponents to be represented by a sparse linear combination of features, and
-\item observations to follow various likelihood functions.
+	\item opponents to be represented by a sparse linear combination of features, and
+	\item observations to follow various likelihood functions.
 \end{enuminline}
 In fact, it unifies and extends a large body of prior work.
 Second, we derive an efficient algorithm for approximate Bayesian inference (Section~\ref{kks:sec:inference}).

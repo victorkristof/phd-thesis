@@ -17,16 +17,16 @@ In many applications of practical interest, comparison outcomes tend to vary ove
 In chess, for example, this is due to the skill of players changing over time.
 The World Chess Federation, which uses a variant of the Bradley--Terry model to rank players, updates player scores after each match by using a stochastic gradient update:
 \begin{align*}
-s_i \gets s_i + \lambda \frac{\partial}{\partial s_i} \log p(y \mid s_i - s_j),
+	s_i \gets s_i + \lambda \frac{\partial}{\partial s_i} \log p(y \mid s_i - s_j),
 \end{align*}
 where $\lambda \in \mathbf{R}$ is a learning rate.
 It is interesting that this simple online update scheme (known as the Elo rating system~\citep{elo1978rating}) enables a basic form of ``tracking'': the sequence of scores gives an indication of a player's evolution over time.
 Whereas, in this case, score dynamics occur as a by-product of the learning rule, several attempts have been made to model time dynamics explicitly.
 Usually, these models assume a variant of Brownian motion:
 \begin{align}
-\label{kks:eq:brownian}
-s(t_{n+1}) = s(t_n) + \varepsilon_{n},
-    \qquad \varepsilon_{n} \sim \mathcal{N}(0, \sigma^2 \Abs{t_{n+1} - t_n}).
+	\label{kks:eq:brownian}
+	s(t_{n+1}) = s(t_n) + \varepsilon_{n},
+	\qquad \varepsilon_{n} \sim \mathcal{N}(0, \sigma^2 \Abs{t_{n+1} - t_n}).
 \end{align}
 \citet{glickman1993paired} and~\citet{fahrmeir1994dynamic} are, to the best of our knowledge, the first to consider such a model.
 \citet{glickman1999parameter} derives a computationally-efficient Bayesian inference method by using closed-form approximations of intractable integrals.
