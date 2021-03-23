@@ -58,7 +58,7 @@ Except for chess, all data are publicly available online\footnote{%
 Let $(\bm{x}, t^*, y)$ be an observation.
 We measure performance by using
 the logarithmic loss: $-\log p(y \mid \bm{x}, t^*)$ and
-the accuracy: $\textbf{1}\{y = \Argmax_{y'} p(y' \mid \bm{x}, t^*)\}$.
+the accuracy: $\Indic{y = \Argmax_{y'} p(y' \mid \bm{x}, t^*)}$.
 We report their average values on the test set.
 
 \paragraph{Methodology}
@@ -208,7 +208,7 @@ Including this additional feature improves performance significantly, and we con
 \subsubsection{Capturing Intransitivity} \label{kks:sec:eval-intrans}
 Score-based models such as ours are sometimes believed to be unable to capture meaningful intransitivities, such as those that arise in the ``rock-paper-scissors'' game~\citep{chen2016modeling}.
 This is incorrect: if an opponent's score can be modeled by using match-dependent features, we can simply add an \emph{interaction} feature for every pair of opponents.
-In the next experiment, we model the score difference between two opponents $i, j$ as $d \doteq s_i - s_j + s_{ij}$.
+In the next experiment, we model the score difference between two opponents $i, j$ as $d \define s_i - s_j + s_{ij}$.
 Informally, the model learns to explain the transitive effects through the usual player scores $s_i$ and $s_j$ and the remaining intransitive effects are captured by the interaction score $s_{ij}$.
 We compare this model to the Blade-Chest model of~\citet{chen2016modeling} on the two StarCraft datasets, known to contain strong intransitivities.
 The Blade-Chest model is specifically designed to handle intransitivities in comparison data.

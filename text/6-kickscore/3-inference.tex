@@ -9,13 +9,13 @@ A reference software implementation, available online at \url{https://github.com
 
 % Notation & preliminaries.
 We begin by introducing some notation.
-Let $\mathcal{D} = \{ (\bm{x}_n, t_n, y_n) : n \in [N] \}$ be a dataset of $N$ independent observations, where for conciseness we fold the two opponents $\bm{x}_{n,i}$ and $\bm{x}_{n,j}$ into $\bm{x}_n \doteq \bm{x}_{n,i} - \bm{x}_{n,j}$, for each observation\footnote{%
+Let $\mathcal{D} = \{ (\bm{x}_n, t_n, y_n) : n \in [N] \}$ be a dataset of $N$ independent observations, where for conciseness we fold the two opponents $\bm{x}_{n,i}$ and $\bm{x}_{n,j}$ into $\bm{x}_n \define \bm{x}_{n,i} - \bm{x}_{n,j}$, for each observation\footnote{%
 	This enables us to write the score difference more compactly.
-	Given an observation at time $t^*$ and letting $\bm{x} \doteq \bm{x}_i - \bm{x}_j$, we have $s_i - s_j = \bm{x}_i\Tr \bm{s}(t^*) - \bm{x}_j\Tr \bm{s}(t^*) = \bm{x}\Tr \bm{s}(t^*)$.
+	Given an observation at time $t^*$ and letting $\bm{x} \define \bm{x}_i - \bm{x}_j$, we have $s_i - s_j = \bm{x}_i\Tr \bm{s}(t^*) - \bm{x}_j\Tr \bm{s}(t^*) = \bm{x}\Tr \bm{s}(t^*)$.
 }.
 Let $\mathcal{D}_m \subseteq [N]$ be the subset of observations involving feature $m$, \textit{i.e.}, those observations for which $x_{nm} \ne 0$, and let $N_m = \lvert \mathcal{D}_m \rvert$.
 Finally, denote by $\bm{s}_m \in \mathbf{R}^{N_m}$ the samples of the latent score process at times corresponding to the observations in $\mathcal{D}_m$.
-The joint prior distribution of these samples is $p(\bm{s}_m) = \mathcal{N}(\bm{0}, \bm{K}_m)$, where $\bm{K}_m$ is formed by evaluating the covariance function $k_m(t, t')$ at the relevant times.
+The joint prior distribution of these samples is $p(\bm{s}_m) = \DNorm{\bm{0}, \bm{K}_m}$, where $\bm{K}_m$ is formed by evaluating the covariance function $k_m(t, t')$ at the relevant times.
 
 % Bayesian inference.
 We take a Bayesian approach and seek to compute the posterior distribution
@@ -33,7 +33,7 @@ In particular, we assume that the posterior can be well-approximated by a multiv
 	\label{kks:eq:approxpost}
 	p(\bm{s}_1, \ldots, \bm{s}_M \mid \mathcal{D})
 	\approx q(\bm{s}_1, \ldots, \bm{s}_M)
-	\doteq \prod_{m = 1}^M \mathcal{N}(\bm{s}_m \mid \bm{\mu}_m, \bm{\Sigma}_m).
+	\define \prod_{m = 1}^M \DNorm{\bm{s}_m \mid \bm{\mu}_m, \bm{\Sigma}_m}.
 \end{align}
 Computing this approximate posterior amounts to finding the variational parameters $\{\bm{\mu}_m, \bm{\Sigma}_m \}$ that best approximate the true posterior.
 More formally, the inference problem reduces to the optimization problem
@@ -48,7 +48,7 @@ We will consider two different such measures in Section~\ref{kks:sec:inf-pseudo-
 A different viewpoint on the approximate posterior is as follows.
 For both of the variational objectives that we consider, it is possible to rewrite the optimal distribution $q(\bm{s}_m)$ as
 \begin{align*}
-	q(\bm{s}_m) \propto p(\bm{s}_m) \prod_{n \in \mathcal{D}_m} \mathcal{N}[s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}].
+	q(\bm{s}_m) \propto p(\bm{s}_m) \prod_{n \in \mathcal{D}_m} \DNorm{s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}}.
 \end{align*}
 Letting $\mathcal{X}_n \subseteq [M]$ be the subset of features such that $x_{nm} \ne 0$, we can now reinterpret the variational approximation as transforming every observation $(\bm{x}_n, t_n, y_n)$ into several independent \emph{pseudo-observations} with Gaussian likelihood, one for each feature $m \in \mathcal{X}_n$.
 Instead of optimizing directly $\{ \bm{\mu}_m, \bm{\Sigma}_m \}$ in~\eqref{kks:eq:varopt}, we can alternatively choose to optimize the parameters $\{ \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn} \}$.
@@ -110,7 +110,7 @@ We begin by defining two distributions.
 The \emph{cavity} distribution $q_{-n}$ is the approximate posterior without the pseudo-observations associated with the $n$th datum, that is,
 \begin{align*}
 	q_{-n}(\bm{s}_1, \ldots, \bm{s}_M) \propto \frac{q(\bm{s}_1, \ldots, \bm{s}_M)}{
-	\prod_{m \in \mathcal{X}_n} \mathcal{N}[s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}]}.
+	\prod_{m \in \mathcal{X}_n} \DNorm{s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}}}.
 \end{align*}
 The \emph{hybrid} distribution $\hat{q}_n$ is given by the cavity distribution multiplied by the $n$th likelihood factor, \textit{i.e.},
 \begin{align*}
@@ -125,7 +125,7 @@ To this end, the function \textsc{Derivatives} (on line~\ref{li:derivatives} of 
 	\label{kks:eq:logpart}
 	\log \mathbf{E}_{q_{-n}} \left\{ p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)] \right\}
 \end{align}
-with respect to ${\mu}_{-n} \doteq \mathbf{E}_{q_{-n}}[\bm{x}_n\Tr \bm{s}(t_n)]$.
+with respect to ${\mu}_{-n} \define \mathbf{E}_{q_{-n}}[\bm{x}_n\Tr \bm{s}(t_n)]$.
 These computations can be done in closed form for the widely-used probit likelihood, and they involve one-dimensional numerical integration for most other likelihoods.
 EP has been reported to result in more accurate posterior approximations on certain classification tasks~\citep{nickisch2008approximations}.
 
@@ -141,7 +141,7 @@ In this case, the function \textsc{Derivatives} computes the first and second de
 	\label{kks:eq:exp-ll}
 	\mathbf{E}_q \left\{ \log p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)] \right\}
 \end{align}
-with respect to $\mu \doteq \mathbf{E}_q[\bm{x}_n\Tr \bm{s}(t_n)]$.
+with respect to $\mu \define \mathbf{E}_q[\bm{x}_n\Tr \bm{s}(t_n)]$.
 These computations involve numerically solving two one-dimensional integrals.
 
 % Comparison to EP.
@@ -158,9 +158,9 @@ Excepted for the probit likelihood, computing~\eqref{kks:eq:exp-ll} is numerical
 
 % Problem formulation.
 The second step of Algorithm~\ref{alg:inference} (lines~\ref{li:begin-post} and~\ref{li:end-post}) solves the following problem, for every feature $m$.
-Given Gaussian pseudo-observations $\{ \tilde{\mu}_{mn}, \tilde{\sigma}_{mn} : n \in \mathcal{D}_m \}$ and a Gaussian prior $p(\bm{s}_m) = \mathcal{N}(\bm{0}, \bm{K}_m)$, compute the posterior
+Given Gaussian pseudo-observations $\{ \tilde{\mu}_{mn}, \tilde{\sigma}_{mn} : n \in \mathcal{D}_m \}$ and a Gaussian prior $p(\bm{s}_m) = \DNorm{\bm{0}, \bm{K}_m}$, compute the posterior
 \begin{align*}
-	q(\bm{s}_m) \propto p(\bm{s}_m) \prod_{n \in \mathcal{D}_m} \mathcal{N}[s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}].
+	q(\bm{s}_m) \propto p(\bm{s}_m) \prod_{n \in \mathcal{D}_m} \DNorm{s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}}.
 \end{align*}
 This computation can be done independently and in parallel for each feature $m \in [M]$.
 
@@ -180,7 +180,7 @@ Without loss of generality, we now assume that the $N$ observations are ordered 
 The key idea is to augment $s(t)$ into a $K$-dimensional vector-valued Gauss-Markov process $\bar{\bm{s}}(t)$, such that
 \begin{align*}
 	\bar{\bm{s}}(t_{n+1}) = \bm{A}_n \bar{\bm{s}}(t_n) + \bm{\varepsilon}_n,
-	\qquad \bm{\varepsilon}_n \sim \mathcal{N}(\bm{0}, \bm{Q}_n)
+	\qquad \bm{\varepsilon}_n \sim \DNorm{\bm{0}, \bm{Q}_n}
 \end{align*}
 where $K \in \mathbf{N}_{>0}$ and $\bm{A}_n, \bm{Q}_n \in \mathbf{R}^{K \times K}$ depend on the time interval $\Abs{t_{n+1} - t_n}$ and on the covariance function $k(t, t')$ of the original process $s(t)$.
 The original (scalar-valued) and the augmented (vector-valued) processes are related through the equation

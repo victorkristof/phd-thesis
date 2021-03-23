@@ -38,7 +38,7 @@
 	$\Cov{x}{y}$
 	       & Covariance of the random variables $x$ and $y$.                                                                                   \\
 	$\sigma(x)$
-	       & Sigmoid function $\sigma: \mathbf{R} \rightarrow [0, 1]$,  $\sigma(x) = 1 / (1 + \exp[-x])$.                                      \\
+	       & Sigmoid function $\sigma: \mathbf{R} \rightarrow [0, 1]$,  $\sigma(x) = 1 / [1 + \exp(-x)]$.                                      \\
 	$\mathcal{S}(x)$
 	       & Softmax function $\mathcal{S}: \mathbf{R}^K \rightarrow [0, 1]^K$,  $\mathcal{S}(\bm{x})_i = \exp(x_i) / \sum_{k=1}^K \exp(x_k)$. \\
 	$\BigO{f(x)}$
@@ -57,23 +57,23 @@
 	$\DNorm{\bm{\mu}, \bm{\Sigma}}$
 	             & $\mathbf{R}^D$
 	             & $\displaystyle \frac{1}{\sqrt{2 \pi \Abs{\bm{\Sigma}}}}
-	\exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right] $                                                                                             \\
+	\exp \left[ -\frac{1}{2} (\bm{x} - \bm{\mu})\Tr \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu}) \right] $                                                                        \\
 	\rule{0pt}{5ex}%
 	$\DGumbel{\mu, \beta}$
 	             & $\mathbf{R}$
-	             & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                                                 \\
+	             & $\displaystyle \frac{1}{\beta} \exp \{ - [z + \exp(-z)]\}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                            \\
 	\rule{0pt}{5ex}%
 	$\DLogistic{\mu, \beta}$
 	             & $\mathbf{R}$
-	             & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                                        \\
+	             & $\displaystyle \frac{\exp(-z)}{\beta \left[1 + \exp(-z) \right]^2}$, where $\displaystyle z = \frac{x - \mu}{\beta}$                                   \\
 	\rule{0pt}{5ex}%
 	$\DBernoulli{p}$
 	             & $\{0, 1\}$
-	             & $\displaystyle p^x (1-p)^{1-x}$                                                                                                                                             \\
+	             & $\displaystyle p^x (1-p)^{1-x}$                                                                                                                        \\
 	\rule{0pt}{5ex}%
 	$\DCategorical{\bm{p}, K}$
 	             & $\{0, \ldots, K\}$
-	             & $\displaystyle \prod_{i=1}^K \Indic{x=i} p_i$                                                                                                                               \\
+	             & $\displaystyle \prod_{i=1}^K \Indic{x=i} p_i$                                                                                                          \\
 \end{tabularx}
 
 \endgroup
