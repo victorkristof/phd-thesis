@@ -13,7 +13,7 @@ Let $\mathcal{D} = \{ (\bm{x}_n, t_n, y_n) : n \in [N] \}$ be a dataset of $N$ i
 	This enables us to write the score difference more compactly.
 	Given an observation at time $t^*$ and letting $\bm{x} \doteq \bm{x}_i - \bm{x}_j$, we have $s_i - s_j = \bm{x}_i\Tr \bm{s}(t^*) - \bm{x}_j\Tr \bm{s}(t^*) = \bm{x}\Tr \bm{s}(t^*)$.
 }.
-Let $\mathcal{D}_m \subseteq [N]$ be the subset of observations involving feature $m$, i.e., those observations for which $x_{nm} \ne 0$, and let $N_m = \lvert \mathcal{D}_m \rvert$.
+Let $\mathcal{D}_m \subseteq [N]$ be the subset of observations involving feature $m$, \textit{i.e.}, those observations for which $x_{nm} \ne 0$, and let $N_m = \lvert \mathcal{D}_m \rvert$.
 Finally, denote by $\bm{s}_m \in \mathbf{R}^{N_m}$ the samples of the latent score process at times corresponding to the observations in $\mathcal{D}_m$.
 The joint prior distribution of these samples is $p(\bm{s}_m) = \mathcal{N}(\bm{0}, \bm{K}_m)$, where $\bm{K}_m$ is formed by evaluating the covariance function $k_m(t, t')$ at the relevant times.
 
@@ -112,7 +112,7 @@ The \emph{cavity} distribution $q_{-n}$ is the approximate posterior without the
 	q_{-n}(\bm{s}_1, \ldots, \bm{s}_M) \propto \frac{q(\bm{s}_1, \ldots, \bm{s}_M)}{
 	\prod_{m \in \mathcal{X}_n} \mathcal{N}[s_{mn} \mid \tilde{\mu}_{mn}, \tilde{\sigma}^2_{mn}]}.
 \end{align*}
-The \emph{hybrid} distribution $\hat{q}_n$ is given by the cavity distribution multiplied by the $n$th likelihood factor, i.e.,
+The \emph{hybrid} distribution $\hat{q}_n$ is given by the cavity distribution multiplied by the $n$th likelihood factor, \textit{i.e.},
 \begin{align*}
 	\hat{q}_n(\bm{s}_1, \ldots, \bm{s}_M) \propto q_{-n}(\bm{s}_1, \ldots, \bm{s}_M) p[y_n \mid \bm{x}_n\Tr \bm{s}(t_n)].
 \end{align*}
@@ -132,7 +132,7 @@ EP has been reported to result in more accurate posterior approximations on cert
 \subsubsection{Reverse KL Divergence}
 
 % Variational objective.
-This method (often referred to simply as \emph{variational inference} in the literature) seeks to minimize $\KL(q \Vert p)$, i.e., the KL divergence from the approximate posterior $q$ to the true posterior $p$.
+This method (often referred to simply as \emph{variational inference} in the literature) seeks to minimize $\KL(q \Vert p)$, \textit{i.e.}, the KL divergence from the approximate posterior $q$ to the true posterior $p$.
 
 % Update rule.
 To optimize this objective, we adopt the approach of~\citet{khan2017conjugate}.

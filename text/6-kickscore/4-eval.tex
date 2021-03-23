@@ -180,7 +180,7 @@ The logit likelihood performs similarly to the probit one~\citep{stern1992all}, 
 
 \subsubsection{Match-Dependent Parametrization}
 For a given match, we can represent opponents by using (non-trivial) linear combinations of features.
-This enables, e.g., to represent context-specific information that might influence the outcome probabilities.
+This enables, \textit{e.g.}, to represent context-specific information that might influence the outcome probabilities.
 In the case of football, for example, it is well-known that a team playing at home has an advantage.
 Similarly, in the case of chess, playing White results in a slight advantage.
 Table~\ref{kks:tab:homeadv} displays the predictive performance achieved by our model when the score of the home team (respectively, that of the opponent playing White) is modeled by a linear combination of two features: the identity of the team or player and an \emph{advantage} feature.
@@ -241,7 +241,7 @@ Our model uses a one-to-one mapping between teams and features, a constant + Mat
 
 We compare the predictive performance resulting from two inference variants,
 \begin{enuminline}
-	\item mean-field approximate inference, i.e., Algorithm~\ref{alg:inference}, and
+	\item mean-field approximate inference, \textit{i.e.}, Algorithm~\ref{alg:inference}, and
 	\item \emph{exact} posterior inference\footnote{%
 		This is possible for this particular choice of likelihood thanks to the self-conjugacy of the Gaussian distribution, but at a computational cost $O(N^3)$.}.
 \end{enuminline}
