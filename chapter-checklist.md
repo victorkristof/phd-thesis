@@ -10,7 +10,7 @@ cp path-to-paper-folder/fig/*.pdf text/figures/
 ```
 
 - [ ] Create main.tex file in chapter folder and link to sections
-
+- [ ] Move supplementary material to global appendix folder
 - [ ] Update names and paths to figures in the Latex files
 
 ```
@@ -18,8 +18,7 @@ vidir text/figures
 vim /includegraphics/ **/x-chapter/*.tex
 ```
 
-- [ ] Compile thesis with `make` and correct compilation errors
-
+- [ ] Compile thesis with `make` and fix compilation errors
 - [ ] Add path to root thesis.tex
 
 ```vim
@@ -37,6 +36,7 @@ bufdo 1put! ='%! TEX root = ../thesis.tex'
 - [ ] Replace eq: by {chapter}:eq:
 - [ ] Replace fig: by {chapter}:fig:
 - [ ] Replace sec: by {chapter}:sec:
+- [ ] Replace app: by {chapter}:app:
 
 ```vim
 vim /{tab:/ *.tex
@@ -65,7 +65,7 @@ cdo s/ i\.e\./ \\textit{i.e.}/c
 ```
 
 - [ ] Normalize equations
-- [ ] Add missing citations
+- [ ] Add missing citation
 - [ ] Adapt size of tables
 - [ ] Adapt size of figures
 - [ ] Generate figures with correct size and font
