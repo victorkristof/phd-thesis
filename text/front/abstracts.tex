@@ -7,50 +7,31 @@
 
 Global problems stemming from the decisions and behaviors of people, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions, can seem intractable and unpredictable.
 Fortunately, people are more predictable than we think, and with large enough datasets and machine-learning algorithms, we can design accurate models of human behavior in a variety of settings.
-In this thesis, we develop probabilistic models of choice to gain insight into social processes.
+In this thesis, to gain insight into social processes, we develop probabilistic models of choice.
 We focus on designing models that are highly interpretable by drawing from the econometrics literature on discrete-choice models that we combine with latent-factor models, Bayesian statistics, and generalized linear models.
 These predictive models enable interpretability through their learned parameters and latent factors.
 
-First, we study the social dynamics behind group collaborations for collective content creation, such as in Wikipedia, the Linux kernel, and laws.
-By combining the Bradley-Terry and Rasch models with collaborative filtering and natural language processing, we develop a model of edit acceptance in peer-production systems and in the European Union law-making process.
+First, we study the social dynamics behind group collaborations for the collective creation of content, such as in Wikipedia, the Linux kernel, and laws.
+By combining the Bradley-Terry and Rasch models with matrix factorization and natural language processing, we develop a model of edit acceptance in peer-production systems and in the European Union law-making process.
 This enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with a high probability of edit acceptance.
-The latent representations capture non-linear interactions between components and users and cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, and business and environment in European laws).
-% In peer-production systems, users with shared but competing interests attempt to edit components of the system.
-% We posit that the probability that an edit is accepted is a function of the editor’s skill, of the difficulty of editing the component, and of a user-component interaction term.
-% The model parameters lead to a ranking of "hard-to-edit" components and influential users.
-% The latent representations capture non-linear interactions between users and components and cluster well into different topics.
-% This enables us to discover controversial laws, words and features of the parliamentarians that correlate with high probability of edit acceptance, and representations of laws in an ideological space.
-% Our model is general, achieves high predictive performance, and enables interpretability.
-% We obtain a ranking of "hard-to-edit" components, which correlates well with ad-hoc rankings of controversial items.
-% Our approach also learns latent representations of users and components, which clusters well into different topics.
-
-% Second, we study the competitive dynamics of the law-making process in the European Union through the lens of peer-production systems.
-% Because of its transparency in documenting the creation of laws, we study the competitive dynamics of the legislative process in the European Union.
-% We take a graph-theoretical perspective to characterize this process by analyzing the \emph{edit graph} of law proposals.
-% We model the adoption of law edits by combining the above model with the Bradley-Terry model and enhancing it with techniques from natural language processing.
-% Our model combines (a) explicit features of the parliamentarians, the laws, and the edits, (b) latent features of the parliamentarians and laws, and (c) text features of the edits.
-% This enables us to discover controversial laws, words and features of the parliamentarians that correlate with high probability of edit acceptance, and representations of laws in an ideological space.
+The latent representations capture non-linear interactions between components and users and cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, business and environment in European laws).
 
 Second, we develop an algorithm for predicting the popular vote of elections and referenda by combining matrix factorization and generalized linear models.
-Our algorithm learns representations of votes and regions to capture ideological and cultural voting patterns (\textit{e.g.}, liberal/conservative and rural/urban) and predicts the vote results in unobserved regions from partial observations.
-We test our model on synthetic data in Germany, Switzerland, and the US, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
+Our algorithm learns representations of votes and regions, which capture ideological and cultural voting patterns (\textit{e.g.}, liberal/conservative, rural/urban), and it predicts the vote results in unobserved regions from partial observations.
+We test our model on voting data in Germany, Switzerland, and the US, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
 On average, our predictions reach~1\% of error by observing~5\% of the regions.
 
-Third, by observing that people make choices based on their perception of their environment, we study how they perceive the carbon footprint of their day-to-day actions.
+Third, we study how people perceive the carbon footprint of their day-to-day actions.
 We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between flying across continents and using household appliances), and we develop a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
 The model learns the users’ perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to collect data efficiently.
-Our experiments show that users overestimate the emissions of low-footprint actions and underestimate high-footprint actions.
-% We enrich our model by incorporating perception biases (\textit{e.g.}, cultural, political, and gender) to interpret our results at a finer level of socio-demographics features.
+Our experiments show that users overestimate the emissions of low-footprint actions and underestimate those of high-footprint actions.
 
 Finally, we develop a probabilistic model of pairwise-comparison outcomes that capture a wide range of time dynamics.
 We achieve this by replacing the static parameters of a class of popular pairwise-comparison models with continuous-time Gaussian processes.
-We also develop an efficient inference algorithm that computes an approximate Bayesian posterior distribution with only a few linear-time iterations over the data.
-% We apply this algorithm to sports, and we deploy it on a Web platform to predict football matches in European leagues.
-
-% In summary, we develop machine-learning models and algorithms to mine social datasets, thereby shedding light on human behavior.
+We also develop an efficient inference algorithm that computes, with only a few linear-time iterations over the data, an approximate Bayesian posterior distribution.
 
 \paragraph{Keywords}
-discrete-choice models, latent-factor models, comparisons, choices, probabilistic models, data mining, machine learning, computational social science
+discrete-choice models, matrix factorization, Bayesian statistics, generalized linear models, comparisons, choices, probabilistic models, data mining, machine learning, computational social science
 
 \cleardoublepage
 
@@ -59,6 +40,34 @@ discrete-choice models, latent-factor models, comparisons, choices, probabilisti
 	\chapter*{Résumé}
 	\markboth{Résumé}{Résumé}
 
-	% \paragraph{Mots-clés}
-	% comparaisons, choix, classements, modèles probabilistes, inférence statistique, algorithmes, apprentissage automatique, apprentissage actif, réseaux
+	Les problèmes globaux, tels que le manque de transparence des processus démocratiques, la propagation de théories conspirationnistes ou l'augmentation des gaz à effet de serre, peuvent paraître imprévisible et insoluble.
+	Mais heureusement, les humains sont plus prévisibles que l'on ne pense.
+	Grâce à des jeux de données massifs et de puissants algorithmes d'apprentissage automatique, il devient possible de modéliser une multitude de comportements sociaux.
+	Dans cette thèse, nous développons des modèles probabilistes de choix individuels afin d'analyser ces comportements.
+	Nous puisons dans la littérature des modèles de choix discrets, forts utilisés en économétrie, afin de rendre nos modèles interprétables, et nous les combinons avec des méthodes computationnelles, telles que les modèle à facteurs latents, les statistiques bayésiennes et les modèles linéaires généralisés, afin de les rendre plus riches.
+
+	Premièrement, nous étudions les dynamiques de collaboration des systèmes collaboratifs de création de contenu, tels que Wikipédia, le système d'opération Linux, et les lois du Parlement européen.
+	Nous combinons les modèles de Bradley-Terry et de Rasch en un nouveau modèle qui nous permet de prédire si les modifications de contenu sont acceptées ou non (par la communauté Wikipédia ou par les autres parlementaires, par exemple).
+	Ce modèle révèle quels sont les composants importants de ces systèmes, tels que les articles de Wikipédia controversés ou les parlementaires influents, ainsi que les facteurs qui augmentent la probabilité qu'une modification soit acceptée.
+	Notre modèle inclut également des facteurs latents qui améliorent les performances de prédictions.
+	% Ces facteurs permettent aussi d'effectuer une analyse par regroupement, laissant émerger les sujets qui divisent le plus les utilisateurs (c'est-à-dire qu'ils sont soit connaisseurs d'un sujet, soit d'un autre, mais pas des deux).
+	% Sur Wikipédia, par exemple, ce sont les personnages historiques d'un côté et la culture populaire de l'autre.
+
+	Deuxièmement, nous développons un algorithme de prédiction des résultats du vote populaire d'élections et de référendums à partir d'observations régionales partielles.
+	Notre approche combine la factorisation matricielle et les modèles linéaires généralisés afin d'apprendre des représentations vectorielles des votes et des régions.
+	Ces représentations capturent les biais d'influence, comme les biais culturels, linguistiques ou idéologiques.
+	Nous appliquons notre modèles à des données de vote pour l'Allemagne, les États-Unis et la Suisse, et nous le déployons sur une plateforme en ligne pour prédire les votations suisses en temps réel.
+	En moyenne, nos prédictions sont correctes à moins de 1\% d'erreur en utilisant les résultats de seulement 5\% des communes.
+
+	Troisièmement, nous nous intéressons à la perception que les gens ont de leur empreinte carbone.
+	Nous formalisons ce problème sous forme de comparaisons entre deux actions (par exemple, prendre l'avion contre utiliser un séchoir) et développons un modèle qui rappelle l'approche de Thurstone en psychométrique.
+	Le modèle apprend la perception générale d'une population d'individus en apprenant les paramètres d'une régression linéaire bayésienne.
+	Nos expériences montrent que les individus ont tendance à sur-estimer les actions à faible empreinte carbone et sous-estimer les actions à forte empreinte.
+
+	Finalement, nous développons un modèle probabiliste dynamique de comparaison par paires.
+	Nous remplaçons les paramètres statiques d'une classe de modèles de comparaison connue par des processus gaussiens à temps continu.
+	Nous développons également un algorithme d'inférence qui calcule une approximation bayésienne de la distribution postérieure du modèle de manière efficace, en quelques itérations à temps linéaire sur les données.
+
+	\paragraph{Mots-clés}
+	modèles de choix discrets, factorisation matricielle, statistiques bayésiennes, modèles linéaires généralisés, comparaisons, choix, modèles probabilistes, analyse de données, apprentissage automatique, sciences sociales computationnelles
 \end{otherlanguage}
