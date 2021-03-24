@@ -49,7 +49,7 @@ In reinforcement learning, \citet{sadigh2017active} and~\citet{christiano2017dee
 Finally, \citet{salganik2015wiki} implemented the probit model into the online platform \emph{All Our Ideas}\footnote{\href{http://www.allourideas.org/planyc_example?guides=true}{http://www.allourideas.org}} to help the New York City Mayor’s Office of Long-Term Planning and Sustainability understand New Yorkers' preferences for developing the city sustainably.
 
 A history of the development of discrete-choice models in econometrics is given by~\citet{mcfadden2001economic} in his Nobel Prize lecture.
-The interested reader will find more details about random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
+The curious reader will find more details about random utility models in the books of~\citet[Chapter~1]{train2009discrete} and~\citet[Chapter~3]{hensher2005applied}.
 An introduction to probabilistic models of choice from a statistical perspective is given by~\citet[Chapter~1]{maystre2018efficient}.
 In the next section, we introduce discrete-choice models from a \emph{random utility} perspective.
 
@@ -125,7 +125,7 @@ Hence, the probability that a decision maker chooses~$i$ over~$j$ is
 \end{align}
 The probability $\Prob{i \succ j}$ is called the \emph{choice probability}.
 The notation ``$i \succ j$'' reads as ``alternative~$i$ is chosen over alternative~$j$'' or, equivalently, as ``$i$ wins over $j$''.
-In our example, we are interested in the probability that the student chooses to drink a cappuccino instead of an espresso $\Prob{\text{``capuccino''} \succ \text{``espresso''}}$.
+In our example, we are interested in the probability $\Prob{\text{``capuccino''} \succ \text{``espresso''}}$ that the student chooses to drink a cappuccino instead of an espresso.
 
 From~\eqref{in:eq:choiceprob}, the characterization of a discrete-choice model depends, therefore, on the researcher's hypotheses on the noise model, \textit{i.e.}, on the probability distribution that captures best the unobserved features.
 Two popular choices of distribution, that we describe below, are (i) the Gaussian distribution $\DNorm{\mu, \sigma^2}$ with mean $\mu$ and variance $\sigma^2$ and (ii) the Gumbel distribution $\DGumbel{\mu, \beta}$ with location $\mu$ and scale $\beta$.

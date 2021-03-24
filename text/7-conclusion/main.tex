@@ -1,72 +1,76 @@
+%! TEX root = ../thesis.tex
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-% Modern technologies enable the collection of comparison data at an unprecedented scale, opening up many new opportunities for businesses and researchers.
-% But they also raise substantial challenges.
-% Often, the number of parameters of the models used to analyze the data grows concurrently to the amount of data.
-% This calls for new, efficient methods for collecting comparisons and learning models.
-% In this thesis, we propose several solutions that highlight different aspects of efficiency.
+In this thesis, we answered specific questions about social processes from a machine-learning and data-mining viewpoint.
+We built upon the literature on discrete-choice models, which we combined latent-factor models, Bayesian statistics, and generalized linear models, to propose predictive models that enable interpretation through the learned parameters.
+We hope to have demonstrated that discrete-choice analysis offers a principled and powerful approach to modeling social processes, as making choices is inherent in human behaviour.
 
-% \begin{itemize}
-% \item In Chapter~\ref{ch:fastinference}, we address the problem of parameter inference for Luce's choice model.
-% By expressing stationary points of the likelihood function as the stationary distribution of a Markov chain, we link recently proposed spectral estimators to maximum-likelihood methods.
-% This link enables the development of new inference algorithms that are statistically and computationally efficient.
+In Chapter~\ref{ch:peerproduction}, we studied the social dynamics behind group collaborations for collective content creation, such as in Wikipedia and the Linux kernel.
+We proposed a new discrete choice model inspired from the Bradley-Terry and Rasch models, which incorporates ideas from collaborative filtering.
+The model enabled us to identify controversial Wikipedia articles and core Linux components that are crucial to the system.
+Including latent factors improved the predictive performance and helped us understand how users edit some Wikipedia articles:
+They are either "experts" in popular culture or in high culture, but not both.
 
-% \item In Chapter~\ref{ch:robustsort}, we consider the active-learning setting.
-% We study theoretically and empirically the performance of Quicksort when pairwise comparison outcomes follow the Bradley--Terry model.
-% In scenarios where it is possible to adaptively select pairs of items to compare, we show that sorting-based active-learning strategies lead to significant gains in sample efficiency.
-% Compared to competing active-learning methods, ours is computationally cheaper.
+In Chapter~\ref{ch:lawmaking}, we studied the law-making process in the European Union through the lens of peer-production systems.
+We extended our model by combining the multinomial logit and Rasch models, and by enhancing it with natural language processing techniques.
+We quantified the controversy of laws and obtained intuitive visualizations by representing each law as the conflict graph of its edits.
+We also identified features of the edits that correlate with higher probability of acceptance:
+For example, inserting short edits, providing a justification for the change, deleting ``human rights'', and having the parliamentarian in charge of the law sponsoring the edit are all factors that contribute to acceptance.
 
-% \item In Chapter~\ref{ch:choicerank}, we focus on choices in networks.
-% In this case, we achieve data efficiency in a different way: we find that it is not necessary to observe distinct choices among well-defined sets of alternatives in order to estimate model parameters.
-% Marginal information about the incoming and outgoing traffic at each node is sufficient.
-% The network structure also enables a fast algorithm that scales to very large graphs.
+In Chapter~\ref{ch:predikon}, we developed an algorithm that combines matrix factorization and generalized linear models for predicting the popular vote of elections and referenda from partial, region results.
+This algorithm learns representations of votes and regions to capture ideological and cultural voting patterns (e.g., rural/urban, liberal/conservative, etc.).
+Its predictions are also accurate: In Switzerland, for example, it is able to predict referendum votes with an accuracy of 99\% and a mean absolute error of less than 1\% using only 5\% of the results observed in municipalities.
+We deployed our algorithm on a Web platform to make real-time predictions for referenda in Switzerland.
 
-% \item Finally, in Chapter~\ref{ch:playerkern}, we tackle a concrete problem in sports.
-% Based on past outcomes of football matches, we seek to predict the outcome of future matches between national teams.
-% We devise a method that uses all the available data efficiently: it considers the outcome of all matches---including those between clubs---and obtains predictions that outperform competing models.
-% It does so by implicitly projecting the football matches in the space of players.
-% \end{itemize}
+In Chapter~\ref{ch:climpact}, we studied how people perceive the carbon footprint of their day-to-day actions.
+We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between intercontinental flights and using household appliances) and developed a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
+The model learns the users perception as the parameters of a Bayesian linear regression, which enabled us to derive an active-learning algorithm to select the optimal pairs of actions to probe.
+Because no suitable data existed for answering these questions, we built a Web interface to collect comparison data from students on our university campus.
+Our results show that users tend to overestimate actions with low carbon footprint and underestimate actions with high carbon footprint.
 
-% The approach we take in most of this thesis consists of distilling challenges faced in modern applications of choice models into simple and fundamental problems.
-% We then propose methods to address these problems.
-% We have applied these methods to real use-cases; however, there remain important classes of practical applications for which our methods are not applicable directly.
-% We discuss three directions in which our work could be extended.
+Finally, in Chapter~\ref{ch:kickscore}, we developed a dynamic model of choice that enables the parameters to vary over time.
+We achieve this by replacing the static parameters by continuous-time Gaussian processes.
+We also developed an efficient inference algorithm that computes an approximate Bayesian posterior distribution in a few linear-time iterations over the data.
+We show experimentally on several datasets of (e-)sports that this model outperforms competing approaches in terms of predictive performance, scales to millions of observations, and generates compelling visualizations of the parameters' dynamics.
+We deployed our approach as a real-world application on the Web for predicting football matches in European leagues.
 
-% \begin{description}
-% \item[Item features] With the exception of Chapter~\ref{ch:playerkern}, we have assumed that the item strengths $\{ \gamma_i \}$ or $\{ \theta_i \}$ are free parameters.
-% However, in some applications, we might have access to features that relate items to each other.
-% We distinguish two cases.
-% First, suppose that item $i$ is described by a real-valued feature vector $\bm{x}_i \in \mathbf{R}^D$, where typically $D \ll N$.
-% Then, by setting $\theta_i = \bm{x}_i^\Tr \bm{w}$ for some latent parameter vector $\bm{w} \in \mathbf{R}^D$, we obtain the multinomial logit model \citep{mcfadden1973conditional, train2009discrete}.
-% Inference in this model is well-studied, but the issue of effective and efficient active learning remains widely open.
-% Second, suppose that item $i$ is described by a binary vector $\bm{x}_i \in \{0, 1\}^D$ describing the presence or absence of certain features.
-% Then, we can model comparison outcomes using the elimination-by-aspects (EBA) model \citep{tversky1972elimination}, a model closely related to that of Luce.
-% Preliminary work shows that the algorithms developed in Chapter~\ref{ch:fastinference} could be extended to the EBA model in the case of pairwise comparisons.
+\paragraph{Perspective on Methodological Uncertainties}
 
-% \item[Context of comparisons] Sometimes, the context in which choices are made is important.
-% For example, we might prefer to listen to a different type of music depending on whether we are spending a quiet moment or doing sports, or whether it is summer or Christmas time, etc.
-% In cases where the context is explicit, we fall back to the problem of integrating side information in the form of feature vectors.
-% However, if the context is not explicitly observed, the problem becomes more difficult.
-% We make a step towards addressing this problem in \citet{ko2016collaborative}, where we study a setting in which we observe sequences of choices.
-% We propose a model where the context at time $t$ is encoded by previous choices made by a user in $(-\infty, t)$, and where the effective utility $\theta_i^{(t)}$ of item $i$ at time $t$ varies accordingly.
-% In general, integrating latent context into choice models remains an interesting avenue for future research.
+% Parameter and
+By definition, computational models are approximate representations of (complex) realities.
+Human behaviour, in particular, is uncertain by essence, and models of social processes are only as good as the datasets they rely on.
+In presence of noisy data, it becomes crucial to quantify uncertainty and propagate it through parameter estimation.
+This enables a model to provide predictive distributions rather than point-wise predictions.
+Bayesian inference offers a principled approach to achieve uncertainty quantification and propagation.
+In this work, we have relied on such methods only in Chapter~\ref{ch:kickscore} and, to some extent, in Chapter~\ref{ch:climpact}.
+We believe that the other chapters, and the \textsc{SubSVD-GLM} algorithm of Chapter~\ref{ch:predikon} in particular, would benefit from Bayesian inference to provide more informative predictions.
 
-% \item[Personalization] In applications using recommender systems, the task is often to learn a \emph{distinct} preference profile for each user.
-% For example, online service providers use these systems in order to tailor their service to the specific tastes of a user.
-% An obvious but inefficient way to achieve personalization is to learn a distinct choice model for every user.
-% As many users share similar preferences, it is sensible to take advantage of similar users' choices to learn a given user's preferences.
-% One approach is to postulate that there are a small number of (global) instances of Luce's model, and that individual preferences are formed by (user-specific) mixtures of these models \citep{gormley2008exploring, ammar2015ranked}.
-% The inference problem then consists of jointly learning the global models and the user-specific mixture weights.
-% To this end, the algorithms developed in Chapter~\ref{ch:fastinference} could be used to carry out the \emph{M} step in the \emph{EM} algorithm of \citet{gormley2008exploring}.
-% \end{description}
+% Structural uncertainty.
+The discrete-choice models on which the present work is based, such as the Bradley-Terry, the Thurstone, and the multinomial logit models, are subject to structural uncertainty because they assume that the alternatives in the choice set are independent.
+Clearly, this strong assumption might limit the depth of some analyzes.
+Resorting to models that encode dependencies between alternatives offers a natural and promising direction to further exploit the structure of the problems at hand.
+For example, the mixed logit, nested logit, and multinomial probit models all enable this by encoding correlations through the joint distribution of the noise model (see Section~\ref{in:sec:models}).
+To the best of our knowledge, combining matrix factorization techniques with these models has not yet been explored and opens up fascinating research directions that could lead to new methodologies in discrete-choice analysis and preference learning.
 
-% A potential weakness of models based on Luce's axiom (as well as those based on Thurstone's ideas, see Section~\ref{in:sec:thurstone}) is that they are sensitive to outliers: the probability that the outcome of a comparison between $i$ and $j$ is inconsistent decreases \emph{exponentially} fast with $\Abs{\theta_i - \theta_j}$.
-% Hence, a small fraction of outliers (due, e.g., to the actions of dishonest users) can affect the model significantly.
-% In addition to the extensions outlined above, the study of robust alternatives to Luce's model is an important direction for future work.
-% On the one hand, model inference will likely require the development of new tools, beyond those presented in this thesis.
-% On the other hand, there is hope that the sorting-based active-learning strategies presented in Chapter~\ref{ch:robustsort}---including the theoretical bounds on Quicksort's performance---can be extended to heavy-tailed noise.
+\paragraph{Perspective on Socio-Environmental Processes}
 
-% In conclusion, we hope to have convinced the reader that the study of comparison models is of paramount importance to improve online applications, because choices are the most natural way for humans to express their opinions (whether implicitly or explicitly).
-% This thesis hopefully brings us a step closer towards effective methods for eliciting and analyzing comparison outcomes.
-% As several challenges remain, research on choice models has a bright future ahead of itself.
+This thesis is written in a time when the global political spectrum is more polarized than ever and in a society that faces the grand environmental challenges of climate change and biodiversity loss.
+While currently being mostly part of the problem, computer science and machine-learning algorithms can become part of the solution.
+Impactful policies require ambitious target setting and effective implementation.
+They require to combine (1) top-down processes, \textit{i.e.}, how policy-makers shape laws, and (2) bottom-up processes, \textit{i.e.}, how individuals make choices in their daily life.
+For (1), machine-learning methods can help discovering influence networks and lobbying activities in political processes.
+For (2), understanding how people make choices and change their opinion over time gives a starting point to bridge the gap between policy and implementation.
+Processing large-scale datasets of legal texts, parliamentary speeches, and social media activities with recent methods in language modeling, latent-factor models, and network science offers a promising direction to study hidden influence processes and understand people's behaviour in law-making and political participation.
+Monitoring societal currents and making the results available to the general public can increase transparency into political processes and help shape truly effective policies.
+
+\paragraph{A Call for Interdisciplinary Research}
+
+Tackling social-science problems from a machine-learning perspective gave us the advantage of agnostic analyzes, but sometimes at the expense of shallowness.
+Indeed, collaborating with political scientists, economists, psychologists, sociologists, climate scientists, and ecologists would provide expert knowledge to strengthen our findings.
+As computer science increasingly percolates through other scientific domains, computational methods are often used only as a means to an end rather than as a source of innovative approaches and fresh viewpoints.
+Interdisciplinary research can act as an effective catalyser for scientific progress.
+Major breakthroughs often take place by crossing ideas from different fields.
+For example, the sequencing of the human genome in the 1990s required the collective efforts of physicists, chemists, biologists, and computer scientists.
+Today, at a time when conspiracy theories disseminate doubt and threaten facts, interdisciplinary research could restore trust in science by reinforcing the credibility of scientific results and enhancing their scope.
+Only synergistic collaborations with other fields will enable computer science to unleash its true potential for transformative societal good.
