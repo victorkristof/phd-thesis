@@ -20,12 +20,15 @@
 - [ ] General: Find missing references with latexmk
 - [ ] General: Add links to data and code for each chapter
 - [ ] General: Normalize paragraphs that introduce each section in intro of chapters
+- [ ] General: Rename all "results" sections as "Experimental Evaluation" or all "Results"
 
 ## For camera-ready
 
+- [ ] Preamble: Write acknowledgements
 - [ ] Preamble: Add dedication
-- [ ] Ch. 2: Generate figures with correct size and font
 - [ ] Bibliography: Verify all links in @misc entries
 - [ ] Bibliography: Normalize names of venues with abbreviations
+- [ ] General: Generate figures with correct size and font
 - [ ] General: Remove comments in Latex
 - [ ] General: Replace \bm and \boldsymbol by \vec for vectors
+- [ ] Ch. 4: Rename "SubSVD" by "Predikon" algorithm
