@@ -7,12 +7,12 @@
 % Misinformation, fake news, and conspiracy theories spread to millions of people within algorithmically recommended echo chambers on social networks.
 % Bitcoin mining emits as much CO2 as Denmark, and training large language models, such as GPT-3, emits as much CO2 as driving a car for 10 years (TODO: verify).
 % Algorithmic bias exacerbated.
-Since the seminal work of Alan Turing establishing the foundations of modern computer science~\citep{turing1937computable} and artificial intelligence~\citep{turing2009computing}, computers and algorithms have only accelerated progress in science and engineering.
+Since the seminal work of Alan Turing establishing the foundations of modern computer science~\citep{turing1937computable} and artificial intelligence~\citep{turing2009computing}, computers and algorithms have repeatedly accelerated the progress in science and engineering.
 Today, however, their effect on society is mixed.
-The US presidential election and the UK Brexit referendum in 2016 have been marred by allegations of manipulation by the algorithms of the political consulting firm Cambridge Analytica.
-Misinformation, fake news, and conspiracy theories spread to millions of people within algorithmically-recommended echo chambers on social media~\citep{kumar2016disinformation,garimella2018political,ribeiro2020auditing,cinelli2021echo}, shaping collective action and political participation~\citep{margetts2015political}.
-While reducing costs, increasing economic outputs, and facilitating decision-making, the democratization of machine-learning algorithms in health, finance, surveillance, marketing, justice, and policy-making also reinforces and exacerbates social biases~\citep{hajian2016algorithmic,stoica2018algorithmic,rodolfa2020case}.
-Major breakthroughs in computer vision and natural language processing are obtained at a high environmental cost~\citep{strubell2019energy} and mining cryptocurrencies consumes as much energy as Belgium~\citep{gallersdorfer2020energy,de2020bitcoin}.
+The US presidential election and the UK Brexit referendum in 2016 were marred by allegations of manipulation by the algorithms of the political consulting firm Cambridge Analytica.
+Misinformation, fake news, and conspiracy theories spread to millions of people within algorithmically recommended echo chambers on social media~\citep{kumar2016disinformation,garimella2018political,ribeiro2020auditing,cinelli2021echo}, thus shaping collective action and political participation~\citep{margetts2015political}.
+Although it reduces costs, increases economic outputs, and facilitates decision-making, the democratization of machine-learning algorithms in health, finance, surveillance, marketing, justice, and policy-making also tends to reinforce and exacerbate social biases~\citep{hajian2016algorithmic,stoica2018algorithmic,rodolfa2020case}.
+Major breakthroughs in computer vision and natural language processing are obtained at a high environmental cost~\citep{strubell2019energy}, and mining cryptocurrencies consumes as much energy as Belgium does~\citep{gallersdorfer2020energy,de2020bitcoin}.
 
 % These global problems, stemming from the decisions and behaviors of people, may appear intractable and unpredictable, but a century of research in econometrics and psychometrics has developed mathematical models of human decisions, enabling analysis and forecast.
 % We make choices as soon as we get up, for example by choosing between wearing a pull-over or a shirt and between drinking tea or coffee.
@@ -20,29 +20,30 @@ Major breakthroughs in computer vision and natural language processing are obtai
 % This earned Daniel McFadden his Nobel prize.
 % DCM offers tools to understand people's preferences in a variety of settings.
 % They have gained an increasing interest with increasing computational power and larger datasets.
-Global problems stemming from the decisions and behaviors of people, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions, can seem intractable and unpredictable.
+The lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions are examples of seemingly intractable and unpredictable global problems stemming from the poor decisions and selfish behaviors of people.
 Fortunately, a century of research in econometrics and psychometrics has taught us that human decisions are more predictable than we think:
-From choosing between drinking tea or coffee in the morning to selecting which book to read before going to bed, human behaviour often reduces to making choices between a finite number of alternatives.
-Rooted in the work of~\citet{thurstone1927law} and of~\citet{zermelo1928berechnung} in the 1920s, and later earning Daniel McFadden his Nobel Prize in economics~\citep{mcfadden2001economic}, \emph{discrete-choice theory} provides us with a toolset of statistical models to analyze and forecast decision-making processes.
+From choosing between drinking tea or coffee in the morning to selecting which book to read before going to bed, human behavior is often reduced to making choices between a finite number of alternatives.
+Rooted in the work of~\citet{thurstone1927law} and of~\citet{zermelo1928berechnung} in the 1920s, and later earning Daniel McFadden his Nobel Prize in economics~\citep{mcfadden2001economic}, \emph{discrete-choice theory} provides us with a toolset of statistical models for analyzing and forecasting decision-making processes.
 
 % With large enough datasets and machine-learning algorithms, we can design accurate models of human behavior.
 % At work and at home, we spend countless of hours behind a computer screen and on the internet, where every click and mouse movement is recorded.
 % With the development of the Internet-of-Things, social media platforms, and smartphones, we are generating XX Gbytes (TODO: find amount of data generated per day) per day.
 % In parallel, the development of machine-learning algorithms and the rapid increase of computational power enable us to process this vast amount of data.
-Despite the progress that they have made possible in studying consumer choices of transportation modes~\citep{ben1973structure,mcfadden1974measurement}, household energy suppliers~\citep{goett2000customers}, and college choices~\citep{fuller1982new}, early use of discrete-choice models has been mostly restricted to small-scale problems by lack of data and limited computational power.
-The emergence of the Internet and the World Wide Web in the second half of the 19\textsuperscript{th} century has enabled us to collect large datasets of human behaviors.
-At work and at home, people spend countless of hours behind their computers and smartphones, where every click, tap, and mouse movement are recorded.
-The~\citet{wef2019data} estimates that, by 2025, the world will generate 463 exabytes\footnote{This is $463 \times 10^{18}$ bytes or 463 billion gigabytes.} of data each day.
-In parallel, the development of machine-learning algorithms and the rapid increase of computational power has made it possible to process considerable amount of data.
+Despite the progress that discrete-choice models made possible in studying consumer choices of transportation modes~\citep{ben1973structure,mcfadden1974measurement}, household energy suppliers~\citep{goett2000customers}, and college choices~\citep{fuller1982new}, their early application was mostly restricted to small-scale problems due to lack of data and of computational power.
+Coincidently, the emergence of the Internet and the World Wide Web in the second half of the 20\textsuperscript{th} century led to the collection of large datasets of human behavior.
+At work and at home, people spend countless hours behind their computers and their smartphones, where every click, tap, and mouse movement is recorded.
+The~\citet{wef2019data} estimates that by 2025, the world will generate 463 exabytes\footnote{This is $463 \times 10^{18}$ bytes or 463 billion gigabytes, enough data to fill almost 100 billions DVDs.} of data every day.
+In parallel, the development of machine-learning algorithms and the rapid increase of computational power have made it possible to process considerable amounts of data.
 
 % Very often, these algorithms are used as black boxes, \textit{i.e.}, as oracles that gobble a dataset and spits out predictions.
 % Other advanced algorithms in natural language processing and computer vision have so many layers of transformations and parameters that researchers are only guessing what the model has learned.
-While recent deep-learning algorithms offer unprecedented predictive powers~\citep{lecun2015deep}, they offer little insights into the problem itself~\citep{rudin2019stop}, limiting any in-depth understanding of human behaviour.
-These algorithms are used as black boxes, \textit{i.e.}, oracles that gobble datasets and spit out predictions.
-The architecture of large language and vision models consists of many layers of transformations and parameters, whose interpretation is ambiguous because it is unclear what the model has learned exactly~\citep{fong2017interpretable,guidotti2018survey,olah2020zoom,hilton2020understanding}.
+Although recent deep-learning algorithms offer unprecedented predictive powers~\citep{lecun2015deep}, they offer little insight into the problem itself, limiting any in-depth understanding of human behavior.
+These algorithms are used as black boxes, \textit{i.e.}, oracles that gobble up datasets and spit out predictions.
+The architecture of large language and vision models consists of so many layers of transformations and parameters that their interpretation is challenging:
+It is unclear what patterns the model has learned exactly~\citep{fong2017interpretable,guidotti2018survey,olah2020zoom,hilton2020understanding}.
 
 In this thesis, we focus on designing probabilistic models of decision-making that are highly interpretable.
-We study social processes by drawing from the literature on discrete-choice models, which we combine with latent-factor models, Bayesian statistics, and generalized linear models.
+To study social processes, we draw from the literature on discrete-choice models and incorporate ideas from matrix factorization, Bayesian statistics, and generalized linear models.
 In particular, we ask the following research questions:
 \begin{enumerate}[
 		leftmargin=1.5cm,
@@ -52,13 +53,13 @@ In particular, we ask the following research questions:
 		label=\textbf{RQ\arabic*}
 	]
 	\item Who are the important users and components in peer-production systems?
-	\item What features of parliamentarians and laws make law amendments accepted with high probability?
+	\item What features of parliamentarians and laws increase the probability of law amendments being accepted?
 	\item What ideological patterns are contained in voting data and how predictable are elections and referenda?
 	\item How do people perceive the carbon footprint of their actions?
-	\item How to learn pairwise-comparison models of time-dependent data?
+	\item How can we learn pairwise-comparison models of time-dependent data?
 \end{enumerate}
-We answer each question by designing probabilistic models of choice.
-The parameters of these models enable us to interpret their predictions, thereby shedding light on the problem at hand.
-These models are also general enough to be applicable in other contexts.
-Finally, we put some effort in making our approach practical and our results useful by developing interactive Web platforms for RQ3, RQ4, and RQ5.
+We answer each question by designing a tailor-made probabilistic choice models.
+The learned parameters of each model enable us to interpret their predictions, thereby shedding light on the problem at hand.
+These models are also sufficiently general to be applicable in other contexts.
+Finally, we made our approach practical and our results useful by developing interactive Web platforms for RQ3, RQ4, and RQ5.
 These platforms are available to the general public and contribute to the global endeavour of opening science.
