@@ -2,41 +2,56 @@
 \section{Outline and Contributions}
 \label{in:sec:outline}
 
-In this thesis, we combine discrete-choice models with latent-factor models, Bayesian statistics, and generalized linear models to study social systems where people interact through collaboration and conflicts.
-In Chapter~\ref{ch:peerproduction}, we develop a discrete-choice model inspired from the Rasch model in~\eqref{in:eq:rasch} and include latent factors reminiscent of collaborative filtering to predict user contributions to online peer-production systems.
-We apply our model on Wikipedia and the Linux kernel, two examples of large-scale peer-production systems.
-Our approach significantly outperforms those based solely on user reputation and bridges the gap with specialized predictors that use content-based features.
-It also enables us to discover interesting structure in the data:
-The difficulty parameters of our model enables us to rank Wikipedia articles and discover controversial articles.
-We also find Linux components that are crucial to the functioning of the system.
-Finally, the latent factors provide an boost in predictive performance and cluster well according to topics of the Wikipedia articles.
+% General contribution.
+In this thesis, we seek to gain new insight into systems where people interact through collaboration and conflict.
+Our contribution is two-fold:
+\begin{enumerate}
+	\item We ask questions about the structure and the dynamics of social processes, such as peer-production, law-making, and voting.
+	\item We answer these questions by building interpretable predictive models and by designing efficient learning algorithms.
+\end{enumerate}
+The learned parameters of each model enable us to interpret their predictions, thereby gaining insight into the studied processes.
+We also make our approaches practical and our results useful by developing real-world applications on the Web.
+
+% \item Who are the important users and components in peer-production systems?
+% \item What features of parliamentarians and laws increase the probability of law amendments being accepted?
+% \item What ideological patterns are contained in voting data and how predictable are elections and referenda?
+% \item How do people perceive the carbon footprint of their actions?
+% \item How can we learn pairwise-comparison models of time-dependent data?
+
+More specifically, in Chapter~\ref{ch:peerproduction}, we ask who are the important users and components in online peer-production systems.
+We take a predictive viewpoint and posit that the probability of acceptance of user contributions depends on the skill of users and the inertia of components resisting to change.
+We model this probability with a discrete-choice model inspired from the Rasch model in~\eqref{in:eq:rasch}, and we include latent factors reminiscent of matrix factorization.
+We apply our model to Wikipedia and to the Linux kernel, two examples of large-scale peer-production systems, and we discover interesting structures in the data:
+We identify controversial Wikipedia articles and core Linux components that are crucial to the functioning of the system.
+Finally, the latent factors boost the predictive performance and cluster well according to topics of the Wikipedia articles.
 
 In Chapter~\ref{ch:lawmaking}, we shift our attention to law-making processes that we study through the lens of peer-production systems.
-We further develop the above model by combining the multinomial logit model in~\eqref{in:eq:multinomiallogit} with the Rasch model and by including latent factors and natural language processing.
-We collect a new dataset of \numprint{450000} legislative amendments proposed by European parliamentarians between 2009 and 2019.
-We use our model to predict these amendments are accepted or rejected, thereby shedding light on the law-making process.
-In particular, we are able to quantify the controversy of law proposals and the influence of the parliamentarian in charge of a specific law proposal.
-We also study what features of the data (\textit{e.g.}, the type of law, the nationality of amendment authors, the length of the change, and the modified words) contribute to increasing amendment acceptance.
+In the European Union, parliamentarians shape policies by proposing amendments to law drafts.
+We look for features of the parliamentarians, the amendments, and the laws that increase the probability of amendments being accepted.
+We start by collecting a new dataset of \numprint{450000} legislative edits proposed by European parliamentarians between 2009 and 2019.
+Then, we predict the acceptance probability of amendments by building a model inspired from the multinomial logit model in~\eqref{in:eq:multinomiallogit} and the Rasch model.
+Our approach takes advantage of the conflictive structure of amendments that modify the same parts of the same laws.
+We identify that being in charge of a law draft and that proposing shorter amendments are among the features that correlate with highest probability of acceptance.
+We also discover words and bigrams that are predictive of acceptance or rejection when inserted or deleted, such as the term ``human rights'' that predicts acceptance when deleted from the law.
 
-In Chapter~\ref{ch:predikon}, we develop an algorithm for predicting aggregate vote outcomes (\textit{e.g.}, national) from partial outcomes (\textit{e.g.}, regional) that are revealed sequentially.
-While our approach does not use discrete-choice models directly, the problem we tackle is related to one of the most fundamental choice processes: voting.
-We combine matrix factorization and generalized linear models (GLMs) to obtain a flexible, efficient, and accurate algorithm for voting prediction.
-We show experimentally that it is able to accurately predict the outcomes of Swiss referenda, U.S.\ presidential elections, and German legislative elections.
-We also show that the learned learned latent factors correspond to clear ideological and cultural patterns.
-Finally, we deploy our algorithm on an online Web platform to provide real-time vote predictions in Switzerland and a data visualization tool to explore voting behavior.
+In Chapter~\ref{ch:predikon}, we study one of the most fundamental choice processes: voting.
+To understand voting patterns, we develop an algorithm for predicting aggregate vote outcomes (\textit{e.g.}, national) from partial results (\textit{e.g.}, regional) that are revealed sequentially.
+We combine matrix factorization and generalized linear models to obtain a flexible, efficient, and accurate algorithm.
+Our experiments show that this approach accurately predicts the outcomes of Swiss referenda, U.S.\ presidential elections, and German legislative elections.
+We also show that the learned latent factors correspond to clear ideological and cultural patterns, such as conservative/liberal and rural/urban patterns.
+Finally, we deploy our algorithm on an online Web platform to provide real-time vote predictions in Switzerland and a data-visualization tool to explore voting behavior.
 
-In Chapter~\ref{ch:climpact}, we propose a model inspired from the probit model in~\eqref{in:eq:probit} to understand people's perception of their carbon footprint.
-Driven by the observation that few people think of CO\textsubscript{2} impact in absolute terms, we design a system to probe people's perception from simple pairwise comparisons of the relative carbon footprint of their actions.
+In Chapter~\ref{ch:climpact}, we study people's perception of their carbon footprint.
+Driven by the observation that few people think of CO\textsubscript{2} impact in absolute terms, we design a system to probe their perception from simple pairwise comparisons of the relative carbon footprint of their actions.
 We design a Web interface to collect 2000 answers from 200 users on our university campus.
-The formulation of the model enables us to take an active-learning approach to selecting the pairs of actions that are maximally informative about the model parameters.
-The parameters of the model enable then to rank the perceived carbon footprint of the actions and compare them with the true values.
-This reveals interesting patterns:
-Low-impact actions are usually overestimated and high-impact actions and usually underestimated.
-We also analyze the influence of gender on climate perception and observe that male and female users have mostly similar perceptions, except for a few actions.
+We develop a Bayesian model inspired from the probit model in~\eqref{in:eq:probit} that enables us to take an active-learning approach to selecting the pairs of actions that are maximally informative about the model parameters, hence making data collection more efficient.
+The parameters capture the perceived carbon footprint of the actions and induce a natural ranking to compare them with the true values.
+This reveals an interesting pattern:
+Low-impact actions are usually overestimated and high-impact actions are usually underestimated.
 
-Finally, in Chapter~\ref{ch:kickscore}, we propose a probabilistic model of pairwise-comparison outcomes that capture a wide range of time dynamics.
-We achieve this by replacing the static parameters of the logit model in~\eqref{in:eq:logit} by continuous-time Gaussian processes; the covariance function of these processes enables expressive dynamics.
+Finally, in Chapter~\ref{ch:kickscore}, we address the problem of learning choices in a dynamic setting, where alternatives are correlated over time.
+We solve this by replacing the static parameters of the logit model in~\eqref{in:eq:logit} by continuous-time Gaussian processes, whose covariance function enables expressive time dynamics.
 We develop an efficient inference algorithm that computes an approximate Bayesian posterior distribution.
-Despite the flexbility of our model, our inference algorithm requires only a few linear-time iterations over the data and can take advantage of modern multiprocessor computer architectures.
-We apply our model to several historical databases of sports outcomes and find that our approach a) outperforms competing approaches in terms of predictive performance, b) scales to millions of observations, and c) generates compelling visualizations that help in understanding and interpreting the data.
+Despite the flexibility of our model, our inference algorithm requires only a few linear-time iterations over the data.
+We apply our model to several historical databases of sports outcomes and find that our approach (a) outperforms competing approaches in terms of predictive performance, (b) scales to millions of observations, and (c) generates compelling visualizations that help in understanding and interpreting the data.
 We also develop a Web platform that uses our algorithm to make predictions for football matches in European leagues.
