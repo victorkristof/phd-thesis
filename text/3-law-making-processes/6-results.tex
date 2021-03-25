@@ -125,22 +125,29 @@ Surprisingly, our model also learns that it is harder to make edits for decision
 
 \paragraph{Controversy of Dossiers}
 
-Table~\ref{lmp:tab:inertia_params} provides a list of the three dossiers in EP8 with the highest inertia parameter~$d_i$ and the three dossiers with the lowest~$ d_i $.
-The values of $d_i$ correlate well with the number of nodes, the number of cliques, the average size of cliques, and the edit acceptance rate.
-The top-three dossiers include laws with high stakes:
-The "Screening of foreign direct investments" sets a framework to better equip the EU for investments from non-EU countries.
-It has crucial implications for companies, workers, governments, and citizens.
-The infamous "Copyright in the Digital Single Market", considered to be a threat to freedom of expression on the Web by its opponents, sparked public protests in several cities.
-The reporting committee publicized that "MEPs have rarely or never been subject to a similar degree of lobbying before"\cite{europarl2019questions}.
-Finally, the "Energy efficiency labelling" updated famous labels for electrical appliances, which guide consumers in their purchases.
-
-The number of nodes, the number of cliques, the average size of cliques, and the percentage of accepted edits correlate with the value of parameter~$ d_i$.
+Table~\ref{lmp:tab:inertia_params} provides a list of the ten dossiers in EP8 with the highest inertia parameter~$d_i$ and the ten dossiers with the lowest~$ d_i $.
+Overall, the values of $d_i$ correlate well with the number of nodes, the number of cliques, the average size of cliques, and the edit acceptance rate.
 These four metrics are a good proxy to the level of activity by MEPs in the amending process of a given dossier.
 Higher activity, possibly due to higher controversy, leads to higher value of~$d_i$.
-Similarly, the skill parameters~$s_u$ enable us to quantify the influence of each MEP.
-The value of~$s_u$ increases the most when MEP~$u$ wins against stronger MEPs and on dossier~$i$ with high inertia~$d_i$.
-The number of edits, the proportion of successful edits, and the proportion of successful conflicts correlate with the value of parameter~$s_u$ (not shown here for space constraints).
-A MEP able to propose many edits with high acceptance rate, has their political views strongly represented in laws.
+We note, however, that some of the top-10 dossiers have a small number of edits.
+This shows that the inertia parameters capture more information than simply some of these descriptive statistics.
+
+The top-ten dossiers include laws with high stakes about financial markets, the environment, vast investment programmes, and assistance to member states:
+The ``Screening of foreign direct investments'' sets a framework to better equip the EU for investments from non-EU countries.
+It has crucial implications for companies, workers, governments, and citizens.
+The ``European Supervisory Authorities on financial markets'' sets strict regulations for the financial markets.
+``InvestEU'' and the ``Horizon Programme'' are vast investment programmes for innovation and research.
+The ``Cost-effective emission reductions and low-carbon investments'' is one of the implementations of the Paris Climate Agreement.
+Finally, The infamous ``Copyright in the Digital Single Market'', considered to be a threat to freedom of expression on the Web by its opponents, sparked public protests in several cities.
+The reporting committee publicized that ``MEPs have rarely or never been subject to a similar degree of lobbying before''~\citep{europarl2019questions}.
+
+% The number of nodes, the number of cliques, the average size of cliques, and the percentage of accepted edits correlate with the value of parameter~$ d_i$.
+% These four metrics are a good proxy to the level of activity by MEPs in the amending process of a given dossier.
+% Higher activity, possibly due to higher controversy, leads to higher value of~$d_i$.
+% Similarly, the skill parameters~$s_u$ enable us to quantify the influence of each MEP.
+% The value of~$s_u$ increases the most when MEP~$u$ wins against stronger MEPs and on dossier~$i$ with high inertia~$d_i$.
+% The number of edits, the proportion of successful edits, and the proportion of successful conflicts correlate with the value of parameter~$s_u$ (not shown here for space constraints).
+% A MEP able to propose many edits with high acceptance rate, has their political views strongly represented in laws.
 
 % \begin{table}
 %   \centering
@@ -165,32 +172,41 @@ A MEP able to propose many edits with high acceptance rate, has their political 
 % 	\end{tabular}
 % \end{table}he bottom-three dossiers are all opinions, which are intrinsically less important than reports, as explained in Section~\ref{lmp:sec:background}.
 
-% TODO: Update this table with the correct top-5 and bottom-5.
 \begin{sidewaystable}
-  \centering
-  \caption{Inertia parameters~$d_i$ for dossiers in EP8.}
-  \label{lmp:tab:inertia_params}
-  \begin{tabular}{rllrrrr}
-    \toprule
-    $d_i$ & Type & Title & \# edits & \# conf. & avg.\ conf. size & \% accepted \\
-    \midrule
+	\centering
+	\caption{Top-10 and bottom-10 inertia parameters~$d_i$ for dossiers in EP8.}
+	\label{lmp:tab:inertia_params}
+	\begin{tabular}{rlllrrrr}
+		\toprule
+		$d_i$ & Type & Comm. & Title                                                         & \# edits & \# conf. & avg.\ cf.\ sz. & \% acc. \\
+		\midrule
 
-    2.055 & opinion & Cost-effective emission reductions             & 1756 & 385 & 4.2 & 5.1\% \\
-    1.502 & report  & Copyright in the Digital Single Market         & 2657 & 577 & 4.3 & 2.6\% \\
-    1.324 & report  & Screening of foreign investments into the EU   & 1040 & 272 & 3.1 & 2.6\% \\
-    1.308 & report  & Specific programme implementing Horizon Europe & 2886 & 654 & 2.7 & 13.1\% \\
-    1.272 & report  & Rules of participation in Horizon Europe       & 2013 & 467 & 3.0 & 9.8\% \\
+		2.01  & Rep. & INTA  & Screening of foreign direct investments                       & 1040     & 272      & 3.1            & 2.6     \\
+		1.95  & Opi. & ITRE  & Cost-effective emission reductions and low-carbon investments & 1756     & 385      & 4.2            & 5.1     \\
+		1.87  & Opi. & PETI  & Discontinuing seasonal changes of time                        & 81       & 25       & 2.9            & 6.2     \\
+		1.61  & Rep. & ENVI  & Health technology assessment and amending                     & 133      & 14       & 2.0            & 4.5     \\
+		1.51  & Rep. & ECON  & European Supervisory Authorities on financial markets         & 48       & 12       & 2.2            & 10.4    \\
+		1.44  & Rep. & ECON  & InvestEU Programme                                            & 1194     & 297      & 2.9            & 27.0    \\
+		1.39  & Rep. & ITRE  & Horizon Europe                                                & 2013     & 467      & 3.0            & 9.8     \\
+		1.38  & Rep. & INTA  & Macro-financial assistance to the Republic of Moldova         & 36       & 8        & 2.4            & 13.9    \\
+		1.28  & Rep. & AFET  & Instrument for Pre-Accession Assistance                       & 732      & 239      & 2.5            & 20.6    \\
+		1.28  & Rep. & JURI  & Copyright in the Digital Single Market                        & 2657     & 577      & 4.3            & 2.6     \\
 
-    \midrule
+		\midrule
 
-    -0.829 & report  & Complementing the Criminal Records Information System & 246 & 56 & 2.2 & 41.9\% \\
-    -0.864 & opinion & Financial information for the detection criminals     & 81  & 2  & 2.0 & 86.4\% \\
-    -0.936 & report  & Establishing a Community Code on Visas                & 259 & 61 & 2.2 & 47.5\% \\
-    -0.949 & opinion & Rules of participation in Horizon Europe              & 198 & 36 & 2.2 & 58.6\% \\
-    -1.445 & report  & Financial rules to the general budget of the EU       & 650 & 13 & 2.0 & 86.9\% \\
+		-1.65 & Opi. & REGI  & Common agricultural policy                                    & 105      & 4        & 2.0            & 82.9    \\
+		-1.65 & Opi. & DEVE  & Promotion of the use of energy from renewable sources         & 62       & 3        & 2.0            & 90.3    \\
+		-1.68 & Opi. & AGRI  & Establishing Horizon Europe                                   & 43       & 8        & 2.0            & 65.1    \\
+		-1.68 & Opi. & AGRI  & Governance of the Energy Union                                & 150      & 30       & 2.3            & 56.7    \\
+		-1.75 & Opi. & JURI  & Insurance against civil liability with motor vehicles         & 29       & 2        & 2.0            & 89.7    \\
+		-1.77 & Opi. & BUDG  & Common agricultural policy                                    & 15       & 0        & 0.0            & 100.0   \\
+		-1.78 & Opi. & AGRI  & European Regional Development and Cohesion Fund               & 129      & 13       & 2.2            & 58.1    \\
+		-1.81 & Opi. & ECON  & Prevention and prosecution of criminal offences               & 81       & 2        & 2.0            & 86.4    \\
+		-2.06 & Opi. & DEVE  & Unfair trading practices in in the food industry              & 63       & 6        & 2.0            & 84.1    \\
+		-2.28 & Opi. & TRAN  & Protection of the collective interests of consumers           & 121      & 26       & 2.1            & 66.9    \\
 
-    \bottomrule
-  \end{tabular}
+		\bottomrule
+	\end{tabular}
 \end{sidewaystable}
 
 \subsection{Interpretation of Text Features}
