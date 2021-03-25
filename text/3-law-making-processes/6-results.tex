@@ -40,8 +40,8 @@ Let~$( \mathcal{C}_n, i_n, l_n )$ be an observation.
 We compute
 \begin{equation}
 	\ell_n = \begin{cases}
-		-\log \Prob{l_n \succ_{i_n} \mathcal{C}_n - \{l_n\} } & \text{if $l_n \in \mathcal{C}_n$}, \\
-		-\log \Prob{i_n \succ \mathcal{C}_n}                  & \text{if $l_n = i_n$}.
+		-\log p(l_n \succ_{i_n} \mathcal{C}_n - \{l_n\} ) & \text{if $l_n \in \mathcal{C}_n$}, \\
+		-\log p(i_n \succ \mathcal{C}_n)                  & \text{if $l_n = i_n$}.
 	\end{cases}
 \end{equation}
 We report the average value for all~$N$ points in our test set as~$\ell = \frac{1}{N} \sum_n \ell_n$.
@@ -49,6 +49,9 @@ We report the average value for all~$N$ points in our test set as~$\ell = \frac{
 % - Explain the training and testing procedure
 % - Explain how we chose the best hyperparameters
 We randomize our dataset and we split it into 80\% for training, 10\% for validation, and 10\% for the final evaluation.
+Note that an edit can be involved in several conflicts.
+For example, in Figure~\ref{lmp:fig:amendment}, edit~$c$ is in involved in two conflicts: $\mathcal{C}_1 = \{ c, d \}$ and $\mathcal{C}_2 = \{ c, e \}$.
+Hence, we assign conflicts to each set so that an edit is present in exactly one set.
 We combine both the training and the validation sets to fit our model before evaluating it on the test set.
 We set the number of latent dimensions~$L$ and the regularizers, and we choose the best word embeddings, by held-out validation.
 % Please refer to Appendix~\ref{app:hyperparameters} for a complete list of the best hyperparameters that we used.
@@ -62,17 +65,17 @@ This results in fastText of dimension~$D = D' = 10$, with bigrams.
 %   - Accuracy?
 %   - F1-Score/AUC?
 
-We show in Figure~\ref{lmp:fig:results} the overall performance of all variations of our model (with and without explicit, latent, and text features) over EP7 and EP8, and we compare them against the naive and the random predictors, as well as against the \wow{} model.
+We show in Figure~\ref{lmp:fig:results} the overall performance of all variations of our model (with and without explicit, latent, and text features) over EP7 and EP8, and we compare them against the naive and the random predictors, as well as against the \wow{}\ model.
 All our models outperform the baselines, and \wow{XLT} outperforms all other models.
-Including explicit features improves the performance of the predictions in terms of the cross entropy by 6\% for EP7 and 5\% for EP8 over the simpler \wow{} model.
-Similarly, \wow{L} and \wow{T} further improves the performance over \wow{} by 14\% for EP7 and by 12\% for EP8.
-Hence, the text and latent features provide a greater improvement than the explicit features.
-Combining the text and latent features provides high performance, but further combining them with explicit features leads to the best performance.
-The difference between \wow{XL} and \wow{L} (0.007 for EP7 and 0.009 for EP8) is less than the difference between \wow{XT} and \wow{T} (0.024 for bot EP7 and EP8), as the latent features absorb the effects of the explicit features more than the text features do.
+Including explicit features improves the performance of the predictions in terms of the cross entropy by 7\% for EP7 and 6\% for EP8 over the simpler \wow{}\ model.
+On EP7, \wow{L}\ improves the performance by 12\% and \wow{T} by 7\%, whereas for EP8 the difference between the two models is smaller (10\% increase for \wow{L}\ and 8\% for \wow{T}).
+Hence, the text features provide a greater improvement for EP8 than for EP7, while the latent features provide a greater improvement for EP7 than for EP8.
+The difference between \wow{XL}\ and \wow{L}\ (0.010 for EP7 and 0.013 for EP8) is less than the difference between \wow{XT}\ and \wow{T}\ (0.034 for EP7 and 0.035 for EP8), as the latent features absorb the effects of the explicit features more than the text features do.
+Finally, combining the text and latent features provides high performance, but further combining them with explicit features leads to the best performance.
 
 \begin{figure}
-  \centering
-  \includegraphics[width=\linewidth*3/4]{lmp-results}
+	\centering
+	\includegraphics[width=\linewidth*3/4]{lmp-results}
 	\caption{%
 		Average cross-entropy loss of the baselines and our models.
 		Combining the explicit, latent, and text features help obtain the best performance.
@@ -80,22 +83,46 @@ The difference between \wow{XL} and \wow{L} (0.007 for EP7 and 0.009 for EP8) is
 	\label{lmp:fig:results}
 \end{figure}
 
-% Move to a new section?
-\subsection{Interpretation of Explicit Features}
+\subsection{Error Analysis by Conflict Size}
+% - Compute the performance of high- and low-controversy dossiers
+%   - Dynamics of law-making is different depending of the level of controversy
+%   - We can not use the same predictor, but the hybrid models bridges the gap
+% - Compute performance per committees
+% - Compute performance per topic
+
+We explore how the \wow{XLT}\ model performs on conflict of different sizes in the test set for EP8 (we observe a similar behaviour on EP7).
+We bin the conflict size so that there are at least 100 data points in each bin.
+The distribution of conflict size is exponentially decreasing: There are 8462 conflicts of size 1 (i.e., an edit is in conflict with the status quo only), 3063 conflicts of size 2 (i.e., two edits are in conflict, as well as with the status quo), and 140 conflicts of size 7 and more.
+We compare the average cross entropy of the \wow{XLT}\ model with that of the random predictor and that of the \wow{}\ model.
+In Figure~\ref{lmp:fig:error-analysis}, we see that while the loss generally increases with conflict size for all three models, it increases less rapidly for the \wow{XLT}\ model than for the \wow{}\ model.
+This suggests that the explicit, latent, and text features enable the model to exploit the increasing complexity of data points to make more accurate predictions.
+We also see that for conflicts of size 4 and higher, the \wow{}\ model performs worse than the random predictor, but the \wow{XLT}\ model is able to outperform it.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth*3/4]{lmp-error-analysis}
+	\caption{%
+		Average cross-entropy loss per conflict size~$\vert \mathcal{C} \vert = K$.
+		The loss of the \wow{XLT} model increases less rapidly than the loss of the baselines.
+	}
+	\label{lmp:fig:error-analysis}
+\end{figure}
+
+\subsection{Contribution of Explicit Features}
 
 % - Explore the contribution of different explicit features to the performance of the model
-To understand the contribution of the explicit features to the predictive performance, we show in Figure~\ref{lmp:fig:improvement} the decrease in cross-entropy loss of \wow{MEP} (all MEP features but the rapporteur feature), \wow{Rapp.} (rapporteur feature only), \wow{Edit}, and \wow{Dossier} over \wow.
+To understand the contribution of the explicit features to the predictive performance, we show in Figure~\ref{lmp:fig:improvement} the decrease in cross-entropy loss of \wow{MEP}\ (all MEP features but the rapporteur feature), \wow{Rapporteur}\ (rapporteur feature only), \wow{Edit}, and \wow{Dossier} over \wow{}.
 The dossier features contribute virtually nothing to the predictive performance (the difference is at the fourth decimal point).
 Similarly, for EP7, the nationality, political group, and gender features of \wow{MEP} contribute very little.
 For EP8, these features improve the performance, but not as much as the edit features.
 This suggests that these features have limited influence on the predictions.
 Nationalities and political groups have been qualitatively analyzed in the literature in the context of their influence on MEPs' voting behaviour~\cite{hix2002parliamentary,coman2009reassessing,muhlbock2012national,lefkofridi2014multilevel}.
 To the best of our knowledge, there is no analysis of their effect on the amending process.
-Interestingly, for EP7, combining all features into the \wow{X} model leads to a performance boost that is greater than the sum of each individual feature groups.
+Interestingly, for EP7, combining all features into the \wow{X}\ model leads to a performance boost that is greater than the sum of each individual feature groups.
 
 \begin{figure}
-  \centering
-  \includegraphics[width=\linewidth*3/4]{lmp-improvement}
+	\centering
+	\includegraphics[width=\linewidth*3/4]{lmp-improvement}
 	\caption{%
 		Difference in cross-entropy loss over \wow{} of different models.
 		The rapporteur feature and the edit features contribute more to the predictive performance than the MEP and dossier features.
@@ -103,25 +130,26 @@ Interestingly, for EP7, combining all features into the \wow{X} model leads to a
 	\label{lmp:fig:improvement}
 \end{figure}
 
-\paragraph{Contribution of Explicit Features}
+\subsection{Interpretation of Explicit Features}
 
+To get insights into the dynamics of the legislative process, we interpret the values of the parameters of \wow{XLT} trained on the full dataset for EP8 (combining training, validation, and test data).
 Let~$w_f \in \mathbf{R}$ be the value of the parameter associated with feature~$f$.
-The rapporteur feature~$r$ of \wow{Rapp.} provides a greater decrease in loss.
+The rapporteur feature~$r$ of \wow{Rapp.}\ provides a greater decrease in loss.
 This \textit{rapporteur advantage} complements the findings of~\citet{costello2010policy}, conducted by interviewing key informants over EP5 (1999-2004) and EP6 (2004-2009).
 They show that the rapporteur, with their particular role, has some influence on the legislative process, albeit constrained.
-We note that, according to our model, the rapporteur advantage has slightly increased in EP8 ($w_r=1.12$) compared to EP7 ($w_r=1.11$).
+We note that, according to our model, the rapporteur advantage has slightly increased in EP8 ($w_r=1.19$) compared to EP7 ($w_r=1.12$).
 
 % - Interpret the values that different parameter of the explicit features take
 These explicit features enable us to explain what contributes to the success of an edit.
 We report here (and in subsequent sections) the results for EP8 only.
-All other things being equal, a female ($w_{\text{fem}}=0.02 > -0.04 = w_{\text{mal}}$) MEP from Luxembourg and whose party belongs to the Alliance of Liberals and Democrats (center) has the highest chance to see her edit accepted.
-This edit has even higher chances if it inserts ($w_{\text{ins}}=-0.02 > w_{\text{del}}=-0.11 > w_{\text{rep}}=-0.23$) a short portion of text (the feature associated with both insertion and deletion length is negative) in a part of the law that is not its body or its preamble ($w_{\text{art}}$ and~$w_{\text{rec}}$ have the lowest value among the seven article types).
-Adding a justification also increases the probability of an edit being accepted ($w_{\text{jus}}=0.09$), as well as edits from the opinion committee (referred to as the "outsider committee" feature in Table~\ref{lmp:tab:features},~$w_{\text{out}} =  0.07$).
+All other things being equal, a female ($w_{\text{fem}}=-0.02 > -0.04 = w_{\text{mal}}$) MEP from Latvia and whose party belongs to the group of the European People's Party (center-right) has the highest chance to see her edit accepted.
+This edit has even higher chances if it inserts ($w_{\text{ins}}=-0.03 > w_{\text{del}}=-0.13 > w_{\text{rep}}=-0.22$) a short portion of text (the feature associated with both insertion and deletion length is negative) in a part of the law that is not its body or its preamble ($w_{\text{art}}$, $w_{\text{rec}}$  and~$w_{\text{para}}$ have the lowest value among the seven article types).
+Adding a justification also increases the probability of an edit being accepted ($w_{\text{jus}}=0.08$), as well as edits from the opinion committee (referred to as the ``outsider committee'' feature in Table~\ref{lmp:tab:features},~$w_{\text{out}} =  0.16$).
 
-For the dossier features, our model learns that it is harder to make edits on reports, as compared to opinions (($w_{\text{rep}}=0.41 > -0.40 = w_{\text{opi}}$)).
+For the dossier features, our model learns that it is harder to make edits on reports, as compared to opinions ($w_{\text{rep}}=0.33 > -0.26 = w_{\text{opi}}$).
 As explained in Section~\ref{lmp:sec:dataset}, reports are voted by the whole Parliament.
 Therefore, they have a greater influence on the final law, and we expect that MEPs make it more difficult for competing edits to be accepted in reports.
-Surprisingly, our model also learns that it is harder to make edits for decisions (the legal acts that are binding for one member state only), as compared to regulations and directives ($w_{\text{dec}}=0.14 > 0.10 = w_{\text{reg}} = w_{\text{dir}}$).
+Finally, our model also learns that it is harder to make edits for decisions and directives, as compared to regulations ($w_{\text{dec}}=0.25 > w_{\text{dir}} = 0.12 > w_{\text{reg}} =0.10$).
 
 \paragraph{Controversy of Dossiers}
 
@@ -213,31 +241,31 @@ The reporting committee publicized that ``MEPs have rarely or never been subject
 \label{lmp:sec:intertext}
 
 In Figure~\ref{lmp:fig:results}, we observe that the text features contribute significantly to improving the performance.
-We use the learned parameter vectors~$\boldsymbol{w}_T$ and~$\boldsymbol{w}_{T'}$ of \wow{XLT} to identify words and bigrams that have the most predictive power.
+We use the learned parameter vectors~$\boldsymbol{w}_T$ and~$\boldsymbol{w}_{T'}$ of \wow{XLT}\ to identify words and bigrams that have the most predictive power.
 First, we rank the words and bigrams of the edit text, according to the dot product of their embeddings with~$\boldsymbol{w}_T$.
 The top-$k$ terms (having a positive dot product) contribute the most towards acceptance of the edit, whereas the bottom-$k$ terms (having a negative dot product) contribute most towards rejection of the edit.
 The opposite holds for the terms of the title and their dot product with~$\boldsymbol{w}_{T'}$.
 
 We look at the top~$50$ terms for each feature and prediction outcome and find some interesting patterns among these terms, although not all of them are easy to interpret.
 Note that we have more than~\numprint{10000} unique terms for the edit text and more than~\numprint{1000} unique terms for the title, hence we consider only the most predictive terms near the ends of the ranking.
-% A list of the top-50 terms for each feature and prediction outcome is reported in Appendix~\ref{app:accept}.
+A list of the top-50 terms for each feature and prediction outcome is reported in Appendix~\ref{app:accept}.
 
 %We first examine the words and bigrams in the inserted and deleted text are predictive of acceptance.
 %We see the word \textit{consumer} here, which commonly occurs in laws on consumer rights.
 %This suggests that deleting provisions of the laws that give rights or benefits to consumers might be getting accepted often (possibly under the influence of lobbies), and indeed we see many such examples in the dataset.
 One of the bigrams that, when deleted, is predictive of acceptance is \textit{any other}, which is commonly used to widen the scope of the law (as in ``contractual or any other duty'').
-The word \textit{should}, which is used to add recommendations, is predictive of acceptance when inserted.
-Adding \textit{must} and \textit{binding}, which are used for obligations, are predictive of rejection.
+Interestingly, the bigrams \textit{human rights} and \textit{data protection} are also predictive of acceptance when deleted.
+The word \textit{should}, which is used to add recommendations, is predictive of acceptance when inserted, while adding \textit{must}, which is used for obligations, is predictive of rejection.
 We see that \textit{best} is predictive of acceptance, which is commonly used to make a requirement stronger (as in ``best available scientific evidence'', ``best possible way'').
 Adding \textit{positive} and \textit{positive impact} predicts acceptance, whereas adding \textit{negative} predicts rejection.
 Adding the word \textit{inserted}, which commonly refers to inserting new articles in existing laws, is predictive of acceptance, whereas \textit{deleted} is predictive of rejection.
 
-Considering the words in the context, we see that \textit{firearms}, \textit{resettlement} and \textit{privacy} are predictive of rejection.
+Considering the words in the context, we see that \textit{firearms}, \textit{resettlement}, \textit{terrorist} and \textit{fingerprints} are predictive of rejection.
 This could be because the laws related to these topics are controversial, hence many edits are rejected due to conflicts.
-For the words in the title, we see that \textit{customs}, \textit{community}, \textit{medicines}, and \textit{general budget} are predictive of acceptance, whereas \textit{market}, \textit{framework}, \textit{structural reform}, \textit{emission},  and \textit{greenhouse gas} are predictive of rejection.
+For the words in the title, we see that \textit{customs}, \textit{community}, \textit{financial}, \textit{fisheries}, and \textit{general budget} are predictive of acceptance, whereas \textit{market}, \textit{framework}, \textit{structural reform}, \textit{emission},  and \textit{greenhouse gas} are predictive of rejection.
 This suggests the relative ease or difficulty of editing laws related to these topics, and it correlates well with the values of the difficulty parameters~$d_i$:
-The top-10 dossiers with the highest difficulty parameters contain high-controversy dossiers about the screening of foreign investments, the regulation of the financial market, vast public investment programs (InvestEU), and  carbon-emission reduction and low-carbon investments,
-The bottom-10 dossiers with the lowest difficulty parameters contain low-controversy dossiers about frequency bands, the attribution of the general budget to border protection and cohesion within the EU, accessibility requirements, and the information systems of criminal records.
+The top-50 dossiers with the highest difficulty parameters contain high-controversy dossiers about establishing frameworks for the screening of foreign investments and vast public investment programs (InvestEU and Horizon Europe), as well as regulation of the financial market, copyright in the digital market, and carbon-emission reduction.
+The bottom-50 dossiers with the lowest difficulty parameters contain low-controversy dossiers about cohesion within the EU, financial rules, fisheries, and the community code on visas.
 
 \subsection{Interpretation of Latent Features}
 % - Interpretation of the latent features
@@ -245,53 +273,31 @@ The bottom-10 dossiers with the lowest difficulty parameters contain low-controv
 %   - Explains why they improve the performance, by capturing different ideologies rather than explicit party assignment
 
 The latent features improve the predictions overall and help capture the complex dynamics of the legislative process.
-The best number of latent dimensions is~$L = 10$  for the \wow{XLT} and the \wow{LT} models, and it is~$L = 20$ for \wow{L} and \wow{XL}.
-In order to interpret the latent features, we gather the latent vectors~$\bm{y}_i$ learned by \wow{XLT} into a matrix~$Y = [ \bm{y}_i ]$.
+The best number of latent dimensions is~$L = 20$  for the models including latent features.
+In order to interpret the latent features, we gather the latent vectors~$\bm{y}_i$ learned by \wow{XLT}\ into a matrix~$Y = [ \bm{y}_i ]$.
 We apply principal component analysis and keep the top-10 and bottom-10 dossiers from each of the first two principal components in EP8.
 We use t-SNE~\cite{maaten2008visualizing} to represent these forty dossiers in a two-dimensional space, and we show the projection in Figure~\ref{lmp:fig:tsne}.
 
 We distinguish four clusters.
-The cluster at the top contains dossiers about investment and development programmes, finance and digitalization, and sustainable development.
-We interpret this cluster as \textit{investment and development}, and we highlight with blue dots the corresponding dossiers.
-The cluster at the right contains dossiers about retirement, refugees, protection of consumer and workers, and limitation of financial risk.
-We interpret this cluster as \textit{social security} (green triangles).
-The cluster at the bottom contains dossiers about support of the defense industry and the establishment of defense funds.
-It also contains dossiers about protection of workers against pollutants, international and financial protection, and rules of accession to the EU.
+The cluster at the top-left contains dossiers about fuel quality, renewable energy, trade of animals, and sustainable investments.
+It also contains dossiers about electronic communications, the processing of personal data, and sharing public information.
+We interpret this cluster as \textit{environment and communications}, and we highlight with green triangles the corresponding dossiers.
+The cluster at the top-center contains dossiers about the establishment of defense funds, the prosecution of criminal offenses, and the identification of criminals between member states.
+It also contains dossiers about the protection of workers, businesses, refugees, internal markets, and cultural goods.
 We interpret this cluster as \textit{defense and protection} (red crosses).
-Finally, the cluster at the left contains dossiers about economic development, innovation, and businesses, as well as dossiers about unfair trading, trade secrets, and the screening of foreign investments.
-We interpret this cluster as \textit{economic competitiveness} (blue dots).
+The cluster at the top-right contains dossiers about vast investment and development programmes, finance, and the development of internal markets.
+We interpret this cluster as \textit{investment and development} (blue dots).
+Finally, the cluster at the bottom-left contains dossiers about economic competitiveness and innovation, as well as frameworks for business development and the funding of start-up companies.
+We interpret this cluster as \textit{business and innovation} (orange squares).
 
 \begin{figure}
-  \centering
-  \includegraphics[width=\linewidth*3/4]{lmp-tsne}
-	\caption{Visualization with t-SNE of the top-10 and bottom-10 dossiers on the first two principal components in EP8.}
-	\label{lmp:fig:tsne}
-\end{figure}
-
-\subsection{Error Analysis by Conflict Size}
-% - Compute the performance of high- and low-controversy dossiers
-%   - Dynamics of law-making is different depending of the level of controversy
-%   - We can not use the same predictor, but the hybrid models bridges the gap
-% - Compute performance per committees
-% - Compute performance per topic
-
-We explore how the \wow{XLT} model performs on conflict of different sizes in the test set for EP8 (we observe a similar behaviour on EP7).
-We bin the conflict size so that there are at least 100 data points in each bin.
-The distribution of conflict size is exponentially decreasing:
-There are 8423 conflicts of size 1 (\textit{i.e.}, an edit is in conflict with the status quo only), 3089 conflicts of size 2 (\textit{i.e.}, two edits are in conflict, as well as with the status quo),  and 107 conflicts of size 8 and more.
-We compare the average cross entropy of the \wow{XLT} model with that of the random predictor and that of the \wow{} model.
-In Figure~\ref{lmp:fig:error-analysis}, the loss of \wow{XLT} increases less rapidly with conflicts of larger sizes than the two baselines.
-This suggests that the explicit, latent, and text features enable the model to exploit the increasing complexity of data points to make more accurate predictions.
-The drop in entropy for conflicts of size 8 and more may be due to the low number of data points in this bin.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\linewidth*3/4]{lmp-error-analysis}
-	\caption{%
-		Average cross-entropy loss per conflict size~$\vert \mathcal{C} \vert = K$.
-		The loss of the \wow{XLT} model increases less rapidly than the loss of the baselines.
+	\centering
+	\includegraphics[width=\linewidth*3/4]{lmp-tsne}
+	\caption{Visualization with t-SNE of the top-10 and bottom-10 dossiers on the first two principal components in EP8.
+		There are four clusters:
+		Environment and Communications (E\&C), Defense and Protection (D\&P), Investment and Development (I\&D), and Business and Innovation (B\&I).
 	}
-	\label{lmp:fig:error-analysis}
+	\label{lmp:fig:tsne}
 \end{figure}
 
 \subsection{Solving the Cold-Start Problem}
@@ -322,7 +328,7 @@ In the current setting, we make predictions for all future dossiers.
 We keep further investigations of this aspect for future work.
 
 \begin{table}
-  \centering
+	\centering
 	\caption{Average cross entropy of the baselines and our model on predicting new, unseen dossiers.}
 	\label{lmp:tab:newdossier}
 	\begin{tabular}{llr}
@@ -331,7 +337,7 @@ We keep further investigations of this aspect for future work.
 		\midrule
 		Baseline & Naive          & 0.947               \\
 		         & Random         & \textbf{0.800}      \\
-		         & \wow{}       & 0.873               \\
+		         & \wow{}         & 0.873               \\
 		\midrule
 		Ours     & \wow{Explicit} & 0.784               \\
 		         & \wow{Text}     & 0.839               \\
