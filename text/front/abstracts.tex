@@ -5,28 +5,28 @@
 \markboth{Abstract}{Abstract}
 \addcontentsline{toc}{chapter}{Abstract / Résumé} % adds an entry to the table of contents
 
-Global problems stemming from the decisions and behaviors of people, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions, can seem intractable and unpredictable.
-Fortunately, people are more predictable than we think, and with large enough datasets and machine-learning algorithms, we can design accurate models of human behavior in a variety of settings.
-In this thesis, to gain insight into social processes, we develop probabilistic models of choice.
-We focus on designing models that are highly interpretable by drawing from the econometrics literature on discrete-choice models that we combine with latent-factor models, Bayesian statistics, and generalized linear models.
+Poor decisions and selfish behaviors give rise to seemingly intractable and unpredictable global problems, such as the lack of transparency in democratic processes, the spread of conspiracy theories, and the rise in greenhouse gas emissions.
+People, however, are more predictable than we think, and with machine-learning algorithms and large enough datasets, we can design accurate models of human behavior in a variety of settings.
+In this thesis, to gain insight into social processes, we develop highly-interpretable probabilistic choice-models.
+We draw from the econometrics literature on discrete-choice models, which we combine with matrix factorization methods, Bayesian statistics, and generalized linear models.
 These predictive models enable interpretability through their learned parameters and latent factors.
 
-First, we study the social dynamics behind group collaborations for the collective creation of content, such as in Wikipedia, the Linux kernel, and laws.
-By combining the Bradley-Terry and Rasch models with matrix factorization and natural language processing, we develop a model of edit acceptance in peer-production systems and in the European Union law-making process.
-This enables us to discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with a high probability of edit acceptance.
-The latent representations capture non-linear interactions between components and users and cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, business and environment in European laws).
+First, we study the social dynamics behind group collaborations for the collective creation of content, such as in Wikipedia, the Linux kernel, and the European Union law-making process.
+By combining the Bradley-Terry and Rasch models with matrix factorization and natural language processing, we develop a model of edit acceptance in peer-production systems.
+We discover controversial components (\textit{e.g.},~Wikipedia articles and European laws) and influential users (\textit{e.g.},~Wikipedia editors and parliamentarians), as well as features that correlate with a high probability of edit acceptance.
+The latent representations capture non-linear interactions between components and users, and they cluster well into different topics (\textit{e.g.}, historical figures and TV characters in Wikipedia, business and environment in European laws).
 
-Second, we develop an algorithm for predicting the popular vote of elections and referenda by combining matrix factorization and generalized linear models.
+Second, we develop an algorithm for predicting the outcome of elections and of referenda by combining matrix factorization and generalized linear models.
 Our algorithm learns representations of votes and regions, which capture ideological and cultural voting patterns (\textit{e.g.}, liberal/conservative, rural/urban), and it predicts the vote results in unobserved regions from partial observations.
 We test our model on voting data in Germany, Switzerland, and the US, and we deploy it on a Web platform to predict Swiss referendum votes in real-time.
-On average, our predictions reach~1\% of error by observing~5\% of the regions.
+On average, our predictions reach a mean absolute error of 1\% after observing only~5\% of the regions.
 
 Third, we study how people perceive the carbon footprint of their day-to-day actions.
 We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between flying across continents and using household appliances), and we develop a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
 The model learns the users’ perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to collect data efficiently.
 Our experiments show that users overestimate the emissions of low-footprint actions and underestimate those of high-footprint actions.
 
-Finally, we develop a probabilistic model of pairwise-comparison outcomes that capture a wide range of time dynamics.
+Finally, we design a probabilistic model of pairwise-comparison outcomes that capture a wide range of time dynamics.
 We achieve this by replacing the static parameters of a class of popular pairwise-comparison models with continuous-time Gaussian processes.
 We also develop an efficient inference algorithm that computes, with only a few linear-time iterations over the data, an approximate Bayesian posterior distribution.
 
@@ -44,7 +44,7 @@ discrete-choice models, matrix factorization, Bayesian statistics, generalized l
 	Mais heureusement, les humains sont plus prévisibles que l'on ne pense.
 	Grâce à des jeux de données massifs et de puissants algorithmes d'apprentissage automatique, il devient possible de modéliser une multitude de comportements sociaux.
 	Dans cette thèse, nous développons des modèles probabilistes de choix individuels afin d'analyser ces comportements.
-	Nous puisons dans la littérature des modèles de choix discrets, forts utilisés en économétrie, afin de rendre nos modèles interprétables, et nous les combinons avec des méthodes computationnelles, telles que les modèle à facteurs latents, les statistiques bayésiennes et les modèles linéaires généralisés, afin de les rendre plus riches.
+	Nous puisons dans la littérature des modèles de choix discrets, forts utilisés en économétrie, afin de rendre nos modèles interprétables, et nous les combinons avec des méthodes computationnelles, telles que la factorization matricielle, les statistiques bayésiennes et les modèles linéaires généralisés, afin de les rendre plus riches.
 
 	Premièrement, nous étudions les dynamiques de collaboration des systèmes collaboratifs de création de contenu, tels que Wikipédia, le système d'opération Linux, et les lois du Parlement européen.
 	Nous combinons les modèles de Bradley-Terry et de Rasch en un nouveau modèle qui nous permet de prédire si les modifications de contenu sont acceptées ou non (par la communauté Wikipédia ou par les autres parlementaires, par exemple).
