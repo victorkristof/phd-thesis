@@ -7,8 +7,8 @@ Our results are qualitatively robust to a large range of values for $\sigma_p^{2
 In order to compare the perceived carbon footprint $\exp \overline{\vec{w}}$ with its true value $\exp \vec{v}$, we set the prior mean to $\vec{\mu} = c \vec{1}$, where $ c = \frac{1}{M}\sum_{i=1}^M v_i$ is the mean of the (log-)true values.
 This guarantees that the perceived carbon footprint estimated from the model parameters have the same scale as the true values.
 
-We compile a set $\mathcal{A}$ of $M=18$ individual actions about transportation, food, and household (the full list of actions is provided in Appendix~\ref{clm:app:actions}).
-We deploy an online quiz\footnote{Accessible at \url{http://www.climpact.ch}} to collect pairwise comparisons of actions from real users on a university campus.
+We compile a set $\mathcal{A}$ of $M=18$ individual actions about transportation, food, and household (the full list of actions is provided in Appendix~\ref{app:clm:actions}).
+We deploy an online quiz\footnote{Accessible at \url{http://www.climpact.ch}} to collect pairwise comparisons of actions from real users on a university campus (see Appendix~\ref{app:clm:climpact})
 We collect $N=2183$ triplets from 176 users, mostly students between 16 and 25 years old.
 We show in Figure~\ref{clm:fig:perception} the true carbon footprint, together with the global perception of the population, \textit{i.e.}, the values $\exp \overline{w}_i$ for each action $i \in \mathcal{A}$.
 
@@ -16,7 +16,7 @@ We show in Figure~\ref{clm:fig:perception} the true carbon footprint, together w
 	\centering
 	\includegraphics[width=\textwidth]{clm-perception}
 	\caption{Global perceived carbon footprint of 18 actions in kg\COtwo-equivalent and their true values (log scale).
-		The list of actions is provided in Appendix~\ref{clm:app:actions}.}%
+		The list of actions is provided in Appendix~\ref{app:clm:actions}.}%
 	\label{clm:fig:perception}
 \end{figure}
 

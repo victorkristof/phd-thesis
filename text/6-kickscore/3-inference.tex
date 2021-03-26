@@ -87,7 +87,7 @@ Note that, as a by-product of the computations performed by the algorithm, we ca
 \end{algorithm}
 
 \paragraph{Running Time}
-In Appendix~\ref{kks:app:inference}, we show that \textsc{Derivatives} and \textsc{UpdateParams} run in constant time.
+In Section~\ref{kks:sec:inf-pseudo-obs}, we show that \textsc{Derivatives} and \textsc{UpdateParams} run in constant time.
 In Section~\ref{kks:sec:inf-posterior}, we show that \textsc{UpdatePosterior} runs in time $O(N_m)$.
 Therefore, if we assume that the vectors $\{ \bm{x}_n \}$ are sparse, the total running time per iteration of Algorithm~\ref{alg:inference} is $O(N)$.
 Furthermore, each of the two outer \emph{for} loops (lines~\ref{li:begin-param} and \ref{li:begin-post}) can be parallelized easily, leading in most cases to a linear acceleration with the number of available processors.
@@ -101,7 +101,68 @@ Furthermore, each of the two outer \emph{for} loops (lines~\ref{li:begin-param} 
 The exact computations performed during the first step of the inference algorithm---updating the pseudo-observations---depend on the specific variational method used.
 We consider two: expectation propagation~\citep{minka2001family}, and reverse-KL variational inference~\citep{blei2017variational}.
 The ability of Algorithm~\ref{alg:inference} to seamlessly adapt to either of the two methods is valuable, as it enables practitioners to use the most advantageous method for a given likelihood function.
-Detailed formulae for \textsc{Derivatives} and \textsc{UpdateParams} can be found in Appendix~\ref{kks:app:inference}.
+
+We give here the detailed formulae for \textsc{Derivatives} and \textsc{UpdateParams}.
+For conciseness, we drop the index $n$ and consider a single observation $(\bm{x}, t^*, y) \in \mathcal{D}$.
+Let $\bm{s} \define \bm{s}(t^*)$ be the vector containing the score of all features at the time of the observation.
+Instead of optimizing the ``standard'' parameters $\tilde{\mu}_m, \tilde{\sigma}^2_m$, we will optimize the corresponding \emph{natural} parameters $\tilde{\alpha}_m, \tilde{\beta}_m$.
+They are related through the following equations.
+\begin{align*}
+	\tilde{\alpha}_m = \tilde{\mu}_m / \tilde{\sigma}^2_m, \qquad
+	\tilde{\beta}_m = 1 / \tilde{\sigma}^2_m
+\end{align*}
+
+\paragraph{Expectation Propagation}
+
+Let $q_{-}(\bm{s}) = \DNorm{\bm{\mu}, \bm{\Sigma}}$ be the cavity distribution.
+The log-partition function can be rewritten as a one-dimensional integral:
+\begin{align*}
+	\log Z
+	 & \define \log \Exp[q_{-}]{ p(y \mid \bm{x}\Tr \bm{s}) }
+	= \log \int_{\bm{s}} p(y \mid \bm{x}\Tr \bm{s}) \DNorm{\bm{s} \mid \bm{\mu}, \bm{\Sigma}} d\bm{s} \\
+	 & = \log \int_{u} p(y \mid u) \DNorm{u \mid \mu, \sigma^2} du,
+\end{align*}
+where $\mu = \bm{x}\Tr \bm{\mu}$ and $\sigma^2 = \bm{x}\Tr \bm{\Sigma} \bm{x}$.
+The function \textsc{Derivatives} computes the first and second derivatives with respect to this mean, i.e.,
+\begin{align*}
+	\delta_1 = \frac{\partial}{\partial \mu} \log Z, \qquad
+	\delta_2 = \frac{\partial^2}{\partial \mu^2} \log Z.
+\end{align*}
+Given these quantities, the function \textsc{UpdateParams} updates the pseudo-observations' parameters for each $m \in \mathcal{X}$:
+\begin{align*}
+	\tilde{\alpha}_m & \gets (1 - \lambda) \tilde{\alpha}_m
+	+ \lambda \left[ \frac{x_m \delta_1 - \mu_m x_m^2 \delta_2}{1 + \Sigma_{mm} x_m^2 \delta_2} \right], \\
+	\tilde{\beta}_m  & \gets (1 - \lambda) \tilde{\beta}_m
+	+ \lambda \left[ \frac{-x_m^2 \delta_2}{1 + \Sigma_{mm} x_m^2 \delta_2} \right],
+\end{align*}
+where $\lambda \in (0, 1]$ is a learning rate.
+A formal derivation of these update equations can be found in \citet{seeger2007bayesian, rasmussen2006gaussian, minka2001family}.
+
+\paragraph{Reverse KL Divergence}
+
+Let $q(\bm{s}) = \DNorm{\bm{\mu}, \bm{\Sigma}}$ be the current posterior.
+Similarly to the log-partition function, the expected log-likelihood can be rewritten as a one-dimensional integral:
+\begin{align*}
+	L
+	 & \define \Exp[q]{ \log p(y \mid \bm{x}\Tr \bm{s}) }
+	= \int_{\bm{s}} \log p(y \mid \bm{x}\Tr \bm{s}) \DNorm{\bm{s} \mid \bm{\mu}, \bm{\Sigma}} d\bm{s} \\
+	 & = \int_{u} \log p(y \mid u) \DNorm{u \mid \mu, \sigma^2} du,
+\end{align*}
+where $\mu = \bm{x}\Tr \bm{\mu}$ and $\sigma^2 = \bm{x}\Tr \bm{\Sigma} \bm{x}$.
+The function \textsc{Derivatives} computes the first and second derivatives with respect to this mean, i.e.,
+\begin{align*}
+	\delta_1 = \frac{\partial}{\partial \mu} L, \qquad
+	\delta_2 = \frac{\partial^2}{\partial \mu^2} L.
+\end{align*}
+Given these quantities, the function \textsc{UpdateParams} updates the pseudo-observations' parameters for each $m \in \mathcal{X}$:
+\begin{align*}
+	\tilde{\alpha}_m & \gets (1 - \lambda) \tilde{\alpha}_m
+	+ \lambda \left[ x_m \delta_1 - \mu_m x_m^2 \delta_2 \right], \\
+	\tilde{\beta}_m  & \gets (1 - \lambda) \tilde{\beta}_m
+	+ \lambda \left[ -x_m^2 \delta_2 \right],
+\end{align*}
+where $\lambda \in (0, 1]$ is the learning rate.
+A formal derivation of these update equations can be found in \citet{khan2017conjugate}.
 
 \subsubsection{Expectation Propagation}
 

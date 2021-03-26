@@ -37,7 +37,7 @@ As data about population counts were not available in this case, we use a likeli
 
 \subsection{Evaluation}
 
-For each dataset, we find the best hyperparameters using the training set only, as explained in details in Appendix~\ref{pdk:app:experimental_setting}.
+For each dataset, we find the best hyperparameters using the training set only. %, as explained in details in Appendix~\ref{pdk:app:experimental_setting}.
 To evaluate the performance of our algorithm, we compute the mean absolute error (MAE) and the accuracy on the national results.
 
 We first describe the error metrics used for the binary outcome case then extend them for multiple outcomes, \textit{e.g.}, when different parties can be voted.
@@ -85,7 +85,8 @@ We collect a dataset of $V=330$ referenda in $R=2196$ municipalities (the region
 We start with a training set of $V=300$ votes and report the average performance on the next 26 votes with $100$ reveal orders each.
 As several votes can occur on the same day, we make sure that only past votes are used in the training set.
 In Section~\ref{pdk:sec:depsys}, we analyze in depth the last four votes (two votes on two dates) for which we have real, sequential data.
-The ranges of hyperparameters are given in Appendix~\ref{app:ch}, and the best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 25$.
+The best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 25$.
+% The ranges of hyperparameters are given in Appendix~\ref{app:ch}, and the best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 25$.
 
 In Figure~\ref{pdk:fig:ch_results}, we show the MAE and the accuracy of our algorithm to predict national results from partial municipal results.
 The two likelihoods used for the GLM provide equal performance, and we report only the performance of the Bernoulli likelihood for clarity.
@@ -153,7 +154,8 @@ In all these elections, the results of other parties, \textit{e.g.}, the Green p
 This dataset contains the results of $V = 11$ votes in $R = 51$ regions (50 states and the District of Columbia) between 1976 and 2016.
 As the number of votes is small, we train our algorithm on all votes up to 2012 ($V = 10$) to set the sub-matrix $\vY_V$, and we predict the state-level results and the national results of the 2016 election.
 We report the averaged performance on $10000$ random reveal orders.
-The ranges of hyperparameters are given in Appendix~\ref{app:us}, and the best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 7$.
+The best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 7$.
+% The ranges of hyperparameters are given in Appendix~\ref{app:us}, and the best combination for the Bernoulli likelihood is $\lambda = 0.01 $ and $D = 7$.
 
 In Figure~\ref{pdk:fig:us_results}, we show the MAE and the accuracy of our algorithm in predicting this election.
 The two likelihoods used for the GLM provide equal performance, and we report only the performance of the Bernoulli likelihood for clarity.

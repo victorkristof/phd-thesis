@@ -65,7 +65,7 @@ We report their average values on the test set.
 \paragraph{Methodology}
 Unless specified otherwise, we partition every dataset into a training set containing the first 70\% of the observations and a test set containing the remaining 30\%, in chronological order.
 The various hyperparameters (such as covariance functions and their parameters, learning rates, etc.) are selected based on the training data only, by maximizing the log-marginal likelihood of Bayesian models and by minimizing the average leave-one-out log loss otherwise.
-The final hyperparameter configuration of all models can be found in Appendix~\ref{app:eval}.
+% The final hyperparameter configuration of all models can be found in Appendix~\ref{app:eval}.
 In order to predict the outcome of an observation at time $t^*$, we use \emph{all} the data (in both training and test sets) up to the day preceding $t^*$.
 This closely mimics the setting where a predictor must guess the outcome of an event in the near future based on all past data.
 Unless specified otherwise, we use Algorithm~\ref{alg:inference} with the EP variational objective, and we declare convergence when the improvement in log-marginal likelihood falls below $10^{-3}$.
@@ -133,8 +133,52 @@ Figure~\ref{kks:fig:scores} displays the temporal evolution of the score of sele
 In the basketball case, we can recognize the dominance of the Boston Celtics in the early 1960's and the Chicago Bulls' strong 1995-96 season.
 In the tennis case, we can see the progression of a new generation of tennis champions at the turn of the 21\textsuperscript{st} century.
 Plotting scores over time provides an effective way to compactly represent the history of a given sport.
-Analyzing the optimal hyperparameters (see Appendix~\ref{app:eval}) is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
+Analyzing the optimal hyperparameters is also insightful: the characteristic timescale of the dynamic covariance component is \num{1.75} and \num{7.47} years for basketball and tennis, respectively.
 The score of basketball teams appears to be much more volatile.
+
+% A list of all the hyperparameters is provided in Table~\ref{kks:tab:hpdefs}, and a formal definition of the covariance functions we use is given in Table~\ref{kks:tab:covfuncs}.
+
+% \begin{table}
+% 	\centering
+% 	\caption{
+% 		Hyperparameters and their description.}
+% 	\label{kks:tab:hpdefs}
+% 	\renewcommand{\arraystretch}{1.2}
+% 	\begin{tabular}{c l}
+% 		\toprule
+% 		Symbol                  & Description                             \\
+% 		\midrule
+% 		$\lambda$               & Learning rate                           \\
+% 		$\alpha$                & Draw margin                             \\
+% 		$\sigma^2_n$            & Observation noise (Gaussian likelihood) \\
+% 		$\sigma_{\text{cst}}^2$ & Variance (constant covariance)          \\
+% 		$\sigma_{\text{lin}}^2$ & Variance (linear covariance)            \\
+% 		$\sigma_{\text{W}}^2$   & Variance (Wiener covariance)            \\
+% 		$\nu$                   & Smoothness (Matérn covariance)          \\
+% 		$\sigma_{\text{dyn}}^2$ & Variance (Matérn covariance)            \\
+% 		$\ell$                  & Timescale, in years (Matérn covariance) \\
+% 		\bottomrule
+% 	\end{tabular}
+% \end{table}
+
+% \begin{figure}
+% 	\centering
+% 	\caption{
+% 		Covariance functions.}
+% 	\label{kks:tab:covfuncs}
+% 	\renewcommand{\arraystretch}{1.2}
+% 	\begin{tabular}{l l}
+% 		\toprule
+% 		Name                & $k(t, t')$                                                                                     \\
+% 		\midrule
+% 		Constant            & $\sigma_{\text{cst}}^2$                                                                        \\
+% 		Linear              & $\sigma_{\text{lin}}^2 t t'$                                                                   \\
+% 		Wiener              & $\sigma_{\text{W}}^2 \min \{ t, t' \}$                                                         \\
+% 		Matérn, $\nu = 1/2$ & $\sigma_{\text{dyn}}^2 \exp (-\Abs{t - t'} / \ell)$                                            \\
+% 		Matérn, $\nu = 3/2$ & $\sigma_{\text{dyn}}^2 (1 +\sqrt{3} \Abs{t - t'} / \ell) \exp (-\sqrt{3} \Abs{t - t'} / \ell)$ \\
+% 		\bottomrule
+% 	\end{tabular}
+% \end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -215,7 +259,7 @@ We compare this model to the Blade-Chest model of~\citet{chen2016modeling} on th
 The Blade-Chest model is specifically designed to handle intransitivities in comparison data.
 We also include two baselines, a simple Bradley--Terry model without the interaction features (\emph{logit}) and a non-parametric estimator (\emph{naive}) that estimates probabilities based on match outcomes between each pair---without attempting to capture transitive effects.
 As shown in Figure~\ref{kks:fig:starcraft}, our model outperforms all other approaches, including the Blade-Chest model.
-More details on this experiment can be found in Appendix~\ref{app:intrans}.
+% More details on this experiment can be found in Appendix~\ref{app:intrans}.
 %For these two datasets, it is important to capture both \emph{transitive} and \emph{intransitive}.
 
 \begin{figure}
