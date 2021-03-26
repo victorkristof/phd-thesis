@@ -5,6 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% HEAD: Book-Begin
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
 \frontmatter
 \include{front/titlepage}
@@ -15,15 +16,15 @@
 \tableofcontents
 \include{front/notation}
 
-% space before each new paragraph according to the template guidelines.
+% Space before each new paragraph according to the template guidelines.
 %(needs to be after titlepage and frontmatter to keep the table of contents lists short)
 \setlength{\parskip}{1em}
 \setlength{\parindent}{0pt}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% MAIN: The chapters of the thesis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \mainmatter
 \subimport{1-intro/}{main}
 \subimport{2-peer-production-systems/}{main}
@@ -31,12 +32,12 @@
 \subimport{4-predikon/}{main}
 \subimport{5-climpact/}{main}
 \subimport{6-kickscore/}{main}
-% \subimport{06-conclusion/}{main}
-
+\subimport{7-conclusion/}{main}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% TAIL: Bibliography, Appendix, CV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \appendix
 \subimport{8-appendix}{main}
 
