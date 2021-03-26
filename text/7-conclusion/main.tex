@@ -2,49 +2,50 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-In this thesis, we answered specific questions about social processes from a machine-learning and data-mining viewpoint.
-We built upon the literature on discrete-choice models, which we combined latent-factor models, Bayesian statistics, and generalized linear models, to propose predictive models that enable interpretation through the learned parameters.
-We hope to have demonstrated that discrete-choice analysis offers a principled and powerful approach to modeling social processes, as making choices is inherent in human behaviour.
+In this thesis, we have answered specific questions about social processes from a machine-learning and data-mining viewpoint.
+In order to propose predictive models that enable interpretation through the learned parameters, we have built upon the literature on discrete-choice models, which we have combined with latent-factor models, Bayesian statistics, and generalized linear models.
+We have demonstrated that discrete-choice analysis offers a principled and powerful approach to modeling social processes, as making choices is inherent in human behaviour.
 
-In Chapter~\ref{ch:peerproduction}, we studied the social dynamics behind group collaborations for collective content creation, such as in Wikipedia and the Linux kernel.
-We proposed a new discrete choice model inspired from the Bradley-Terry and Rasch models, which incorporates ideas from collaborative filtering.
-The model enabled us to identify controversial Wikipedia articles and core Linux components that are crucial to the system.
-Including latent factors improved the predictive performance and helped us understand how users edit some Wikipedia articles:
+In Chapter~\ref{ch:peerproduction}, we have studied the social dynamics behind group collaborations for the collective creation of content, such as in Wikipedia and the Linux kernel.
+We have proposed a new discrete-choice model inspired from the Bradley-Terry and Rasch models, which incorporates ideas from collaborative filtering.
+The model enables us to identify controversial Wikipedia articles and core Linux components that are crucial to the system.
+We have improved the predictive performance by including latent factors, which in turn we have helped us understand how users edit some Wikipedia articles:
 They are either "experts" in popular culture or in high culture, but not both.
 
-In Chapter~\ref{ch:lawmaking}, we studied the law-making process in the European Union through the lens of peer-production systems.
-We extended our model by combining the multinomial logit and Rasch models, and by enhancing it with natural language processing techniques.
-We quantified the controversy of laws and obtained intuitive visualizations by representing each law as the conflict graph of its edits.
-We also identified features of the edits that correlate with higher probability of acceptance:
-For example, inserting short edits, providing a justification for the change, deleting ``human rights'', and having the parliamentarian in charge of the law sponsoring the edit are all factors that contribute to acceptance.
+In Chapter~\ref{ch:lawmaking}, we have studied, through the lens of peer-production systems, the law-making process in the European Union.
+To capture the conflictive structure inherent in this process, we have designed a model inspired from the multinomial logit and Rasch models, which we have enhanced with natural language processing techniques.
+We have quantified the controversy of laws and proposed intuitive visualizations by representing each law as the conflict graph of its edits.
+We have also identified features of the edits that correlate with a higher probability of acceptance:
+For example, inserting short edits, providing a justification for the change, deleting ``human rights'', and having the parliamentarian in charge of the law sponsor the edit are all factors that contribute to acceptance.
 
-In Chapter~\ref{ch:predikon}, we developed an algorithm that combines matrix factorization and generalized linear models for predicting the popular vote of elections and referenda from partial, region results.
+In Chapter~\ref{ch:predikon}, we have developed an algorithm that combines matrix factorization and generalized linear models for predicting the popular vote of elections and referenda from partial, regional results.
 This algorithm learns representations of votes and regions to capture ideological and cultural voting patterns (e.g., rural/urban, liberal/conservative, etc.).
-Its predictions are also accurate: In Switzerland, for example, it is able to predict referendum votes with an accuracy of 99\% and a mean absolute error of less than 1\% using only 5\% of the results observed in municipalities.
-We deployed our algorithm on a Web platform to make real-time predictions for referenda in Switzerland.
+Its predictions are also accurate:
+In Switzerland, for example, it is able to predict referendum votes with an accuracy of 99\% and a mean absolute error of less than 1\% using only 5\% of the results observed in municipalities.
+We have deployed our algorithm on a Web platform to make real-time predictions for referenda in Switzerland.
 
-In Chapter~\ref{ch:climpact}, we studied how people perceive the carbon footprint of their day-to-day actions.
-We cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between intercontinental flights and using household appliances) and developed a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
-The model learns the users perception as the parameters of a Bayesian linear regression, which enabled us to derive an active-learning algorithm to select the optimal pairs of actions to probe.
+In Chapter~\ref{ch:climpact}, we have studied how people perceive the carbon footprint of their day-to-day actions.
+We have cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between intercontinental flights and using household appliances) and developed a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
+The model learns users' perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to select the optimal pairs of actions to probe.
 Because no suitable data existed for answering these questions, we built a Web interface to collect comparison data from students on our university campus.
 Our results show that users tend to overestimate actions with low carbon footprint and underestimate actions with high carbon footprint.
 
 Finally, in Chapter~\ref{ch:kickscore}, we developed a dynamic model of choice that enables the parameters to vary over time.
 We achieve this by replacing the static parameters by continuous-time Gaussian processes.
 We also developed an efficient inference algorithm that computes an approximate Bayesian posterior distribution in a few linear-time iterations over the data.
-We show experimentally on several datasets of (e-)sports that this model outperforms competing approaches in terms of predictive performance, scales to millions of observations, and generates compelling visualizations of the parameters' dynamics.
-We deployed our approach as a real-world application on the Web for predicting football matches in European leagues.
+We have shown experimentally on several datasets of (e-)sports that this model outperforms competing approaches in terms of predictive performance, scales to millions of observations, and generates compelling visualizations of the parameters' dynamics.
+We have deployed our approach as a real-world application on the Web for predicting football matches in European leagues.
 
 \paragraph{Perspective on Methodological Uncertainties}
 
-% Parameter and
+% Parameter uncertainty.
 By definition, computational models are approximate representations of (complex) realities.
 Human behaviour, in particular, is uncertain by essence, and models of social processes are only as good as the datasets they rely on.
-In presence of noisy data, it becomes crucial to quantify uncertainty and propagate it through parameter estimation.
+In the presence of noisy data, it becomes crucial to quantify uncertainty and propagate it through parameter estimation.
 This enables a model to provide predictive distributions rather than point-wise predictions.
 Bayesian inference offers a principled approach to achieve uncertainty quantification and propagation.
 In this work, we have relied on such methods only in Chapter~\ref{ch:kickscore} and, to some extent, in Chapter~\ref{ch:climpact}.
-We believe that the other chapters, and the \textsc{SubSVD-GLM} algorithm of Chapter~\ref{ch:predikon} in particular, would benefit from Bayesian inference to provide more informative predictions.
+We believe that the other chapters, and the \textsc{SubSVD-GLM} algorithm of Chapter~\ref{ch:predikon} in particular, would benefit from Bayesian inference to provide more informative and robust predictions.
 
 % Structural uncertainty.
 The discrete-choice models on which the present work is based, such as the Bradley-Terry, the Thurstone, and the multinomial logit models, are subject to structural uncertainty because they assume that the alternatives in the choice set are independent.
@@ -55,22 +56,21 @@ To the best of our knowledge, combining matrix factorization techniques with the
 
 \paragraph{Perspective on Socio-Environmental Processes}
 
-This thesis is written in a time when the global political spectrum is more polarized than ever and in a society that faces the grand environmental challenges of climate change and biodiversity loss.
-While currently being mostly part of the problem, computer science and machine-learning algorithms can become part of the solution.
+This thesis is written at a time when the global political spectrum is more polarized than ever and in a society that faces the grand environmental challenges of climate change and biodiversity loss.
+Although currently being mostly part of the problem, computer science and machine-learning algorithms can become part of the solution.
 Impactful policies require ambitious target setting and effective implementation.
-They require to combine (1) top-down processes, \textit{i.e.}, how policy-makers shape laws, and (2) bottom-up processes, \textit{i.e.}, how individuals make choices in their daily life.
-For (1), machine-learning methods can help discovering influence networks and lobbying activities in political processes.
-For (2), understanding how people make choices and change their opinion over time gives a starting point to bridge the gap between policy and implementation.
-Processing large-scale datasets of legal texts, parliamentary speeches, and social media activities with recent methods in language modeling, latent-factor models, and network science offers a promising direction to study hidden influence processes and understand people's behaviour in law-making and political participation.
-Monitoring societal currents and making the results available to the general public can increase transparency into political processes and help shape truly effective policies.
+They require combining (1) top-down processes, \textit{i.e.}, how policy-makers shape laws, and (2) bottom-up processes, \textit{i.e.}, how individuals make choices in their daily life.
+For (1), machine-learning methods can help to discover influence networks and lobbying activities in political processes.
+For (2), understanding how people make choices and change their opinions over time gives a starting point to bridge the gap between policy and implementation.
+Processing large-scale datasets of legal texts, parliamentary speeches, and social media activities with recent methods in language modeling, latent-factor models, and network science offers a promising direction to study the hidden influence processes and to understand people's behaviour in law-making and political participation.
+Monitoring societal currents and making the results available to the general public can increase transparency into political processes and help shape fair, effective policies.
 
 \paragraph{A Call for Interdisciplinary Research}
 
-Tackling social-science problems from a machine-learning perspective gave us the advantage of agnostic analyzes, but sometimes at the expense of shallowness.
+Tackling social-science problems from a machine-learning perspective gave us the advantage of agnostic analyzes, but sometimes at the expense of some limitation in the analysis.
 Indeed, collaborating with political scientists, economists, psychologists, sociologists, climate scientists, and ecologists would provide expert knowledge to strengthen our findings.
-As computer science increasingly percolates through other scientific domains, computational methods are often used only as a means to an end rather than as a source of innovative approaches and fresh viewpoints.
-Interdisciplinary research can act as an effective catalyser for scientific progress.
-Major breakthroughs often take place by crossing ideas from different fields.
+As computer science increasingly percolates through other scientific domains, computational methods are often used only as a means to an end, rather than as a source of innovative approaches and fresh viewpoints.
+Interdisciplinary research can act as an effective catalyst for scientific progress, as major breakthroughs often take place by crossing ideas from different fields.
 For example, the sequencing of the human genome in the 1990s required the collective efforts of physicists, chemists, biologists, and computer scientists.
-Today, at a time when conspiracy theories disseminate doubt and threaten facts, interdisciplinary research could restore trust in science by reinforcing the credibility of scientific results and enhancing their scope.
+Today, at a time when conspiracy theories disseminate doubt and threaten the acceptance of facts, interdisciplinary research could restore trust in science by reinforcing the credibility of scientific results and enhancing their scope.
 Only synergistic collaborations with other fields will enable computer science to unleash its true potential for transformative societal good.
