@@ -9,11 +9,11 @@ GOLDEN_RATIO = (5 ** 0.5 + 1) / 2
 TEXTWIDTH = 5.78  # 146.8mm = 5.78in, c.f. preamble.tex
 
 
-def set_rcparams(size, factor=0.75, subplots=(1, 1)):
+def _set_rcparams(size, factor=0.75, subplots=(1, 1)):
     # Set height and width.
     width = TEXTWIDTH
     # Scale height according to golden ratio and number of subplots.
-    height = width / GOLDEN_RATIO * subplots[0] / subplots[1]
+    height = width / GOLDEN_RATIO  # * (subplots[0] / subplots[1])
 
     if size == 'full' or size is None:
         figsize = (width, height)
@@ -46,21 +46,24 @@ def set_rcparams(size, factor=0.75, subplots=(1, 1)):
         "legend.frameon": True,  # Remove the black frame around the legend
         "pgf.texsystem": "xelatex",  # Use Xelatex which is TTF font aware
         "pgf.rcfonts": False,  # Use pgf.preamble, ignore Matplotlib RC
+        # The thesis's font is Latin Modern, but I cannot make it work properly
+        # with Matplotlib (e.g., with `\textsc`). Using the default Computer
+        # Modern is good enough, as the visual difference is imperceptible.
         "pgf.preamble": ''.join(
             [
-                r'\usepackage{fontspec}',
-                r'\usepackage{unicode-math}',
-                r'\usepackage{lmodern}',
-                r'\setmainfont{Latin Modern Math}',
-                r'\setmathfont{Latin Modern Math}',
+                # r'\usepackage{fontspec}',
+                # r'\usepackage{unicode-math}',
+                # r'\usepackage{lmodern}',
+                # r'\setmainfont{Latin Modern Math}',
+                # r'\setmathfont{Latin Modern Math}',
             ]
         ),
     }
 
 
-def setup_plotting(size=None):
+def setup_plotting(size=None, factor=0.75, subplots=(1, 1)):
     matplotlib.backend_bases.register_backend('pdf', FigureCanvasPgf)
-    matplotlib.rcParams.update(set_rcparams(size))
+    matplotlib.rcParams.update(_set_rcparams(size, factor, subplots))
 
 
 def save_fig(fig, file_name, tight=True):
