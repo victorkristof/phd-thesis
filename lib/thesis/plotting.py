@@ -6,23 +6,31 @@ import matplotlib
 from matplotlib.backends.backend_pgf import FigureCanvasPgf
 
 GOLDEN_RATIO = (5 ** 0.5 + 1) / 2
-TEXTWIDTH = 5.78  # 146.8mm = 5.78in, c.f. preamble.tex
+TEXT_WIDTH = 5.78  # 146.8mm = 5.78in, c.f. preamble.tex
 
 
-def _set_rcparams(size, factor=0.75, subplots=(1, 1)):
-    # Set height and width.
-    width = TEXTWIDTH
-    # Scale height according to golden ratio and number of subplots.
-    height = width / GOLDEN_RATIO  # * (subplots[0] / subplots[1])
+def _set_rcparams(size, fraction=0.75, subplots=(1, 1)):
+    """Configure Matplotlib to draw figures for my thesis.
 
-    if size == 'full' or size is None:
-        figsize = (width, height)
-    elif size == 'single':
-        figsize = (width * factor, height * factor)
-    elif type(size) is tuple:
+    The `size` argument can be a tuple (width, height) or a string indicating
+    whether it whether the figure takes the `full` text width or a `fraction`
+    of it (in which case the `fraction` can be specified). In both cases, the
+    height is automatically determined using the golden ratio.
+    """
+    if type(size) is tuple:
         figsize = size
     else:
-        raise ValueError(f'Size "{size}" invalid')
+        # Set height and width.
+        width = TEXT_WIDTH
+        # Scale height according to golden ratio and number of subplots.
+        height = width / GOLDEN_RATIO  # * (subplots[0] / subplots[1])
+
+        if size == 'full' or size is None:
+            figsize = (width, height)
+        elif size == 'fraction':
+            figsize = (width * fraction, height * fraction)
+        else:
+            raise ValueError(f'Size "{size}" invalid')
     return {
         "figure.autolayout": True,  # Makes sure the figure is neat & tight.
         "figure.figsize": figsize,
@@ -38,7 +46,7 @@ def _set_rcparams(size, factor=0.75, subplots=(1, 1)):
         "ytick.labelsize": 9,
         "text.usetex": True,  # Use LaTeX to write all text
         "font.family": "serif",  # Use serif rather than sans-serif
-        "font.serif": "Latin Modern Roman",
+        "font.serif": "lmodern",
         "font.size": 11,
         "axes.titlesize": 11,  # LaTeX default is 10pt font.
         "axes.labelsize": 9,  # LaTeX default is 10pt font.
@@ -81,7 +89,8 @@ def save_fig(fig, file_name, tight=True):
 
     # Save figure
     if tight:
-        fig.savefig(tmp_name, bbox_inches='tight')
+        fig.tight_layout()
+        fig.savefig(tmp_name)
     else:
         fig.savefig(tmp_name)
 
