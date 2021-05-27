@@ -74,7 +74,7 @@ def setup_plotting(size=None, factor=0.75, subplots=(1, 1)):
     matplotlib.rcParams.update(_set_rcparams(size, factor, subplots))
 
 
-def save_fig(fig, file_name, tight=True):
+def save_fig(fig, file_name, tight=True, dpi=None):
     """Saves a Matplotlib figure as PDF to the given path and crops it."""
 
     # Create file name.
@@ -90,9 +90,9 @@ def save_fig(fig, file_name, tight=True):
     # Save figure
     if tight:
         fig.tight_layout()
-        fig.savefig(tmp_name)
+        fig.savefig(tmp_name, dpi=dpi)
     else:
-        fig.savefig(tmp_name)
+        fig.savefig(tmp_name, dpi=dpi)
 
     # Crop it.
     subprocess.call('pdfcrop %s %s' % (tmp_name, file_name), shell=True)
