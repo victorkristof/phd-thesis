@@ -5,7 +5,6 @@
 # If no arguments are given, it plots all figures.
 
 BASEDIR=$(dirname "$0")
-FIGDIR="$BASEDIR"/../text/figures
 
 # If there are some arguments, use them to plot the figures.
 if [ "$#" -gt 0 ]; then
@@ -17,8 +16,9 @@ fi
 
 for fig in $figures; do
     echo "Plotting $fig..."
-    script="$BASEDIR"/"$fig"/plot.py
-    path=$FIGDIR/$fig.pdf
-    python $script --save_as $path
+    # Change to the directory the figure.
+    cd "$BASEDIR"/"$fig"
+    python plot.py --save_as $fig.pdf
+    cd -
 done
 echo "Done."
