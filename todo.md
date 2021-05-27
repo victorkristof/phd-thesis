@@ -30,6 +30,15 @@
 - [ ] General: Replace \bm and \boldsymbol by \vec for vectors
 - [ ] General: Add links to data and code for each chapter
 - [ ] General: Update CV
+- [ ] General: Update abstract on IS academia
+- [ ] General: Ask for feedback on French abstract to PM
 - [ ] Ch. 3: Verify results of distribution of cliques and modularity in Section 4
+- [ ] Ch. 3: Check that the notation for "choose among alternative" is coherent with notation in table of notations.
+- [ ] Ch. 3: Add "trois chiffres significatifs" at table of dossier controversy
 - [ ] Ch. 4: Rename "SubSVD" by "Predikon" algorithm
+- [ ] Ch. 4: Fix equation (5) -> `y_V+1` should be `y^(O)_V+1` to make it clear that one learns the parameters with the observed regions only
+- [ ] Ch. 5: Check that scaling of results is not explained twice
+- [ ] Ch. 6: Include update rules of EP and KL (see commented todo in 6-kickscore/3-inference.tex)
+- [ ] Ch. 6: Refer to "Kickscore" as our algorithm
+- [ ] Conclusion: Mention "to use artificial for social good" and cite Ghani
 - [ ] Appendix: Include hyperparameters intuition into content of Chapter 6
