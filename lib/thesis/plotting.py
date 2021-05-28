@@ -95,6 +95,10 @@ def save_fig(fig, file_name, tight=True, dpi=None):
         fig.savefig(tmp_name, dpi=dpi)
 
     # Crop it.
-    subprocess.call('pdfcrop %s %s' % (tmp_name, file_name), shell=True)
+    subprocess.call(
+        'pdfcrop %s %s' % (tmp_name, file_name),
+        shell=True,
+        stdout=subprocess.DEVNULL,
+    )
 
     print(f'Saved figure to {file_name}')

@@ -22,6 +22,6 @@ for fig in $figures; do
     # Change to the directory the figure.
     cd "$BASEDIR"/"$fig"
     python plot.py --save_as $FIGDIR/$fig.pdf
-    cd -
+    cd - &> /dev/null
 done
 echo "Done."
