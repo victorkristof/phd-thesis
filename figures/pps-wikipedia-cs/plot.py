@@ -1,23 +1,34 @@
-import pickle
-
 import fire
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from thesis import save_fig, setup_plotting
-from thesis.plotting import GOLDEN_RATIO, TEXT_WIDTH
+from thesis.plotting import TEXT_WIDTH
+
+# I convertd the file frwiki-dot-coldstart.pickle to data.csv using the
+# following snippet:
+
+# header = 'n_obs_u,n_obs_a,log_loss'
+# with open('pps-wikipedia-cs/data.csv', 'w') as f:
+#     f.write(header)
+#     f.write('\n')
+# with open('pps-wikipedia-cs/data.csv', 'a') as f:
+#     for nu, na, ll in zip(obs_u, obs_a, -loss):
+#         row = ','.join([str(nu), str(na), f'{ll:.6f}'])
+#         f.write(row)
+#         f.write('\n')
 
 
 def load_data():
-    with open('frwiki-dot-coldstart.pickle', 'rb') as f:
-        return pickle.load(f)
+    return pd.read_csv('data.csv')
 
 
 def plot_coldstart(data, ax, fig, gridsize=20):
     # Extract data
-    loss = -data['log_loss']
-    obs_u = data['n_obs_u']
-    obs_a = data['n_obs_a']
+    loss = -np.array(data['log_loss'])
+    obs_u = np.array(data['n_obs_u'])
+    obs_a = np.array(data['n_obs_a'])
 
     perc = np.linspace(0.0, 100.0, num=len(loss))
     # Calling argsort twice essentially gets the (zero-based) ranks for the
