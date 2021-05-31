@@ -9,7 +9,7 @@ GOLDEN_RATIO = (5 ** 0.5 + 1) / 2
 TEXT_WIDTH = 5.78  # 146.8mm = 5.78in, c.f. preamble.tex
 
 
-def _set_rcparams(size, fraction=0.75, subplots=(1, 1)):
+def _set_rcparams(size, fraction=0.85, subplots=(1, 1)):
     """Configure Matplotlib to draw figures for my thesis.
 
     The `size` argument can be a tuple (width, height) or a string indicating
@@ -69,9 +69,22 @@ def _set_rcparams(size, fraction=0.75, subplots=(1, 1)):
     }
 
 
-def setup_plotting(size=None, factor=0.75, subplots=(1, 1)):
+def set_aspect_ratio(ax, ratio):
+    # Get x and y limits.
+    x_left, x_right = ax.get_xlim()
+    y_low, y_high = ax.get_ylim()
+    # Set aspect ratio.
+    if ratio == 'golden':
+        ax.set_aspect(
+            abs((x_right - x_left) / (y_low - y_high)) / GOLDEN_RATIO
+        )
+    else:
+        ax.set_aspect(ratio)
+
+
+def setup_plotting(size=None, fraction=0.85, subplots=(1, 1)):
     matplotlib.backend_bases.register_backend('pdf', FigureCanvasPgf)
-    matplotlib.rcParams.update(_set_rcparams(size, factor, subplots))
+    matplotlib.rcParams.update(_set_rcparams(size, fraction, subplots))
 
 
 def save_fig(fig, file_name, tight=True, dpi=None):
@@ -82,6 +95,7 @@ def save_fig(fig, file_name, tight=True, dpi=None):
     if not file_name.endswith(extension):
         file_name += extension
 
+    # tmp_name = file_name
     # Create tmp file for cropping.
     file_name = os.path.abspath(file_name)
     with tempfile.NamedTemporaryFile() as tmp_file:

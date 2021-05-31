@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-from thesis import save_fig, setup_plotting
+from thesis import save_fig, set_aspect_ratio, setup_plotting
 from thesis.plotting import TEXT_WIDTH
 
 # I convertd the file frwiki-dot-coldstart.pickle to data.csv using the
@@ -42,6 +42,7 @@ def plot_coldstart(data, ax, fig, gridsize=20):
     ax.set_xlabel('User percentile')
     ax.set_ylabel('Article percentile')
     ax.set_title('Avg. log-likelihood (French Wikipedia)')
+    set_aspect_ratio(ax, 'equal')
 
     divider = make_axes_locatable(ax)
     cax = divider.append_axes('right', size='5%', pad=0.2)
@@ -49,9 +50,9 @@ def plot_coldstart(data, ax, fig, gridsize=20):
 
 
 def plot(save_as=None):
+    # Make a square figure taking 75% of the width.
     width = TEXT_WIDTH * 0.75
-    height = width
-    setup_plotting(size=(width, height))
+    setup_plotting(size=(width, width))
 
     fig, ax = plt.subplots()
     plot_coldstart(load_data(), ax, fig)

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import interp1d
 from sklearn.metrics import precision_recall_curve
-from thesis import save_fig, setup_plotting
+from thesis import save_fig, set_aspect_ratio, setup_plotting
 from thesis.plotting import GOLDEN_RATIO, TEXT_WIDTH
 
 
@@ -100,6 +100,7 @@ def plot_results(ax1, ax2):
         ax.set_ylim(ymin=0.0, ymax=1.0)
         ax.set_title(edition)
         ax.set_xlabel('Recall')
+        set_aspect_ratio(ax, 'equal')
     ax1.set_ylabel('Precision')
     # Draw legend on right plot.
     handles, labels = ax2.get_legend_handles_labels()
@@ -109,7 +110,7 @@ def plot_results(ax1, ax2):
 def plot(save_as=None):
     subplots = (1, 2)
     width = 5.78
-    height = width / GOLDEN_RATIO * 0.85
+    height = width / GOLDEN_RATIO
     setup_plotting(size=(width, height), subplots=subplots)
 
     fig, (ax1, ax2) = plt.subplots(*subplots, sharex=True, sharey=True)

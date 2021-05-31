@@ -5,7 +5,7 @@ import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from thesis import save_fig, setup_plotting
+from thesis import save_fig, set_aspect_ratio, setup_plotting
 from thesis.plotting import GOLDEN_RATIO, TEXT_WIDTH
 
 
@@ -92,12 +92,13 @@ def plot_correlation_matrix(fig, ax):
     )
     plt.xticks([], [])
     plt.ylabel('Developer IDs')
+    set_aspect_ratio(ax, 'equal')
 
 
 def plot(save_as=None):
+    # Make a square figure taking 75% of the width.
     width = TEXT_WIDTH * 0.75
-    height = width
-    setup_plotting(size=(width, height))
+    setup_plotting(size=(width, width))
 
     fig, ax = plt.subplots()
     plot_correlation_matrix(fig, ax)

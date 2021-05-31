@@ -2,7 +2,7 @@ import fire
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
-from thesis import save_fig, setup_plotting
+from thesis import save_fig, set_aspect_ratio, setup_plotting
 
 
 def plot_pdf(ax):
@@ -29,10 +29,11 @@ def plot_pdf(ax):
     ax.legend()
     ax.set_ylabel(r'Probability density $f(x)$')
     ax.set_xlabel(r'$x$')
+    set_aspect_ratio(ax, 'golden')
 
 
 def plot(save_as=None):
-    setup_plotting(size='single')
+    setup_plotting(size='fraction')
 
     fig, ax = plt.subplots()
     plot_pdf(ax)
