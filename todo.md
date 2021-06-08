@@ -40,5 +40,8 @@
 - [ ] Ch. 5: Check that scaling of results is not explained twice
 - [ ] Ch. 6: Include update rules of EP and KL (see commented todo in 6-kickscore/3-inference.tex)
 - [ ] Ch. 6: Refer to "Kickscore" as our algorithm
+- [ ] Ch. 6: Add work by Roberta Sinatra, Dashun Wang, Laszlo Barabasi about predicting success of scientists and artists (e.g., Quantifying the evolution of individual scientific impact by Sinatra et al.)
 - [ ] Conclusion: Mention "to use artificial for social good" and cite Ghani
+- [ ] Conclusion: Discuss causality vs predictions in perspectives
+- [ ] Conclusion: Add reflections on ethics, feasibility of applications, hurdles to public acceptance and implementation of tools based on the proposed methods, stakeholders who would need to be brought on board as well as the resistance one might face from them
 - [ ] Appendix: Include hyperparameters intuition into content of Chapter 6
