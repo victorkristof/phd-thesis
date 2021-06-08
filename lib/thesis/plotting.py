@@ -70,6 +70,7 @@ def _set_rcparams(size, fraction=0.85, subplots=(1, 1)):
 
 
 def set_aspect_ratio(ax, ratio):
+    # Source: https://www.statology.org/matplotlib-aspect-ratio/
     # Get x and y limits.
     x_left, x_right = ax.get_xlim()
     y_low, y_high = ax.get_ylim()
