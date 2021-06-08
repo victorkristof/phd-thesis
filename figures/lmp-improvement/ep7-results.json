@@ -1,0 +1,14 @@
+{"model": "Naive", "data": "ep7-naive", "accuracy": 0.4395812012910336, "log-loss": 0.8964069054480461}
+{"model": "Random", "data": "ep7-random", "accuracy": 0.6244981500432969, "log-loss": 0.795564929138425}
+{"model": "WarOfWords", "data": "ep7-no_features", "accuracy": 0.6658269700070849, "log-loss": 0.7217220917396335}
+{"model": "WarOfWords", "data": "ep7-mep_features", "accuracy": 0.6712587577737542, "log-loss": 0.7165203309313503}
+{"model": "WarOfWords", "data": "ep7-dossier_features", "accuracy": 0.6661418562544281, "log-loss": 0.7219035828035003}
+{"model": "WarOfWords", "data": "ep7-rapporteur_advantage", "accuracy": 0.6877902857592695, "log-loss": 0.6919904588583917}
+{"model": "WarOfWords", "data": "ep7-edit_features", "accuracy": 0.6707864284027395, "log-loss": 0.7122076633323693}
+{"model": "WarOfWords", "data": "ep7-all_features", "accuracy": 0.6935369597732819, "log-loss": 0.6754917136520205}
+{"model": "WarOfWordsLatent", "data": "ep7-no_features", "accuracy": 0.7180193655042116, "log-loss": 0.6352158845227692}
+{"model": "WarOfWordsLatent", "data": "ep7-all_features", "accuracy": 0.721561835786822, "log-loss": 0.6253668887585139}
+{"model": "WarOfWords", "data": "ep7-no_features-text", "accuracy": 0.6936944028969535, "log-loss": 0.6718658285566251}
+{"model": "WarOfWords", "data": "ep7-all_features-text", "accuracy": 0.7151853892781233, "log-loss": 0.6375236327229171}
+{"model": "WarOfWordsLatent", "data": "ep7-no_features-text", "accuracy": 0.7382508068960089, "log-loss": 0.5933873395132596}
+{"model": "WarOfWordsLatent", "data": "ep7-all_features-text", "accuracy": 0.737069983468472, "log-loss": 0.592474145418232}

@@ -75,7 +75,7 @@ Finally, combining the text and latent features provides high performance, but f
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth*3/4]{lmp-results}
+	\includegraphics{lmp-results}
 	\caption{%
 		Average cross-entropy loss of the baselines and our models.
 		Combining the explicit, latent, and text features help obtain the best performance.
@@ -100,7 +100,7 @@ We also see that for conflicts of size 4 and higher, the \wow{}\ model performs 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth*3/4]{lmp-error-analysis}
+	\includegraphics{lmp-error-analysis}
 	\caption{%
 		Average cross-entropy loss per conflict size~$\vert \mathcal{C} \vert = K$.
 		The loss of the \wow{XLT} model increases less rapidly than the loss of the baselines.
@@ -122,7 +122,7 @@ Interestingly, for EP7, combining all features into the \wow{X}\ model leads to 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth*3/4]{lmp-improvement}
+	\includegraphics{lmp-improvement}
 	\caption{%
 		Difference in cross-entropy loss over \wow{} of different models.
 		The rapporteur feature and the edit features contribute more to the predictive performance than the MEP and dossier features.
@@ -292,10 +292,10 @@ We interpret this cluster as \textit{business and innovation} (orange squares).
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth*3/4]{lmp-tsne}
+	\includegraphics{lmp-tsne}
 	\caption{Visualization with t-SNE of the top-10 and bottom-10 dossiers on the first two principal components in EP8.
 		There are four clusters:
-		Environment and Communications (E\&C), Defense and Protection (D\&P), Investment and Development (I\&D), and Business and Innovation (B\&I).
+		Environment and Communications, Defense and Protection, Investment and Development, and Business and Innovation.
 	}
 	\label{lmp:fig:tsne}
 \end{figure}
