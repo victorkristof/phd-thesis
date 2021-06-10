@@ -72,7 +72,7 @@ def plot_svd_with_lang(embedding, languages, colors, labels, fig, ax):
             y=embedding[ixs, 1],
             alpha=1,
             c=colors[lang],
-            s=0.8,
+            s=2,
             linewidths=0.8,
             label=labels[lang],
         )
@@ -125,7 +125,7 @@ def plot_embedding_with_lang(embedding, languages, colors, labels, fig, ax):
             y=-embedding[ixs, 1],
             alpha=1,
             c=colors[lang],
-            s=0.8,
+            s=2,
             linewidths=0.8,
             label=labels[lang],
         )
@@ -205,7 +205,7 @@ def plot_embedding_with_canton_and_lang(
                 c=c,
                 vmin=0,
                 vmax=1,
-                s=0.8,
+                s=2,
                 linewidths=0.8,
                 label=label,
                 # marker=lang_markers[lang]

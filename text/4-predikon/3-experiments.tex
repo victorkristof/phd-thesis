@@ -43,14 +43,15 @@ To evaluate the performance of our algorithm, we compute the mean absolute error
 We first describe the error metrics used for the binary outcome case then extend them for multiple outcomes, \textit{e.g.}, when different parties can be voted.
 Let $\vy^* \in \mathbf{R}^R$ be the true regional results and let $\vy \define \vy_{V+1} \in \mathbf{R}^R$ be a prediction.
 The true national outcome $y^* \in \mathbf{R}$ is defined as
-\begin{equation}
+\begin{equation*}
 	y^* \define \frac{1}{N} \sum_{r \in [R]} N_r y_r^*,
-\end{equation}
+\end{equation*}
 where $N = \sum_{r \in [R]} N_r$ is the total number of voters.
 The predicted national outcome $y \in \mathbf{R}$ is defined as
-\begin{equation}
-	y \define \frac{1}{\vert \Ubs \vert} \sum_{r \in \Ubs} N_r y_r + \frac{1}{\vert \Obs \vert} \sum_{r \in \Obs} N_r y_r^*,
-\end{equation}
+\begin{equation*}
+	\label{pdk:eq:prediction}
+	y \define \frac{1}{N}\left( \sum_{r \in \Ubs} N_r y_r + \sum_{r \in \Obs} N_r y_r^* \right),
+\end{equation*}
 where the prediction $y_r$ in some observed region~$r \in \Obs$ equals the true outcome $y_r^*$.
 Then, the MAE and the accuracy of the national prediction are computed as
 \begin{align}
@@ -64,10 +65,9 @@ For $K$ outcomes, the true and the predicted outcomes are vectors $\vy^* \in [0,
 As the accuracy is not defined for multiple outcomes, we compute the average displacement (or Spearman's footrule)~\cite{diaconis1977spearman}.
 Let \mbox{$p: [K] \rightarrow [K]$} be a permutation map from a party to its rank for the predicted order, and let \mbox{$p^*: [K] \rightarrow [K]$} be a permutation map for the true order.
 The average displacement is then computed as
-\begin{equation}
-	\label{pdk:eq:displacement}
+\begin{equation*}
 	D(p, p^*) = \frac{1}{K} \sum_{k=1}^K \vert p(k) - p^*(k) \vert.
-\end{equation}
+\end{equation*}
 This measures the average position shift between the true rank and the predicted rank of each party.
 
 We train our algorithm on data up to vote $V$ and make predictions on vote $V+1$ to evaluate our algorithm.
@@ -166,7 +166,7 @@ This is because the Democratic candidate won in 21 of 51 regions (41\%) and won 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth*3/4]{pdk-us-results.pdf}
+	\includegraphics{pdk-us-results.pdf}
 	\caption{MAE (top) and accuracy (bottom) of the popular vote of the U.S.\ presidential election in 2016.}
 	\label{pdk:fig:us_results}
 \end{figure}
@@ -191,7 +191,7 @@ This suggests that the finer the level of granularity of regions is, the better 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth*3/4]{pdk-de-results.pdf}
+	\includegraphics{pdk-de-results.pdf}
 	\caption{MAE (top) and average displacement (bottom) of German legislative elections at state level in 2009 (left) and district level in 2005 (right).}
 	\label{pdk:fig:de_results}
 \end{figure}
@@ -207,7 +207,7 @@ The districts on the left side of this cluster (which vote in majority for the S
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth*3/4]{pdk-de-svd.pdf}
+	\includegraphics{pdk-de-svd.pdf}
 	\caption{
 		Projection of German district on the first two singular vectors of election matrix $\vY$.
 		(Left) Districts are colored according to the first party elected in each of them.

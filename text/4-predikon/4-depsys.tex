@@ -44,10 +44,10 @@ For a vote~$V+1$, we use the historical data up to vote~$V$ to learn the feature
 We use a Bernoulli likelihood to define our GLM with~$D=25$ latent dimensions and a regularization factor~$\lambda=0.01$.
 We fetch municipal results from the API every two minutes\footnote{Schedule suggested by the Swiss Federal Statistical Office.}.
 If new results are available, we learn the optimal parameters~$\vw_*$ by optimizing the negative log-likelihood using Newton's method, and we predict the unobserved municipal results as $\vy_{V+1}^{(\Ubs)} = \sigma(X^{(\Ubs)} \vw_*)$.
-We predict the national outcome~$y_{\textrm{nat}} \in [0, 1]$ by aggregating our prediction of unobserved results~$\Ubs$ with the observed results~$\Obs$ as
-\begin{equation}
+Similar to Equation~\eqref{pdk:eq:prediction}, we predict the national outcome~$y_{\textrm{nat}} \in [0, 1]$ by aggregating our prediction of unobserved results~$\Ubs$ with the observed results~$\Obs$ as
+\begin{equation*}
 	y_{\textrm{nat}} = \frac{1}{N} \left( \sum_{r \in \Ubs} N_r^{(\Ubs)} y_{r, V+1}^{(\Ubs)} + \sum_{r \in \Obs} N_r^{(\Obs)} y_{r, V+1}^{(\Obs)} \right),
-\end{equation}
+\end{equation*}
 where~$N_r^{(\Ubs)}$ is the number of valid ballots in municipality~$r$ from the previous vote (used as proxy for the current vote),~$N_r^{(\Obs)}$ is the number of valid ballots in municipality~$r$ for the current vote, and~$N = \sum_{r \in \Ubs} N_r^{(\Ubs)} + \sum_{r \in \Obs} N_r^{(\Obs)}$ is the total number of valid ballots.
 As the number of unobserved results~$\vert \Ubs \vert$ tends to 0 with time and the number of observed results~$\vert \Obs \vert$ tends to the total number of regions~$R$, the prediction for the national outcome~$y_{\textrm{nat}}$ converges to the true outcome~$y_{\textrm{nat}}^* \in [0, 1]$.
 
