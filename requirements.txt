@@ -3,3 +3,4 @@ jupyter==1.0.0
 matplotlib==3.3.4
 numpy==1.20.1
 scipy==1.6.1
+kickscore==0.1.5
