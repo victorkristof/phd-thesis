@@ -33,14 +33,16 @@ Despite the progress that discrete-choice models made possible in studying consu
 Coincidently, the emergence of the Internet and the World Wide Web in the second half of the 20\textsuperscript{th} century led to the collection of large datasets of human behavior.
 At work and at home, people spend countless hours behind their computers and their smartphones, where every click, tap, and mouse movement is recorded.
 The~\citet{wef2019data} estimates that by 2025, the world will generate 463 exabytes\footnote{This is $463 \times 10^{18}$ bytes or 463 billion gigabytes, enough data to fill almost 100 billions DVDs.} of data every day.
-In parallel, the development of machine-learning algorithms and the rapid increase of computational power have made it possible to process considerable amounts of data.
+In parallel, the rapid increase of computational power and the development of machine-learning algorithms have made it possible to process and analyze considerable amounts of data.
 
 % Very often, these algorithms are used as black boxes, \textit{i.e.}, as oracles that gobble a dataset and spits out predictions.
 % Other advanced algorithms in natural language processing and computer vision have so many layers of transformations and parameters that researchers are only guessing what the model has learned.
-Although recent deep-learning algorithms offer unprecedented predictive powers~\citep{lecun2015deep}, they offer little insight into the problem itself, limiting any in-depth understanding of human behavior.
-These algorithms are used as black boxes, \textit{i.e.}, oracles that gobble up datasets and spit out predictions.
-The architecture of large language and vision models consists of so many layers of transformations and parameters that their interpretation is challenging:
+However, modern machine-learning methods belong to the class of deep-learning algorithms.
+The architecture of these algorithms consists of many layers of non-linear transformations that progressively extract higher-level features from the data, and each layer consists of many parameters.
+This complex structure makes interpretation challenging:
 It is unclear what patterns the model has learned exactly~\citep{fong2017interpretable,guidotti2018survey,olah2020zoom,hilton2020understanding}.
+Hence, although these algorithms offer unprecedented predictive powers~\citep{lecun2015deep}, they offer little insight into the problem itself, limiting any in-depth understanding of human behavior.
+They are used as black boxes, \textit{i.e.}, oracles that gobble up datasets and spit out predictions.
 
 In this thesis, we focus on designing probabilistic models of decision-making that are highly interpretable.
 To study social processes, we draw from the literature on discrete-choice models and incorporate ideas from matrix factorization, Bayesian statistics, and generalized linear models.
