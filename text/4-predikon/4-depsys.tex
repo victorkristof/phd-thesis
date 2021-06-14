@@ -16,7 +16,7 @@ In 2019, the Swiss Federal Statistical Office released a public API to access vo
 This enabled us to obtain sequential results in all municipalities on the referendum vote days and made it possible to use our algorithm to predict the outcome of referenda starting at 12pm.
 We use the dataset described in Table~\ref{pdk:tab:datasets} for Switzerland, which contains~$R = 2196$ municipalities.
 We predict the outcome of twelve items between February 9, 2020, and March 7, 2021.
-We summarize these two items in Table~\ref{pdk:tab:real_votes}.
+We summarize these items in Table~\ref{pdk:tab:real_votes}.
 On average, the turnout is 53.3\% and 2.8 million valid ballots are counted for each referendum.
 
 \begin{table}
@@ -65,16 +65,13 @@ In Figure~\ref{pdk:fig:predictions}, we show eight examples of the evolution of 
 The ballot counting starts at 12pm and ends later in the afternoon, after all municipalities reported their results.
 Looking at the trajectory of the weighted averaging, the jumps occurring at several steps correspond to the publication of the results of whole cantons, such as Wallis, and of large municipalities, such as the cities of Basel, Genera, Bern or Zurich.
 
-% TODO: Update with new plot.
 Our first predictions are made at 12:01pm, using the results of 355 municipalities on average (16.2\% of all municipalities) representing 6.5\% of the total population.
 For the twelve referenda, these predictions reach a mean absolute error of 0.8\% to the true outcome.
-Qualitatively, our predictions stay stable over time compared to the weighted average of the observed results.
-The weighted average for the current count varies up to a difference of 6.5\% , whereas our predictions are qualitatively stable over time.
+The largest error is made on the ``e-ID Act'', with a MAE of 2.39\%.
+This could be due to the lack of historical votes related to digitalization in Switzerland leading to a vote embedding lying in an empty region of the ideological space.
+The weighted average for the current count varies up to a difference of 7.3\%, whereas our predictions are qualitatively stable over time.
 To provide a robust estimation of the final outcome, our algorithm takes advantage of the correlation across municipalities and votes.
-The performance of our approach for the two referenda of May 19, 2019, is similar; but we do not show them\footnote{The interested reader can access these predictions on our \href{http://www.predikon.ch}{Web platform}.}, as early counting data were not available due to a bug on the API side (they published the first results at 12:35pm).
-Furthermore, the results of the nine districts of Zurich, which cumulatively form the largest municipality in Switzerland, were incorrectly reported on that day.
-Consequently, we could not reliably use the results in our algorithm.
-We report only the earliest prediction, made at 12:40pm, in Table~\ref{pdk:tab:real_votes}.
+Furthermore, our earliest predictions were always on the correct side of the 50\% threshold, \textit{i.e.}, it reached an accuracy of 100\% at predicting the acceptance or rejection of a referenda.
 
 \begin{figure}
 	\centering
