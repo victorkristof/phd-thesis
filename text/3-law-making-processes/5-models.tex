@@ -36,8 +36,8 @@ As an example, a MEP from one party might propose a modification favoring econom
 We model the probability of the edit proposed by MEP $u$ to be accepted over the edit proposed by MEP $v$ on dossier $i$, \textit{i.e.}, the  probability of MEP $u$ "winning" over MEP $v$ on dossier $i$ as
 \begin{align}
 	\label{lmp:eq:basemodel}
-  \Prob{ u \succ_i v }
-	 & = \frac{\exp(s_u)}{\exp(s_u) + \exp(s_v) + \exp(d_i + b)} \nonumber  \\
+	\Prob{ u \succ_i v }
+	 & \define \frac{\exp(s_u)}{\exp(s_u) + \exp(s_v) + \exp(d_i + b)} \nonumber \\
 	 & = \frac{1}{1 + \exp[ -( s_u - s_v ) ] + \exp[ -( s_u - d_i ) + b ]},
 \end{align}
 where $ s_u, s_v \in \mathbf{R} $ are the \textit{skills} of MEPs $u$ and $v$, $ d_i \in \mathbf{R} $ is the \textit{inertia} of dossier $i$, and $ b \in \mathbf{R} $ is a global bias parameter.
@@ -53,7 +53,7 @@ Call \mbox{$\mathcal{C} = \{ a, b, \dots \}$} the set of conflicting edits propo
 The probability of edit $a$ being accepted over edits $b, \dots$ on dossier $i$ is given by
 \begin{equation}
 	\label{lmp:eq:wowmodel}
-	\Prob{ a \succ_i \mathcal{C} - \{ a\} } =
+	\Prob{ a \succ_i \mathcal{C} - \{ a\} } \define
 	\frac{\exp(s_a) }{ \sum\limits_{c \in \mathcal{C} } \exp(s_c) + \exp(d_i + b) },
 \end{equation}
 where $s_a = \sum_{u \in \mathcal{A}_a} s_u$ is the cumulated skill of all authors of edit~$a$.
@@ -61,7 +61,7 @@ We refer to this model as the \warofwords{} model, or simply as the \wow{} model
 The probability that all edits are rejected, \textit{i.e.}, the status quo of dossier~$i$ wins, is given by
 \begin{equation*}
 	\Prob{i \succ \mathcal{C} }
-	= 1 - \sum_{a \in \mathcal{C} } \Prob{ a \succ_i \mathcal{C} - \{ a \}}
+	\define 1 - \sum_{a \in \mathcal{C} } \Prob{ a \succ_i \mathcal{C} - \{ a \}}
 	= \frac{\exp(d_i + b) }{ \sum\limits_{a \in \mathcal{C} } \exp(s_a) + \exp(d_i + b) }.
 \end{equation*}
 
@@ -169,20 +169,20 @@ The \wow{} model has no features at all and will serve as a baseline.
 The \wow{XLT} combines explicit, latent, and text features together, and it has the highest complexity.
 
 \begin{table}
-  \centering
+	\centering
 	\caption{Variations of our model by combination of features (explicit, latent, and text features).}
 	\label{lmp:tab:models}
 	\begin{tabular}{llccc}
 		\toprule
-		Model          & Equation                                                           & Explicit   & Latent     & Text       \\
+		Model          & Equation                                                                       & Explicit   & Latent     & Text       \\
 		\midrule
-    \wow{}           & \eqref{lmp:eq:wowmodel}                                                & --         & --         & --         \\
-		\wow{Explicit} & \eqref{lmp:eq:wowexplicit}                                             & \checkmark & --         & --         \\
-		\wow{Latent}   & \eqref{lmp:eq:wowlatent}                                               & --         & \checkmark & --         \\
-		\wow{Text}     & \eqref{lmp:eq:wowtext}                                                 & --         & --         & \checkmark \\
-		\wow{XL}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowlatent}                     & \checkmark & \checkmark & --         \\
-		\wow{XT}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowtext}                       & \checkmark & --         & \checkmark \\
-		\wow{LT}       & \eqref{lmp:eq:wowlatent} \& \eqref{lmp:eq:wowtext}                         & --         & \checkmark & \checkmark \\
+		\wow{}         & \eqref{lmp:eq:wowmodel}                                                        & --         & --         & --         \\
+		\wow{Explicit} & \eqref{lmp:eq:wowexplicit}                                                     & \checkmark & --         & --         \\
+		\wow{Latent}   & \eqref{lmp:eq:wowlatent}                                                       & --         & \checkmark & --         \\
+		\wow{Text}     & \eqref{lmp:eq:wowtext}                                                         & --         & --         & \checkmark \\
+		\wow{XL}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowlatent}                         & \checkmark & \checkmark & --         \\
+		\wow{XT}       & \eqref{lmp:eq:wowexplicit} \& \eqref{lmp:eq:wowtext}                           & \checkmark & --         & \checkmark \\
+		\wow{LT}       & \eqref{lmp:eq:wowlatent} \& \eqref{lmp:eq:wowtext}                             & --         & \checkmark & \checkmark \\
 		\wow{XLT}      & \eqref{lmp:eq:wowexplicit}, \eqref{lmp:eq:wowlatent} \& \eqref{lmp:eq:wowtext} & \checkmark & \checkmark & \checkmark \\
 		\bottomrule
 	\end{tabular}
@@ -200,7 +200,7 @@ Given a dataset of~$N$ independent triplets \mbox{$\mathcal{D} = \{ ( \mathcal{C
 \begin{equation*}
 	- \ell(\vec{\theta} ; \mathcal{D})
 	= \sum_{n = 1}^N  \sum_{a \in \mathcal{C}_n} \Biggl[ \Indic{l_n = a} \log \Prob{a \succ_{i_n} \mathcal{C}_n - \{ a \} }
-  + \Indic{l_n = i_n} \log \Prob{i_n \succ \mathcal{C}_n } \Biggr],
+		+ \Indic{l_n = i_n} \log \Prob{i_n \succ \mathcal{C}_n } \Biggr],
 \end{equation*}
 where~$\Prob{a \succ_{i_n} \mathcal{C}_n - \{ a \} }$ and~$\Prob{i_n \succ \mathcal{C}_n }$ depend on~$\vec{\theta}$.
 In order to avoid overfitting, we add regularization to the negative log-likelihood.
