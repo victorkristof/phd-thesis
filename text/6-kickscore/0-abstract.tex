@@ -4,9 +4,10 @@ We achieve this by replacing the static parameters of a class of popular pairwis
 the covariance function of these processes enables expressive dynamics.
 We develop an efficient inference algorithm that computes an approximate Bayesian posterior distribution.
 Despite the flexibility of our model, our inference algorithm requires only a few linear-time iterations over the data and can take advantage of modern multiprocessor computer architectures.
-We apply our model to several historical databases of sports outcomes and find that our approach
+We apply our model to several historical databases\footnote{Data and code publicly available on \href{https://github.com/lucasmaystre/kickscore-kdd19}{https://github.com/lucasmaystre/kickscore-kdd19}.} of sports outcomes and find that our approach
 \begin{enuminline}
 	\item outperforms competing approaches in terms of predictive performance,
 	\item scales to millions of observations, and
 	\item generates compelling visualizations that help in understanding and interpreting the data.
 \end{enuminline}
+Finally, we deploy our algorithm on a Web platform\footnote{The platform is accessible on \href{https://kickoff.ai}{https://kickoff.ai}.} to predict the outcome of football matches in European leagues and international competitions.
