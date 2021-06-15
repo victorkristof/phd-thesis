@@ -107,13 +107,13 @@ where the matrix~$\vX \in \mathbf{R}^{R \times D}$ stores~$D$-dimensional repres
 We explore these representations in more detail in Section~\ref{pdk:sec:experiments}.
 These two steps are performed offline, \textit{i.e.}, they are performed once.
 
-Third, we use the observed results of a new vote~$\vy_{V+1}$ and the representations of observed regions in~$\vX$ to fit a GLM~$p$.
+Third, we use the observed results of a new vote~$\vy^{(\Obs)}_{V+1}$ and the representations of observed regions in~$\vX$ to fit a GLM~$p$.
 We find the maximum likelihood estimate~$\vw_* \in \mathbf{R}^D$ by minimizing the regularized negative log-likelihood of model~$p$ in Equation~\eqref{pdk:eq:glm}, with regularization parameter $\lambda \in \mathbf{R}$,
 \begin{equation}
 	\label{pdk:eq:log_likelihood}
-	\ell_p(\vw ; \vX, \vy_{V+1}) = -\sum_{r \in \Obs} \log p(y_{r,V+1} \given \vw, \vx_r) + \lambda \| \vw \|_2^2,
+	\ell_p(\vw ; \vX, \vy^{(\Obs)}_{V+1}) = -\sum_r \log p(y^{(\Obs)}_{r,V+1} \given \vw, \vx_r) + \lambda \| \vw \|_2^2,
 \end{equation}
-where $y_{r,V+1} \in \mathbf{R}$ is the result of the~$r$-th (observed) region, and~$\vx_r \in \mathbf{R}^D$ is the~$r$-th row of the representation matrix~$\vX$ corresponding to the representation of the~$r$-th region.
+where $y^{(\Obs)}_{r,V+1} \in \mathbf{R}$ is the result of the~$r$-th observed region, and~$\vx_r \in \mathbf{R}^D$ is the~$r$-th row of the representation matrix~$\vX$ corresponding to the representation of the~$r$-th region.
 
 Finally, we predict the unobserved regions of the new vote~$\vy_{V+1}^{(\Ubs)} \in \mathbf{R}^{\vert \Ubs \vert}$ as the mean of the GLM~$p$ using the link function~$g$.
 From the optimal parameters~$\vw_*$, we compute
@@ -134,7 +134,7 @@ We summarize these steps in Algorithm~\ref{alg:algorithm}.
 
 		\State Decompose $\vY_V \approx \vU \vSigma \vV\T$. \Comment{Equation~\eqref{pdk:eq:svd}}
 		\State Project $\vX = \vU \vSigma$. \Comment{Equation~\eqref{pdk:eq:projection}}
-		\State Optimize $\vw_* = \argmin_{\vw} -\ell_p(\vw ; \vX, \vy_{V+1})$. \Comment{Equation~\eqref{pdk:eq:log_likelihood}}
+		\State Optimize $\vw_* = \argmin_{\vw} -\ell_p(\vw ; \vX, \vy^{(\Obs)}_{V+1})$. \Comment{Equation~\eqref{pdk:eq:log_likelihood}}
 		\State Predict $\vy^{(\Ubs)}_{V+1} = g^{-1}\left(\vX^{(\Ubs)} \vw_*\right)$. \Comment{Equation~\eqref{pdk:eq:prediction}}
 
 	\end{algorithmic}
@@ -194,7 +194,7 @@ So far, we have considered that each region has the same number of voters.
 If we have access to data about the number of voters in each region (\textit{e.g.}, the number of valid votes, the number of eligible voters, or the population), we can include this information by replacing the regularized log-likelihood in~\eqref{pdk:eq:log_likelihood} by
 \begin{equation}
 	\label{pdk:eq:weighted}
-	-\ell_p(\vw ; \vX, \vy_{V+1}) = \sum_{r \in \Obs} N_r \log p(y_{r,V+1} \given \vw, \vx_r) + \lambda \Vert \vw \Vert_2^2,
+	-\ell_p(\vw ; \vX, \vy^{(\Obs)}_{V+1}) = \sum_r N_r \log p(y^{(\Obs)}_{r,V+1} \given \vw, \vx_r) + \lambda \Vert \vw \Vert_2^2,
 \end{equation}
 where $N_r \in \mathbf{R}$ is a count related to the number of voters in region~$r$.
 We refer to the variation of the algorithm that uses this log-likelihood as \textit{weighted}.
