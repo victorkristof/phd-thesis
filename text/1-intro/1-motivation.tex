@@ -12,7 +12,7 @@ Today, however, their effect on society is mixed.
 The US presidential election and the UK Brexit referendum in 2016 were marred by allegations of manipulation by the algorithms of the political consulting firm Cambridge Analytica.
 Misinformation, fake news, and conspiracy theories spread to millions of people within algorithmically recommended echo chambers on social media~\citep{kumar2016disinformation,garimella2018political,ribeiro2020auditing,cinelli2021echo}, thus shaping collective action and political participation~\citep{margetts2015political}.
 Although it reduces costs, increases economic outputs, and facilitates decision-making, the democratization of machine-learning algorithms in health, finance, surveillance, marketing, justice, and policy-making also tends to reinforce and exacerbate social biases~\citep{hajian2016algorithmic,stoica2018algorithmic,rodolfa2020case}.
-Major breakthroughs in computer vision and natural language processing are obtained at a high environmental cost~\citep{strubell2019energy}, and mining cryptocurrencies consumes as much energy as Belgium does~\citep{gallersdorfer2020energy,de2020bitcoin}.
+Major breakthroughs in computer vision and natural language processing are obtained at a high environmental cost~\citep{strubell2019energy}.
 
 % These global problems, stemming from the decisions and behaviors of people, may appear intractable and unpredictable, but a century of research in econometrics and psychometrics has developed mathematical models of human decisions, enabling analysis and forecast.
 % We make choices as soon as we get up, for example by choosing between wearing a pull-over or a shirt and between drinking tea or coffee.
@@ -37,12 +37,11 @@ In parallel, the rapid increase of computational power and the development of ma
 
 % Very often, these algorithms are used as black boxes, \textit{i.e.}, as oracles that gobble a dataset and spits out predictions.
 % Other advanced algorithms in natural language processing and computer vision have so many layers of transformations and parameters that researchers are only guessing what the model has learned.
-However, modern machine-learning methods belong to the class of deep-learning algorithms.
-The architecture of these algorithms consists of many layers of non-linear transformations that progressively extract higher-level features from the data, and each layer consists of many parameters.
+However, the architecture of modern machine-learning methods, belonging to the class of deep-learning algorithms, consists of many layers of non-linear transformations that progressively extract higher-level features from the data, and each layer consists of many parameters.
 This complex structure makes interpretation challenging:
 It is unclear what patterns the model has learned exactly~\citep{fong2017interpretable,guidotti2018survey,olah2020zoom,hilton2020understanding}.
 Hence, although these algorithms offer unprecedented predictive powers~\citep{lecun2015deep}, they offer little insight into the problem itself, limiting any in-depth understanding of human behavior.
-They are used as black boxes, \textit{i.e.}, oracles that gobble up datasets and spit out predictions.
+Often, they are used as black boxes, \textit{i.e.}, oracles that gobble up datasets and spit out predictions.
 
 In this thesis, we focus on designing probabilistic models of decision-making that are highly interpretable.
 To study social processes, we draw from the literature on discrete-choice models and incorporate ideas from matrix factorization, Bayesian statistics, and generalized linear models.
@@ -56,11 +55,11 @@ In particular, we ask the following research questions:
 	]
 	\item Who are the important users and components in peer-production systems?
 	\item What features of parliamentarians and laws increase the probability of law amendments being accepted?
-	\item What ideological patterns are contained in voting data and how predictable are elections and referenda?
+	\item What ideological patterns are contained in voting data and how can they help predict elections and referenda?
 	\item How do people perceive the carbon footprint of their actions?
 	\item How can we learn pairwise-comparison models of time-dependent data?
 \end{enumerate}
-We answer each question by designing a tailor-made probabilistic choice models.
+We answer each question by designing a tailor-made probabilistic choice model.
 The learned parameters of each model enable us to interpret their predictions, thereby shedding light on the problem at hand.
 These models are also sufficiently general to be applicable in other contexts.
 Finally, we made our approach practical and our results useful by developing interactive Web platforms for RQ3, RQ4, and RQ5.
