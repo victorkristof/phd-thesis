@@ -9,8 +9,8 @@ We have demonstrated that discrete-choice analysis offers a principled and power
 In Chapter~\ref{ch:peerproduction}, we have studied the social dynamics behind group collaborations for the collective creation of content, such as in Wikipedia and the Linux kernel.
 We have proposed a new discrete-choice model inspired from the Bradley-Terry and Rasch models, which incorporates ideas from collaborative filtering.
 The model enables us to identify controversial Wikipedia articles and core Linux components that are crucial to the system.
-We have improved the predictive performance by including latent factors, which in turn we have helped us understand how users edit some Wikipedia articles:
-They are either "experts" in popular culture or in high culture, but not both.
+We have improved the predictive performance by including latent factors, which in turn have helped us understand how users edit some Wikipedia articles:
+They are either ``experts'' in popular culture or in high culture, but not both.
 
 In Chapter~\ref{ch:lawmaking}, we have studied, through the lens of peer-production systems, the law-making process in the European Union.
 To capture the conflictive structure inherent in this process, we have designed a model inspired from the multinomial logit and Rasch models, which we have enhanced with natural language processing techniques.
@@ -25,16 +25,46 @@ In Switzerland, for example, it is able to predict referendum votes with an accu
 We have deployed our algorithm on a Web platform to make real-time predictions for referenda in Switzerland.
 
 In Chapter~\ref{ch:climpact}, we have studied how people perceive the carbon footprint of their day-to-day actions.
-We have cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, the difference between intercontinental flights and using household appliances) and developed a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
+We have cast this problem as a comparison problem between pairs of actions (\textit{e.g.}, between intercontinental flights and using household appliances) and developed a statistical model of relative comparisons reminiscent of the Thurstone model in psychometrics.
 The model learns users' perception as the parameters of a Bayesian linear regression, which enables us to derive an active-learning algorithm to select the optimal pairs of actions to probe.
 Because no suitable data existed for answering these questions, we built a Web interface to collect comparison data from students on our university campus.
 Our results show that users tend to overestimate actions with low carbon footprint and underestimate actions with high carbon footprint.
 
-Finally, in Chapter~\ref{ch:kickscore}, we developed a dynamic model of choice that enables the parameters to vary over time.
+Finally, in Chapter~\ref{ch:kickscore}, we have developed a dynamic choice-model that enables the parameters to vary over time.
 We achieve this by replacing the static parameters by continuous-time Gaussian processes.
-We also developed an efficient inference algorithm that computes an approximate Bayesian posterior distribution in a few linear-time iterations over the data.
+We have also developed an efficient inference algorithm that computes an approximate Bayesian posterior distribution in a few linear-time iterations over the data.
 We have shown experimentally on several datasets of (e-)sports that this model outperforms competing approaches in terms of predictive performance, scales to millions of observations, and generates compelling visualizations of the parameters' dynamics.
-We have deployed our approach as a real-world application on the Web for predicting football matches in European leagues.
+We have deployed our approach as a real-world application on the Web for predicting football matches in European leagues and international competitions.
+
+\paragraph{Ethical Considerations}
+Studying human behavior and addressing social problems from a computational viewpoint induces a risk of abuses.
+This is especially true for political processes, as in the infamous scandal of Cambridge Analytica in 2016.
+After submitting our paper~\citep{kristof2021war} forming the basis of Chapter~\ref{ch:lawmaking} to the Web Conference 2021, one anonymous reviewer expressed concerns regarding the use of machine learning for making decisions in law making, and whether our findings in Section~\ref{lmp:sec:results} could help adversarial attacks.
+We answer to such concerns by precising that we do not propose to rely on our models for making decisions, such as whether an edit should be accepted or not.
+Our goal is to understand the factors correlated with the acceptance of edits, and thereby gain insights into the law-making processes.
+These correlations do not imply a causal relationship that would benefit potential adversarial attackers.
+Nevertheless, even if such a relationship were to exist, we prefer that these findings are published in an open research community, where possible countermeasures to such attacks could be thought of for the public good, rather than them being discovered by a company or an influence group that might use them in an opaque manner to push private interests.
+
+Our vote prediction algorithm of Chapter~\ref{ch:predikon} also triggered private concerns regarding its potential effect on the final outcome.
+If voters see early predictions of the outcome of an election or referendum, will they decide not to vote at all (if the prediction is in their favor) or, on the contrary, encourage more people to do so (if the prediction goes against their preference) in order to swing the result?
+In the political science literature of election forecasting, these are called the \emph{underdog} and the \emph{bandwagon} effects, and it is unclear which one prevails.
+However, a recent paper that studies the effect of probabilistic forecasting in the 2016 U.S.\ election concludes that ``forecasting can fundamentally alter the information environment available to potential voters, with the potential to change the outcome of elections''~\citep{westwood2020projecting}.
+For that reason, some countries, such as France, Spain, Italy, and Canada, enforce \emph{election silence}:
+Polling and political campaigning (including predictions) are forbidden some time prior to the voting day to prevent influencing voting behavior and election outcome.
+In Switzerland, voting offices close at 12:00pm on the Sunday of the vote.
+Our predictions are made during ballot counting, which takes a few hours and starts only when voting has closed everywhere.
+Hence, our predictions cannot influence the voting behavior, because it is impossible to vote when our predictions are made public.
+
+\paragraph{Perspective on Interpretability and Causality}
+
+The results of this thesis rely on correlations between features and predicted outputs.
+For example, in Chapter~\ref{ch:lawmaking}, we uncover features of law edits that correlate well with higher probability of acceptance.
+While these findings enable us to shed light on the problems we address, they could be made stronger by taking a causal inference perspective.
+In particular, a rigorous evaluation of potential confounding factors would reinforce our statistical models and conclusions.
+For example, in Chapter~\ref{ch:lawmaking}, controversy might be a confounding factor:
+Many edits might be rejected because the laws are controversial, but controversy is also modeled as a parameter of the law proposals.
+Causal inference and reasoning is rapidly expanding in the machine-learning community.
+Discovering causal relationships could be used to derive new insights from the present work and to develop our methods further.
 
 \paragraph{Perspective on Methodological Uncertainties}
 

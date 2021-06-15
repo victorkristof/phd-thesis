@@ -14,18 +14,11 @@ We have analyzed the words and bigrams in different parts of an edit and a dossi
 We have also analyzed the performance of our model on subsets of the test set based on conflict size, and we have shown that our best model can leverage the features of the data to make more accurate predictions on conflicts of higher size than other baselines.
 Finally, we have described how to use our model for predicting edits made on new, unseen dossiers.
 
-\paragraph{Ethical Considerations}
-After submitting our paper~\citep{kristof2021war} to the Web Conference 2021, one anonymous reviewer expressed concerns regarding the use of machine learning for making decisions in law making, and whether our findings in Section~\ref{lmp:sec:results} could help adversarial attacks.
-However, we do not propose to rely on our models for making decisions, such as whether an edit should be accepted or not.
-Our goal is to understand the factors correlated with the acceptance of edits, and thereby gain insights into the law-making processes.
-These correlations do not imply a causal relationship that would benefit potential adversarial attackers.
 \paragraph{Applications and Broader Impact}
 We believe that approaches such as ours are helpful to political scientists, journalists and transparency observers, and to the general public:
 First, it could be useful in validating theoretical hypotheses using large-scale datasets and advanced computational methods.
 Second, it could help uncover lesser-known facts, such as controversial dossiers that slipped under the radar.
 Finally, the greater transparency that results from these insights can enhance trust in public institutions and strengthen democratic processes.
-
-% Nevertheless, even if such a relationship were to exist, we prefer that these findings are published in an open research community, where possible countermeasures to such attacks could be thought of for the public good, rather than them being discovered by a company or an influence group that might use them in an opaque manner to push private interests.
 
 \paragraph{Perspective}
 First, we currently use pre-trained word embeddings and embeddings trained on an ad-hoc binary classification task.
