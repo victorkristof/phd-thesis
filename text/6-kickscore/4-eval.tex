@@ -92,7 +92,7 @@ In Table~\ref{kks:tab:predperf}, we report results for the following models:
 	\item \emph{TrueSkill}. The Bayesian model of~\citet{herbrich2006trueskill}.
 	      Time dynamics are assumed to follow Brownian motion (akin to our Wiener kernel) and inference is done in a single pass over the data.
 
-	\item \emph{Ours}. The model of Section~\ref{kks:sec:model}.
+	\item \emph{Kickscore}. The model of Section~\ref{kks:sec:model}.
 	      We try multiple covariance functions and report the one that maximizes the log-marginal likelihood.
 \end{itemize}
 
@@ -105,21 +105,21 @@ In Table~\ref{kks:tab:predperf}, we report results for the following models:
 	\sisetup{table-format=1.3, detect-all}
 	\begin{tabular}{l SS SS SS SS SSl}
 		\toprule
-		                & \multicolumn{2}{c}{Random}    & \multicolumn{2}{c}{Constant} & \multicolumn{2}{c}{Elo}
-		                & \multicolumn{2}{c}{TrueSkill} & \multicolumn{3}{c}{Ours}                                                                                       \\
+		                & \multicolumn{2}{c}{Random}    & \multicolumn{2}{c}{Constant}  & \multicolumn{2}{c}{Elo}
+		                & \multicolumn{2}{c}{TrueSkill} & \multicolumn{3}{c}{Kickscore}                                                                                   \\
 		\cmidrule(r){2-3}               \cmidrule(r){4-5}               \cmidrule(r){6-7}
 		\cmidrule(r){8-9}               \cmidrule{10-12}
-		Dataset         & Loss                          & \text{Acc.}                  & Loss                    & \text{Acc.}     & Loss                  & \text{Acc.}
-		                & Loss                          & \text{Acc.}                  & Loss                    & \text{Acc.}     & Covariance                          \\
+		Dataset         & Loss                          & \text{Acc.}                   & Loss                    & \text{Acc.}     & Loss                  & \text{Acc.}
+		                & Loss                          & \text{Acc.}                   & Loss                    & \text{Acc.}     & Covariance                          \\
 		\midrule
-		ATP tennis      & 0.693                         & 0.500                        & 0.581                   & 0.689           & 0.563                 & 0.705
-		                & 0.563                         & 0.705                        & \bfseries 0.552         & \bfseries 0.714 & Affine + Wiener                     \\
-		NBA basketball  & 0.693                         & 0.500                        & 0.692                   & 0.536           & 0.634                 & 0.644
-		                & 0.634                         & 0.644                        & \bfseries 0.630         & \bfseries 0.645 & Constant + Matérn 1/2               \\
-		World football  & 1.099                         & 0.333                        & 0.929                   & \bfseries 0.558 & 0.950                 & 0.551
-		                & 0.937                         & 0.554                        & \bfseries 0.926         & \bfseries 0.558 & Constant + Matérn 1/2               \\
-		ChessBase small & 1.099                         & 0.333                        & 1.030                   & \bfseries 0.478 & 1.035                 & 0.447
-		                & 1.030                         & 0.467                        & \bfseries 1.026         & 0.474           & Constant + Wiener                   \\
+		ATP tennis      & 0.693                         & 0.500                         & 0.581                   & 0.689           & 0.563                 & 0.705
+		                & 0.563                         & 0.705                         & \bfseries 0.552         & \bfseries 0.714 & Affine + Wiener                     \\
+		NBA basketball  & 0.693                         & 0.500                         & 0.692                   & 0.536           & 0.634                 & 0.644
+		                & 0.634                         & 0.644                         & \bfseries 0.630         & \bfseries 0.645 & Constant + Matérn 1/2               \\
+		World football  & 1.099                         & 0.333                         & 0.929                   & \bfseries 0.558 & 0.950                 & 0.551
+		                & 0.937                         & 0.554                         & \bfseries 0.926         & \bfseries 0.558 & Constant + Matérn 1/2               \\
+		ChessBase small & 1.099                         & 0.333                         & 1.030                   & \bfseries 0.478 & 1.035                 & 0.447
+		                & 1.030                         & 0.467                         & \bfseries 1.026         & 0.474           & Constant + Wiener                   \\
 		\bottomrule
 	\end{tabular}
 \end{sidewaystable}
@@ -266,7 +266,7 @@ As shown in Figure~\ref{kks:fig:starcraft}, our model outperforms all other appr
 	\centering
 	\includegraphics{kks-starcraft}
 	\caption{
-		Average log loss of four models (Bradley--Terry, naive, blade-chest and ours) on the StarCraft datasets.}
+		Average log loss of four models (Bradley--Terry, naive, blade-chest, and Kickscore) on the StarCraft datasets.}
 	\label{kks:fig:starcraft}
 \end{figure}
 

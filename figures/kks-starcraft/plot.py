@@ -19,7 +19,7 @@ def plot_starcraft(axes):
     axes[0].set_ylabel("Log loss")
 
     models = ["naive", "bt", "bc", "intransitive"]
-    labels = ["Naive", "Logit", "B.-C.", "Ours"]
+    labels = ["Naive", "Logit", "B.-C.", "Kickscore"]
     hatches = [None, '///', '---', 'xxx']
     colors = ['gray', 'white', 'white', 'white']
     edges = ['black', 'black', 'black', 'C3']

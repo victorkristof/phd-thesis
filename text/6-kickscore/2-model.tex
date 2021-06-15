@@ -3,12 +3,12 @@
 \label{kks:sec:model}
 
 % Introduction to the section.
-In this section, we formally introduce our probabilistic model.
+In this section, we formally introduce our probabilistic model, called \emph{Kickscore}.
 For clarity, we take a clean-slate approach and develop the model from scratch.
 We discuss in more detail how it relates to prior work in Section~\ref{kks:sec:relwork}.
 
 % Features have latent score process that follows a GP
-The basic building blocks of our model are \emph{features}\footnote{%
+The basic building blocks of Kickscore are \emph{features}\footnote{%
 	In the simplest case, there is a one-to-one mapping between competitors (e.g., teams) and features, but decoupling them offers increased modeling power.}.
 Let $M$ be the number of features; each feature $m \in [M]$ is characterized by a latent, continuous-time Gaussian process
 \begin{align}
