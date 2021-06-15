@@ -71,16 +71,16 @@ The prior covariance matrix $\vec{\Sigma}_p$ could capture the prior knowledge a
 In future work, we intend to further reduce the number of questions asked during one session by a judicious choice of $\vec{\Sigma}_p$.
 In our experiments so far, we simply initialize it to a spherical covariance, as explained in the next section.
 
-\paragraph{Scaling the Parameters}
-The perceived carbon footprints $\exp \overline{\vec{w}}$ have no unit.
-We scale them in order to compare with the true values.
-Let $\vec{v} \in \mathbf{R}^M$ be the true values of the carbon footprint of actions, and $\widetilde{\vec{v}} = \log{\vec{v}}$.
-We want to find the scaling constant $c \in \mathbf{R}$ that minimizes
-\begin{equation*}
-	l(c) = \sum_{i=1}^{M}(\widetilde{v}_i-\overline{w}_i - c)^2.
-\end{equation*}
-We take the derivative of $l(c)$ with respect to $c$ and set it to zero, and we obtain
-\begin{equation*}
-	c = \frac{1}{M}\sum_{i=1}^{M} (\widetilde{v}_i - \overline{w}_i).
-\end{equation*}
-Hence, the scaled perceived carbon footprint of actions are $\exp{(\overline{\vec{w}} + c)}$.
+% \paragraph{Scaling the Parameters}
+% The perceived carbon footprints $\exp \overline{\vec{w}}$ have no unit.
+% We scale them in order to compare with the true values.
+% Let $\vec{v} \in \mathbf{R}^M$ be the true values of the carbon footprint of actions, and $\widetilde{\vec{v}} = \log{\vec{v}}$.
+% We want to find the scaling constant $c \in \mathbf{R}$ that minimizes
+% \begin{equation*}
+% 	l(c) = \sum_{i=1}^{M}(\widetilde{v}_i-\overline{w}_i - c)^2.
+% \end{equation*}
+% We take the derivative of $l(c)$ with respect to $c$ and set it to zero, and we obtain
+% \begin{equation*}
+% 	c = \frac{1}{M}\sum_{i=1}^{M} (\widetilde{v}_i - \overline{w}_i).
+% \end{equation*}
+% Hence, the scaled perceived carbon footprint of actions are $\exp{(\overline{\vec{w}} + c)}$.
