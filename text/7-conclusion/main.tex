@@ -37,8 +37,8 @@ We have shown experimentally on several datasets of (e-)sports that this model o
 We have deployed our approach as a real-world application on the Web for predicting football matches in European leagues and international competitions.
 
 \paragraph{Ethical Considerations}
-Studying human behavior and addressing social problems from a computational viewpoint induces a risk of abuses.
-This is especially true for political processes, as in the infamous scandal of Cambridge Analytica in 2016.
+Studying human behavior and addressing social problems from a computational viewpoint induces a risk of abuse.
+This is especially true for political processes, as popularized by the infamous scandal of Cambridge Analytica in 2016.
 After submitting our paper~\citep{kristof2021war} forming the basis of Chapter~\ref{ch:lawmaking} to the Web Conference 2021, one anonymous reviewer expressed concerns regarding the use of machine learning for making decisions in law making, and whether our findings in Section~\ref{lmp:sec:results} could help adversarial attacks.
 We answer to such concerns by precising that we do not propose to rely on our models for making decisions, such as whether an edit should be accepted or not.
 Our goal is to understand the factors correlated with the acceptance of edits, and thereby gain insights into the law-making processes.
@@ -46,25 +46,25 @@ These correlations do not imply a causal relationship that would benefit potenti
 Nevertheless, even if such a relationship were to exist, we prefer that these findings are published in an open research community, where possible countermeasures to such attacks could be thought of for the public good, rather than them being discovered by a company or an influence group that might use them in an opaque manner to push private interests.
 
 Our vote prediction algorithm of Chapter~\ref{ch:predikon} also triggered private concerns regarding its potential effect on the final outcome.
-If voters see early predictions of the outcome of an election or referendum, will they decide not to vote at all (if the prediction is in their favor) or, on the contrary, encourage more people to do so (if the prediction goes against their preference) in order to swing the result?
-In the political science literature of election forecasting, these are called the \emph{underdog} and the \emph{bandwagon} effects, and it is unclear which one prevails.
+If voters see early predictions of the outcome of an election or referendum, will they decide not to vote at all (if the prediction is in their favor) or, on the contrary, will they encourage more people to do so in order to swing the result (if the prediction goes against their preference)?
+In the political science literature on election forecasting, this is referred to as the \emph{bandwagon} and the \emph{underdog} effects, respectively,and it is unclear which one prevails.
 However, a recent paper that studies the effect of probabilistic forecasting in the 2016 U.S.\ election concludes that ``forecasting can fundamentally alter the information environment available to potential voters, with the potential to change the outcome of elections''~\citep{westwood2020projecting}.
 For that reason, some countries, such as France, Spain, Italy, and Canada, enforce \emph{election silence}:
 Polling and political campaigning (including predictions) are forbidden some time prior to the voting day to prevent influencing voting behavior and election outcome.
-In Switzerland, voting offices close at 12:00pm on the Sunday of the vote.
+In Switzerland, where no such policy is implemented, voting offices close at 12:00pm on the Sunday of the vote.
 Our predictions are made during ballot counting, which takes a few hours and starts only when voting has closed everywhere.
 Hence, our predictions cannot influence the voting behavior, because it is impossible to vote when our predictions are made public.
 
 \paragraph{Perspective on Interpretability and Causality}
 
-The results of this thesis rely on correlations between features and predicted outputs.
+In the most machine-learning fashion, the results of this thesis rely on correlations between features and predicted outputs.
 For example, in Chapter~\ref{ch:lawmaking}, we uncover features of law edits that correlate well with higher probability of acceptance.
 While these findings enable us to shed light on the problems we address, they could be made stronger by taking a causal inference perspective.
 In particular, a rigorous evaluation of potential confounding factors would reinforce our statistical models and conclusions.
 For example, in Chapter~\ref{ch:lawmaking}, controversy might be a confounding factor:
 Many edits might be rejected because the laws are controversial, but controversy is also modeled as a parameter of the law proposals.
 Causal inference and reasoning is rapidly expanding in the machine-learning community.
-Discovering causal relationships could be used to derive new insights from the present work and to develop our methods further.
+Discovering causal relationships in the problems addressed in this thesis could be used to derive new insights and to develop our methods further.
 
 \paragraph{Perspective on Methodological Uncertainties}
 
