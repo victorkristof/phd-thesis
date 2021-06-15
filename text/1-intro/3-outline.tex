@@ -21,7 +21,7 @@ We also make our approaches practical and our results useful by deploying them o
 
 More specifically, in Chapter~\ref{ch:peerproduction}, we ask who are the important users and components in online peer-production systems.
 We take a predictive viewpoint and posit that the probability of acceptance of user contributions depends on the skill of users and the inertia of components resisting to change.
-We model this probability with a discrete-choice model inspired from the Rasch model, and we include latent factors reminiscent of matrix factorization to capture non-linear interactions between users and components.
+We model this probability with a discrete-choice model inspired from the Rasch model, and we include latent factors reminiscent of collaborative filtering to capture non-linear interactions between users and components.
 We apply our model to Wikipedia and to the Linux kernel, two examples of large-scale peer-production systems, and we discover interesting structures in the data:
 We identify controversial Wikipedia articles and core Linux components that are crucial to the functioning of the system.
 Finally, the latent factors boost the predictive performance and cluster well according to topics of the Wikipedia articles.
@@ -35,7 +35,7 @@ Our approach takes advantage of the conflictive structure of amendments that mod
 We identify that being in charge of a law draft and that proposing shorter amendments are among the features that correlate with highest probability of acceptance.
 We also discover words and bigrams that are predictive of acceptance or rejection when inserted or deleted, such as the term ``human rights'' that predicts acceptance when deleted from the law.
 
-In Chapter~\ref{ch:predikon}, we study one of the most fundamental choice processes: voting.
+In Chapter~\ref{ch:predikon}, we study one of the most fundamental choice processes in our society: voting.
 To understand voting patterns, we develop an algorithm for predicting aggregate vote outcomes (\textit{e.g.}, national) from partial results (\textit{e.g.}, regional) that are revealed sequentially.
 We combine matrix factorization and generalized linear models to obtain a flexible, efficient, and accurate algorithm.
 Our experiments show that this approach accurately predicts the outcomes of Swiss referenda, U.S.\ presidential elections, and German legislative elections.
@@ -55,4 +55,4 @@ We solve this by replacing the static parameters of the logit model by continuou
 We develop an efficient inference algorithm that computes an approximate Bayesian posterior distribution.
 Despite the flexibility of our model, our inference algorithm requires only a few linear-time iterations over the data.
 We apply our model to several historical databases of sports outcomes and find that our approach (a) outperforms competing approaches in terms of predictive performance, (b) scales to millions of observations, and (c) generates compelling visualizations that help in understanding and interpreting the data.
-We also develop a Web platform that uses our algorithm to make predictions for football matches in European leagues.
+We also develop a Web platform that uses our algorithm to make predictions for football matches in European leagues and international competitions.
